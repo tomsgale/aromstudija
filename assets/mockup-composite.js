@@ -70,7 +70,7 @@ class MockupCompositor {
    */
   composite() {
     const { mockup, product } = this.images;
-    const { x, y, width, height, curve_strength } = this.position;
+    const { x, y, width, height, curve_strength, crop_left } = this.position;
 
     // Set canvas size to match mockup dimensions
     this.canvas.width = mockup.naturalWidth;
@@ -82,19 +82,52 @@ class MockupCompositor {
     // Draw mockup template first, then product image on top (for sticker/label effect)
     this.ctx.drawImage(mockup, 0, 0);
 
+    const sourceRect = this.getSourceRect(product, crop_left);
     const strength = Math.max(0, Math.min(1, parseFloat(curve_strength) || 0));
     if (strength > 0) {
-      this.drawCurvedLabel(product, x, y, width, height, strength);
+      this.drawCurvedLabel(product, x, y, width, height, strength, sourceRect);
     } else {
-      this.ctx.drawImage(product, x, y, width, height);
+      this.ctx.drawImage(
+        product,
+        sourceRect.sx,
+        sourceRect.sy,
+        sourceRect.sw,
+        sourceRect.sh,
+        x,
+        y,
+        width,
+        height
+      );
     }
+  }
+
+  /**
+   * Compute source rectangle for optional left-side crop
+   */
+  getSourceRect(img, cropValue) {
+    let fraction = parseFloat(cropValue);
+    if (isNaN(fraction)) {
+      fraction = 1;
+    }
+    // If value > 1 assume percent; clamp to 0-1
+    if (fraction > 1) {
+      fraction = fraction / 100;
+    }
+    fraction = Math.max(0.01, Math.min(1, fraction));
+
+    return {
+      sx: 0,
+      sy: 0,
+      sw: img.naturalWidth * fraction,
+      sh: img.naturalHeight
+    };
   }
 
   /**
    * Draw the product image with a simple top/bottom bow (cylindrical label)
    * strength: 0–1, controls how much the center droops relative to edges
    */
-  drawCurvedLabel(img, x, y, width, height, strength) {
+  drawCurvedLabel(img, x, y, width, height, strength, sourceRect) {
     const curvePx = height * strength * 0.3; // how far center drops
     const steps = Math.min(200, Math.max(40, Math.floor(width / 2)));
     const sliceW = width / steps;
@@ -104,7 +137,17 @@ class MockupCompositor {
     buffer.width = width;
     buffer.height = height;
     const bctx = buffer.getContext('2d');
-    bctx.drawImage(img, 0, 0, width, height);
+    bctx.drawImage(
+      img,
+      sourceRect.sx,
+      sourceRect.sy,
+      sourceRect.sw,
+      sourceRect.sh,
+      0,
+      0,
+      width,
+      height
+    );
 
     for (let i = 0; i < steps; i++) {
       const progress = i / (steps - 1); // 0 left, 1 right

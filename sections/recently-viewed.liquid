@@ -64,6 +64,9 @@
                     const recentlyViewedProductsElement = parsedHtml.querySelector("recently-productsviewed");
                     if (recentlyViewedProductsElement && recentlyViewedProductsElement.hasChildNodes()) {
                         this.innerHTML = recentlyViewedProductsElement.innerHTML;
+                        if (window.initMockupCompositing) {
+                          window.initMockupCompositing();
+                        }
                         AOS.init();
                     }
                 } catch (error) {

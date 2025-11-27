@@ -196,6 +196,9 @@
         var replacementContent = fetchedContent.querySelector("[data-id=\"".concat(CSS.escape(this.dataset.id), "\"]"));
         if (replacementContent) {
           this.innerHTML = replacementContent.innerHTML;
+          if (window.initMockupCompositing) {
+            window.initMockupCompositing();
+          }
         }
       });
     }

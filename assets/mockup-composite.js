@@ -298,5 +298,6 @@ if (document.readyState === 'loading') {
   initMockupCompositing();
 }
 
-// Export for potential external use
+// Export for potential external use or re-init after AJAX inserts
 window.MockupCompositor = MockupCompositor;
+window.initMockupCompositing = initMockupCompositing;

@@ -109,6 +109,9 @@ class MockupCompositor {
    * Handle rendering errors gracefully
    */
   handleError() {
+    // Render the regular product image if available
+    renderFallbackImage(this.canvas);
+
     // Hide canvas
     this.canvas.style.display = 'none';
 
@@ -125,16 +128,37 @@ class MockupCompositor {
 /**
  * Initialize mockup compositing when DOM is ready
  */
+function renderFallbackImage(canvas) {
+  const productImage = canvas.dataset.productImage;
+  if (!productImage) return;
+
+  const img = new Image();
+  img.src = productImage;
+  img.alt = canvas.getAttribute('aria-label') || '';
+  img.loading = canvas.getAttribute('loading') || 'lazy';
+  img.width = canvas.getAttribute('width') || '';
+  img.height = canvas.getAttribute('height') || '';
+  img.className = canvas.className || '';
+
+  canvas.replaceWith(img);
+}
+
 function initMockupCompositing() {
   // Get configuration from theme settings
-  const mockupPositions = JSON.parse(
-    document.body.dataset.mockupPositions || '{}'
-  );
+  let mockupPositions = {};
+  try {
+    mockupPositions = JSON.parse(document.body.dataset.mockupPositions || '{}');
+  } catch (error) {
+    console.warn('[Mockup Compositor] Invalid mockup_positions JSON; falling back to regular images', error);
+  }
 
-  const mockupBaseUrl = document.body.dataset.mockupBaseUrl || '';
+  const mockupBaseUrl = (document.body.dataset.mockupBaseUrl || '').trim();
+  const canvases = document.querySelectorAll('.mockup-canvas');
 
   if (!mockupBaseUrl) {
-    console.warn('[Mockup Compositor] No mockup base URL configured');
+    console.warn('[Mockup Compositor] No mockup base URL configured; rendering product images instead');
+    // Render normal product images so cards/pages are not blank
+    canvases.forEach(renderFallbackImage);
     return;
   }
 
@@ -181,7 +205,6 @@ function initMockupCompositing() {
   );
 
   // Observe all mockup canvases
-  const canvases = document.querySelectorAll('.mockup-canvas');
   canvases.forEach((canvas) => {
     observer.observe(canvas);
   });

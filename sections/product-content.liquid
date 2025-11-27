@@ -45,62 +45,99 @@
         <div class="row justify-content-center">
             <div id="nav-tab-info" class="nav-tab-info {{ left_size }}" data-aos="{{ section.settings.animation }}" >
                 <div class="nav nav-tabs {% if section.settings.enable_left %} justify-content-start {% endif %}" role="tablist">
+                    {%- liquid assign has_active = false -%}
                     {%- for block in section.blocks -%}
                         {%- liquid
-                            if forloop.first == true
-                                assign active = 'active'
-                            else
-                                assign active = ''
+                            assign show_block = true
+                            if block.type == 'content'
+                              capture rendered_content
+                                {{ block.settings.answer_content }}
+                                {{ block.settings.page.content }}
+                              endcapture
+                              assign rendered_content = rendered_content | strip_html | strip
+                              if rendered_content == blank
+                                assign show_block = false
+                              endif
                             endif
-                        -%}
-                        {%- case block.type -%}
-                            {%- when 'description' -%}
-                                <a class="nav-item nav-link {{ active }} disabled-anchor" href="#gtab{{ block.id }}" data-toggle="tab" role="tab" aria-selected="true">
-                                    {{ block.settings.title_tab | default: 'Description' }}
-                                </a>
-                            {%- when 'custom_liquid' -%}
-                                <a class="nav-item nav-link {{ active }} disabled-anchor" href="#gtab{{ block.id }}" data-toggle="tab" role="tab" aria-selected="true">
-                                    {{ block.settings.title_tab | default: 'Custom Liquid' }}
-                                </a>
-                            {%- when 'content' -%}
-                                <a class="nav-item nav-link {{ active }} disabled-anchor" href="#gtab{{ block.id }}" data-toggle="tab" role="tab" aria-selected="true">
-                                    {{ block.settings.title_tab | default: 'Title Content' }}
-                                </a>
-                            {%- when 'review' -%}
-                                    <a class="nav-item nav-link {{ active }} disabled-anchor" href="#gtab{{ block.id }}" data-toggle="tab" role="tab" aria-selected="true">
-                                        {{ block.settings.title_tab | default: 'Reviews' }}
-                                    </a>
-                            {%- endcase -%}
+                          -%}
+                        {%- if show_block -%}
+                          {%- liquid
+                            if has_active == false
+                              assign active = 'active'
+                              assign has_active = true
+                            else
+                              assign active = ''
+                            endif
+                          -%}
+                          {%- case block.type -%}
+                              {%- when 'description' -%}
+                                  <a class="nav-item nav-link {{ active }} disabled-anchor" href="#gtab{{ block.id }}" data-toggle="tab" role="tab" aria-selected="true">
+                                      {{ block.settings.title_tab | default: 'Description' }}
+                                  </a>
+                              {%- when 'custom_liquid' -%}
+                                  <a class="nav-item nav-link {{ active }} disabled-anchor" href="#gtab{{ block.id }}" data-toggle="tab" role="tab" aria-selected="true">
+                                      {{ block.settings.title_tab | default: 'Custom Liquid' }}
+                                  </a>
+                              {%- when 'content' -%}
+                                  <a class="nav-item nav-link {{ active }} disabled-anchor" href="#gtab{{ block.id }}" data-toggle="tab" role="tab" aria-selected="true">
+                                      {{ block.settings.title_tab | default: 'Title Content' }}
+                                  </a>
+                              {%- when 'review' -%}
+                                      <a class="nav-item nav-link {{ active }} disabled-anchor" href="#gtab{{ block.id }}" data-toggle="tab" role="tab" aria-selected="true">
+                                          {{ block.settings.title_tab | default: 'Reviews' }}
+                                      </a>
+                              {%- endcase -%}
+                        {%- endif -%}
                     {%- endfor -%}
                 </div>
                 <div class="tab-content">
+                    {%- liquid assign has_active_tab = false -%}
                     {%- for block in section.blocks -%}
                         {%- liquid
-                            if forloop.first == true
-                                assign activetab = 'show active'
+                            assign show_block = true
+                            if block.type == 'content'
+                              capture rendered_content
+                                {{ block.settings.answer_content }}
+                                {{ block.settings.page.content }}
+                              endcapture
+                              assign rendered_content = rendered_content | strip_html | strip
+                              if rendered_content == blank
+                                assign show_block = false
+                              endif
+                            endif
+
+                            if has_active_tab == false
+                              assign activetab = 'show active'
                             else
-                                assign activetab = ''
+                              assign activetab = ''
                             endif
                         -%}
-                        {%- case block.type -%}
-                            {%- when 'description' -%}
-                                <div class="tab-pane fade {{ activetab }}" id="gtab{{ block.id }}" role="tabpanel" >
-                                    {{ product.description }}
-                                </div>
-                            {%- when 'custom_liquid' -%}
-                                <div class="tab-pane fade {{ activetab }}" id="gtab{{ block.id }}" role="tabpanel" >
-                                    {{ block.settings.custom_liquid }}
-                                </div>
-                            {%- when 'content' -%}
-                                <div class="tab-pane fade {{ activetab }}" id="gtab{{ block.id }}" role="tabpanel" >
-                                    {{ block.settings.answer_content }}
-                                    {{ block.settings.page.content }}
-                                </div>
-                            {%- when 'review' -%}
-                                <div class="tab-pane fade {{ activetab }}" id="gtab{{ block.id }}" role="tabpanel">
-                                    <div id="shopify-product-reviews" data-id="{{ product.id }}">{{ product.metafields.spr.reviews }}</div>
-                                </div>
-                        {%- endcase -%}
+                        {%- if show_block -%}
+                          {%- liquid
+                            if activetab != ''
+                              assign has_active_tab = true
+                            endif
+                          -%}
+                          {%- case block.type -%}
+                              {%- when 'description' -%}
+                                  <div class="tab-pane fade {{ activetab }}" id="gtab{{ block.id }}" role="tabpanel" >
+                                      {{ product.description }}
+                                  </div>
+                              {%- when 'custom_liquid' -%}
+                                  <div class="tab-pane fade {{ activetab }}" id="gtab{{ block.id }}" role="tabpanel" >
+                                      {{ block.settings.custom_liquid }}
+                                  </div>
+                              {%- when 'content' -%}
+                                  <div class="tab-pane fade {{ activetab }}" id="gtab{{ block.id }}" role="tabpanel" >
+                                      {{ block.settings.answer_content }}
+                                      {{ block.settings.page.content }}
+                                  </div>
+                              {%- when 'review' -%}
+                                  <div class="tab-pane fade {{ activetab }}" id="gtab{{ block.id }}" role="tabpanel">
+                                      <div id="shopify-product-reviews" data-id="{{ product.id }}">{{ product.metafields.spr.reviews }}</div>
+                                  </div>
+                          {%- endcase -%}
+                        {%- endif -%}
                     {%- endfor -%}
                 </div>
             </div>

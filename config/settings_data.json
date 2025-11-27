@@ -220,7 +220,7 @@
     "whatsapp_number": "0988164483",
     "whatsapp_msg": "Hello",
     "mockup_base_url": "https://cdn.shopify.com/s/files/1/0926/1350/9504/files",
-    "mockup_positions": "{\n  \"tshirt\": {\"x\": 150, \"y\": 200, \"width\": 300, \"height\": 300},\n  \"mug\": {\"x\": 80, \"y\": 120, \"width\": 200, \"height\": 250},\n  \"oil\": {\"x\": 310, \"y\": 490, \"width\": 180, \"height\": 280}\n}",
+    "mockup_positions": "{\n    \"oil\": {\n      \"x\": 266,\n      \"y\": 520,\n      \"width\": 253,\n      \"height\": 260,\n      \"curve_strength\": 0.18,\n      \"crop_left\": 0.32\n    }\n  }",
     "checkout_header_image": "",
     "checkout_logo_image": "",
     "checkout_logo_position": "left",

@@ -51,18 +51,84 @@
                             assign show_block = true
                             if block.type == 'content'
                               assign show_block = false
-                              capture rendered_content
-                                {{ block.settings.answer_content }}
-                                {{ block.settings.page.content }}
-                              endcapture
-                              assign rendered_content = rendered_content
-                                | strip_html
-                                | replace: '&nbsp;', ' '
-                                | replace: ' ', ' '
-                                | strip
-                              unless rendered_content == blank
-                                assign show_block = true
-                              endunless
+                              assign title_key = block.settings.title_tab | strip | downcase
+
+                              if block.settings.page != blank
+                                capture page_content
+                                  {{ block.settings.page.content }}
+                                endcapture
+                                assign page_content = page_content | strip_html | strip
+                                unless page_content == blank
+                                  assign show_block = true
+                                endunless
+                              endif
+
+                              if show_block == false
+                                case title_key
+                                  when 'ieteikumi'
+                                    unless product.metafields.custom.ieteikumi == blank
+                                      assign show_block = true
+                                    endunless
+                                  when 'enerģētika', 'energetika'
+                                    unless product.metafields.custom.energetics == blank
+                                      assign show_block = true
+                                    endunless
+                                  when 'bio sastāvdaļas', 'bio sastavdalas'
+                                    unless product.metafields.custom.bio_sastavdalas == blank
+                                      assign show_block = true
+                                    endunless
+                                  when 'recepte'
+                                    unless product.metafields.custom.recepte == blank
+                                      assign show_block = true
+                                    endunless
+                                  when 'ādas tips', 'adas tips'
+                                    unless product.metafields.custom.adas_tips == blank
+                                      assign show_block = true
+                                    endunless
+                                  when 'šķīdība', 'skidiba'
+                                    unless product.metafields.custom.skidiba == blank
+                                      assign show_block = true
+                                    endunless
+                                  when 'saderība', 'saderiba'
+                                    unless product.metafields.custom.saderiba == blank
+                                      assign show_block = true
+                                    endunless
+                                  when 'deva'
+                                    unless product.metafields.custom.deva == blank
+                                      assign show_block = true
+                                    endunless
+                                  when 'uzmanību', 'uzmanibu'
+                                    unless product.metafields.custom.uzmanibu == blank
+                                      assign show_block = true
+                                    endunless
+                                  when 'aromāts', 'aromats'
+                                    unless product.metafields.custom.aromats == blank
+                                      assign show_block = true
+                                    endunless
+                                  when 'klasifikācija', 'klasifikacija'
+                                    unless product.metafields.custom.klasifikacija == blank
+                                      assign show_block = true
+                                    endunless
+                                  when 'ieguves metode', 'ieguves metode'
+                                    unless product.metafields.custom.ieguves_metode == blank
+                                      assign show_block = true
+                                    endunless
+                                endcase
+                              endif
+
+                              if show_block == false
+                                capture rendered_content
+                                  {{ block.settings.answer_content }}
+                                endcapture
+                                assign rendered_content = rendered_content
+                                  | strip_html
+                                  | replace: '&nbsp;', ' '
+                                  | replace: ' ', ' '
+                                  | strip
+                                unless rendered_content == blank
+                                  assign show_block = true
+                                endunless
+                              endif
                             endif
                           -%}
                         {%- if show_block -%}
@@ -102,18 +168,84 @@
                             assign show_block = true
                             if block.type == 'content'
                               assign show_block = false
-                              capture rendered_content
-                                {{ block.settings.answer_content }}
-                                {{ block.settings.page.content }}
-                              endcapture
-                              assign rendered_content = rendered_content
-                                | strip_html
-                                | replace: '&nbsp;', ' '
-                                | replace: ' ', ' '
-                                | strip
-                              unless rendered_content == blank
-                                assign show_block = true
-                              endunless
+                              assign title_key = block.settings.title_tab | strip | downcase
+
+                              if block.settings.page != blank
+                                capture page_content
+                                  {{ block.settings.page.content }}
+                                endcapture
+                                assign page_content = page_content | strip_html | strip
+                                unless page_content == blank
+                                  assign show_block = true
+                                endunless
+                              endif
+
+                              if show_block == false
+                                case title_key
+                                  when 'ieteikumi'
+                                    unless product.metafields.custom.ieteikumi == blank
+                                      assign show_block = true
+                                    endunless
+                                  when 'enerģētika', 'energetika'
+                                    unless product.metafields.custom.energetics == blank
+                                      assign show_block = true
+                                    endunless
+                                  when 'bio sastāvdaļas', 'bio sastavdalas'
+                                    unless product.metafields.custom.bio_sastavdalas == blank
+                                      assign show_block = true
+                                    endunless
+                                  when 'recepte'
+                                    unless product.metafields.custom.recepte == blank
+                                      assign show_block = true
+                                    endunless
+                                  when 'ādas tips', 'adas tips'
+                                    unless product.metafields.custom.adas_tips == blank
+                                      assign show_block = true
+                                    endunless
+                                  when 'šķīdība', 'skidiba'
+                                    unless product.metafields.custom.skidiba == blank
+                                      assign show_block = true
+                                    endunless
+                                  when 'saderība', 'saderiba'
+                                    unless product.metafields.custom.saderiba == blank
+                                      assign show_block = true
+                                    endunless
+                                  when 'deva'
+                                    unless product.metafields.custom.deva == blank
+                                      assign show_block = true
+                                    endunless
+                                  when 'uzmanību', 'uzmanibu'
+                                    unless product.metafields.custom.uzmanibu == blank
+                                      assign show_block = true
+                                    endunless
+                                  when 'aromāts', 'aromats'
+                                    unless product.metafields.custom.aromats == blank
+                                      assign show_block = true
+                                    endunless
+                                  when 'klasifikācija', 'klasifikacija'
+                                    unless product.metafields.custom.klasifikacija == blank
+                                      assign show_block = true
+                                    endunless
+                                  when 'ieguves metode', 'ieguves metode'
+                                    unless product.metafields.custom.ieguves_metode == blank
+                                      assign show_block = true
+                                    endunless
+                                endcase
+                              endif
+
+                              if show_block == false
+                                capture rendered_content
+                                  {{ block.settings.answer_content }}
+                                endcapture
+                                assign rendered_content = rendered_content
+                                  | strip_html
+                                  | replace: '&nbsp;', ' '
+                                  | replace: ' ', ' '
+                                  | strip
+                                unless rendered_content == blank
+                                  assign show_block = true
+                                endunless
+                              endif
                             endif
 
                             if has_active_tab == false

@@ -5,7 +5,7 @@
     assign has_mockup = false
     assign mockup_type = product.metafields.custom.mockup_type
 
-    if settings.enable_mockup_compositing and mockup_type != blank
+    if settings.enable_mockup_compositing and settings.mockup_base_url != blank and mockup_type != blank
       assign has_mockup = true
     endif
   -%}

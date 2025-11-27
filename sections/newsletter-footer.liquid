@@ -1,0 +1,374 @@
+<!-- newsletter.liquid -->
+{%- if section.settings.enable_newletter_footer -%}
+{%- liquid
+  assign bg_image = section.settings.image_bg
+  assign newletter_color = section.settings.newletter_color
+-%}
+<style>
+  .customstyle{{ section.id }}{
+    {%- if newletter_color != 'rgba(0,0,0,0)' -%}
+    --g-color-heading : {{ newletter_color }};
+    --color-body-text-rgb : {{ newletter_color }};
+    {%- endif -%}
+    position: relative;
+    z-index: {{ section.settings.zindex }};
+    background-position:center !important;
+    background-repeat:{{ section.settings.e_repeat }} !important;
+    background-size:{{ section.settings.e_size }} !important;
+  }
+  .mail-section-footer .form-group {
+    border:1px solid {{ section.settings.colorborder }};
+    border-radius:var(--g-input-radius) !important;
+  }
+  .mail-section-footer .form-group input::placeholder{
+      color: rgba(var(--color-body-text-rgb),0.6) !important;
+  }
+  .mail-section-footer .form-group .form-control{
+    border:none;
+    box-shadow: none;
+  }
+  .mail-section-footer .form-group .svg-email{
+    width: 24px;
+    height: 24px;
+    fill: var(--g-color-heading);
+  }
+  .mail-section-footer .form-group .btn{
+    align-self: stretch;
+  }
+  .mail-section-footer .form-group .btn .svg-submit{
+    width: 24px;
+    height: 24px;
+    fill: var(--g-color-heading);
+  }
+  
+</style>
+<section class="customstyle{{ section.id }} lazyload " 
+data-bgset="{% render 'bgset', image: bg_image %}"
+data-sizes="auto"
+data-parent-fit="cover" 
+data-section-id="{{ section.id }}"  
+data-aos="{{ section.settings.animation }}"
+data-section-type="newletter-footer"  >
+  {%- render 'style-section' -%}
+  <div class="{{ section.settings.setwidth }} text-center">
+    {%- assign e_left = section.settings.html_left -%}
+    <div class="row d-flex justify-content-center">
+      <div class="{% if e_left %} col-lg-11 {% else %} col-lg-8 {% endif %}">
+        <div class="p-0">
+          {%- render 'section-heading' -%} 
+          {%- if e_left -%}
+          <div class="row">
+          {%- endif -%}
+            {%- if e_left -%}
+              <div class="left_newlleters text-left col-lg-6 col-12">
+                {{ section.settings.html_left_block }}
+              </div>
+            {%- endif -%}
+            <div class="form-vertical mail-section-footer  {% if e_left %} col-lg-6 col-12  pt-2 {% else %} mt-n3  {% endif %}">
+              {%- form 'customer' , id: 'ContactFooterTop' -%}
+                {{ form.errors | default_errors }}
+                {%- if form.posted_successfully? -%}
+                  <p class="form-success">{{ 'general.newsletter_form.confirmation' | t }}</p>
+                {%- else -%}
+                  <input type="hidden" name="contact[tags]" value="newsletter">
+                  <label for="NewsletterEmail-{{ block.id }}" class="label--hidden">{{ 'general.newsletter_form.newsletter_label' | t }}</label>
+                  <div class=" form-group text-center input-group mb-0 align-items-center pl-4 pr-2 py-1">
+                    {%- render 'icon-email' -%}
+                    <input class="form-control" type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ 'general.newsletter_form.newsletter_placeholder' | t }}" name="contact[email]" id="NewsletterEmail-{{ block.id }}" autocorrect="off" autocapitalize="off">
+                    <button type="submit" class="btn" name="commit">
+                      <span class="icon__fallback-text" >{{ 'general.newsletter_form.submit' | t }}</span>
+                        <svg class="svg-submit" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15.1433 11.6483L10.6733 7.17833L11.8517 6L18.3333 12.4817L11.8517 18.9633L10.6733 17.785L15.1433 13.315H5V11.6483H15.1433Z" />
+                        </svg>
+                    </button>
+                  </div>
+                {%- endif -%}
+              {%- endform -%}
+            </div>
+            {%- if e_left -%}
+          </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+    
+    
+  </div>
+</section>
+{%- endif -%}
+{% schema %}
+{
+  "name": "Newsletter Footer",
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_newletter_footer",
+      "label": "Enable ",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+      "label": "Background Section",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "newletter_color",
+      "label": "Color",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "color",
+      "id": "colorborder",
+      "label": "Border Color Input",
+      "default": "#222222"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_bg",
+      "label": "Background image"
+    },
+    {
+      "type": "select",
+      "id": "e_size",
+      "label": "Background Size",
+      "default": "auto",
+      "options": [
+        {
+          "value": "auto",
+          "label": "Auto"
+        },
+        {
+          "value": "cover",
+          "label": "Cover"
+        },
+        {
+          "value": "contain",
+          "label": "Contain"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "e_repeat",
+      "label": "Background Repeat",
+      "default": "no-repeat",
+      "options": [
+        {
+          "value": "no-repeat",
+          "label": "No-repeat"
+        },
+        {
+          "value": "repeat",
+          "label": "Repeat"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "title_top",
+      "label": "Sub Title Top",
+      "default": "Sub Title Top"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Title Newletters"
+    },
+    {
+      "type": "textarea",
+      "id": "des",
+      "label": "HTML / Description"
+    },
+    {
+      "type": "checkbox",
+      "id": "html_left",
+      "label": "Enable left Block HTML",
+      "default": false
+    },
+    {
+      "type": "textarea",
+      "id": "html_left_block",
+      "label": "Left HTML / Description"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ]
+}
+{% endschema %}

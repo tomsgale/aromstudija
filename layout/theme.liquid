@@ -1,0 +1,121 @@
+<!doctype html>
+<html class="no-js " lang="{{ shop.locale }}">
+  <head>
+
+    <style>
+#Details-collapsible_tab_ciUU7d-template--22713603916087__main { display: none; }
+#Details-collapsible_tab_ciUU7d-template--22713603916087__main:has(iframe) { display: block !important; } 
+</style>
+
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="{{ settings.color_header_bg }}">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="dns-prefetch" href="https://{{shop.domain }}" crossorigin>
+    <link rel="dns-prefetch" href="https://{{shop.permanent_domain }}" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.shopify.com" crossorigin>
+    <link rel="dns-prefetch" href="https://fonts.shopifycdn.com" crossorigin>
+  	<link rel="preconnect" href="https//fonts.shopifycdn.com/" crossorigin>
+    <link rel="preconnect" href="https//cdn.shopify.com" crossorigin>
+    
+    <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+    {%- unless settings.font_family.system? -%}
+    <link rel="preload" as="font" href="{{ settings.font_family | font_url }}" type="font/woff2" crossorigin>
+    <link rel="preload" as="font" href="{{ settings.font_family | font_url: 'woff' }}" type="font/woff" crossorigin>
+  {%- endunless -%}
+  {%- if settings.font_family2.system? == false and settings.font_family2 != settings.font_family -%}
+    <link rel="preload" as="font" href="{{ settings.font_family2 | font_url }}" type="font/woff2" crossorigin>
+    <link rel="preload" as="font" href="{{ settings.font_family2 | font_url: 'woff' }}" type="font/woff" crossorigin>
+  {%- endif -%}
+    {%- if settings.favicon != blank -%}
+      <link rel="shortcut icon" href="{{ settings.favicon | image_url: width: 32, height: 32 }}" type="image/png">
+    {%- endif -%}
+
+    <title>
+      {{ page_title }}
+      {% if current_tags %}
+        {% assign meta_tags = current_tags | join: ', ' %}
+        &ndash;
+        {{ 'general.meta.tags' | t: tags: meta_tags }}
+      {% endif %}
+      {% if current_page != 1 %}
+        &ndash;
+        {{ 'general.meta.page' | t: page: current_page }}
+      {% endif %}
+      {% unless page_title contains shop.name %}
+        &ndash;
+        {{ shop.name }}
+      {% endunless %}
+    </title>
+   
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+      {% else %}
+      <meta name="description" content="{{ settings.meta_description | escape }}">
+    {%- endif -%}
+    
+    {%- render 'social-meta-tags' -%}
+    {%- render 'header-css' -%}
+      <link rel="preload" href="{{ 'lazysizes.min.js' | asset_url }}" as="script">
+      <link rel="preload" href="{{ 'vendor.js' | asset_url }}" as="script">
+      <link rel="preload" href="{{ 'swiper-bundle.min.js' | asset_url }}" as="script">
+      <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
+
+      {%- comment -%} Mockup Compositing Assets {%- endcomment -%}
+      {%- if settings.enable_mockup_compositing -%}
+        {{ 'mockup-composite.css' | asset_url | stylesheet_tag }}
+        <script src="{{ 'mockup-composite.js' | asset_url }}" defer="defer"></script>
+      {%- endif -%}
+
+    {{ content_for_header }}
+  </head>
+  <body class="template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }} body-theme {% if settings.productpage == 'product-2' or settings.productpage == 'product-6' or settings.productpage == 'product-7' %} product-hide-breadcrumb {% endif %}"
+        {%- if settings.enable_mockup_compositing -%}
+        data-mockup-positions='{{ settings.mockup_positions | escape }}'
+        data-mockup-base-url="{{ settings.mockup_base_url }}"
+        {%- endif -%}>
+   {% assign lazy = false %}
+    <img {% if lazy %} loading = "lazy" {% endif %} width="99998" height="99999" alt="index" style="pointer-events: none; position: absolute; top: 0; left: 0; width: 99vw; height: 99vh; max-width: 99vw; max-height: 99vh;" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIHdpZHRoPSI5OTk5OXB4IiBoZWlnaHQ9Ijk5OTk5cHgiIHZpZXdCb3g9IjAgMCA5OTk5OSA5OTk5OSIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48ZyBzdHJva2U9Im5vbmUiIGZpbGw9Im5vbmUiIGZpbGwtb3BhY2l0eT0iMCI+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9Ijk5OTk5IiBoZWlnaHQ9Ijk5OTk5Ij48L3JlY3Q+IDwvZz4gPC9zdmc+">
+    {%- render 'loading' -%}
+    {%- sections 'header-group' -%}
+    <div class="page-container page-element is-moved-by-drawer">
+      {%- render 'breadcrumb' -%}
+      <main class="main-content" id="MainContent" role="main">
+        {%- if settings.enable_animationscroll -%}
+          <div id="js-scroll">
+          {% endif %}
+          {%- if settings.enable_animationscroll -%}
+            <div data-scroll-section>
+            {% endif %}
+            {%- render 'slideshow' -%}
+            {%- if settings.enable_animationscroll -%}
+            </div>
+          {% endif %}
+          {{ content_for_layout }}
+          {%- if settings.enable_animationscroll -%}
+          </div>
+        {% endif %}
+      </main>
+    {%- sections 'footer-group' -%}
+     {%- liquid
+      section 'pnewsletter'
+      section 'product-suggest'
+      section 'cookie-policy'
+      section 'custom-color'
+     -%}
+    </div>
+    {%- liquid
+      render 'back-to-top' 
+      render 'whatsapp'
+      render 'menu-mobile' 
+      render 'bottom-contents' 
+      render 'quickview' 
+      render 'popup-compare' 
+      render 'header-js' 
+    -%}
+   
+  </body>
+</html>

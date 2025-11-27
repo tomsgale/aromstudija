@@ -1,0 +1,378 @@
+
+<!-- featured-collection-4.liquid -->
+
+{{ 'component-collection-list.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'collection-list.js' | asset_url }}" defer="defer"></script>
+{%-liquid
+  assign text_color = section.settings.title_color
+  assign height_section = section.settings.height_section
+  assign height_section_mobile = section.settings.height_section_mobile
+  assign size_text = section.settings.size_text
+  assign opacity_bg_overlay = section.settings.opacity_bg_overlay
+  assign bg_overlay = section.settings.bg_overlay
+-%}
+<div class="collection-list{{ section.id }}" data-aos="{{ section.settings.animation }}" style="--g-color-heading : {{ text_color }};--g-collection-op-overlay:{{ opacity_bg_overlay }};--g-collection-bg-overlay:{{ bg_overlay }};">
+    <div class="block-section bgcollection-{{ section.id }}" {%- if section.settings.custom_space != blank -%} style="{{ section.settings.custom_space }};background-color: {{ section.settings.bg_section }}" {%- endif -%}  data-section-id="{{ section.id }}">
+      <div class="block_content bgcollection-wrapper">
+          <collection-list class="colgrid d-flex align-items-center justify-content-center" style="--st-collection-height : {%- if height_section == 'full-screen' -%} calc(100vh - var(--height-announbar) - var(--height-header) - var(--height-announcementbar)) {%- else -%}{{ height_section }}px {%- endif -%};--st-collection-height-mb : {%- if height_section_mobile == 'full-screen' -%} 100vh  {%- else -%}{{ height_section_mobile }}px {%- endif -%};" >
+          <div class="colgrid__bg">
+              {%- for block in section.blocks limit: section.blocks.size -%}
+                {%- if block.settings.image != blank -%}
+                      {%- assign img_url = block.settings.image | image_url: width: 1920 -%}
+                  {%- else -%}
+                      {%- assign img_url = '' -%}
+                  {%- endif -%}
+                <div class=" d-block colgrid__bg--full lazyload {% if forloop.first %} active {% endif %}" {% if block.settings.image != blank %} data-bgset="{% render 'bgset', image: block.settings.image %}"
+                data-sizes="auto" data-src="background-image: url({{ img_url }})" {% endif %} data-index="{{ forloop.index }}"></div>
+                {%- endfor -%}
+            </div>
+            <div class="container" style="position: relative;z-index:1;">
+              <div class="d-flex align-items-center justify-content-center gap-5 flex-wrap colgrid-container">
+                  {%- for block in section.blocks limit: section.blocks.size -%}
+                  {%- liquid
+                    assign title = block.settings.title
+                    assign link = block.settings.link
+                  -%}
+                  <div class="colgrid-col" data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}">
+                      <a class="colgrid__box disabled-anchor {% if forloop.first %} active {% endif %}" {{ block.shopify_attributes }}  href="{%- if link != blank -%}{{ link }}{%- else -%}#{%- endif -%}" data-index="{{ forloop.index }}">
+                        <div class="d-flex align-items-start flex-column h-100 colgrid__boxtop">
+                          <h3 class="colgrid__box--tit mb-0 {{ size_text }}">
+                            {%- if title != blank -%}
+                                {{ title }}
+                            {%- else -%}
+                              {{ 'homepage.onboarding.collection_title' | t }}
+                            {%- endif -%}
+                            </h3>
+                        </div>
+                      </a>
+                  </div>
+                  {%- endfor -%}
+              </div>
+            </div>
+          </collection-list>
+      </div>
+    </div>
+</div>
+<script>
+ 
+</script>
+
+{% schema %}
+{
+  "name": "Collection Bg Hover",
+  "class": "index-section",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+      "label": "Background Section",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "bg_overlay",
+      "label": "Background Overlay",
+      "default": "#000"
+    },
+    {
+      "type": "range",
+      "id": "opacity_bg_overlay",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "label": "Opacity Overlay",
+      "default": 0.1
+    },
+    {
+      "type": "select",
+      "id": "height_section",
+      "label": "Height Section",
+      "default": "550",
+      "options": [
+        {
+          "label": "450px",
+          "value": "450"
+        },
+        {
+          "label": "550px",
+          "value": "550"
+        },
+        {
+          "label": "650px",
+          "value": "650"
+        },
+        {
+          "label": "750px",
+          "value": "750"
+        },
+        {
+          "label": "Full Screen",
+          "value": "full-screen"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "height_section_mobile",
+      "label": "Height Section Mobile",
+      "default": "450",
+      "options": [
+        {
+          "label": "350px",
+          "value": "350"
+        },
+        {
+          "label": "450px",
+          "value": "450"
+        },
+        {
+          "label": "550px",
+          "value": "550"
+        },
+        {
+          "label": "650px",
+          "value": "650"
+        },
+        {
+          "label": "Full Screen",
+          "value": "full-screen"
+        }
+      ]
+    },
+    {
+          "type": "select",
+          "id": "size_text",
+          "default": "h2",
+          "options": [
+            {
+              "value": "h1",
+              "label": "H1"
+            },
+            {
+              "value": "h2",
+              "label": "H2"
+            },
+            {
+              "value": "h3",
+              "label": "H3"
+            },
+            {
+              "value": "h4",
+              "label": "H4"
+            },
+            {
+              "value": "h5",
+              "label": "H5"
+            },
+            {
+              "value": "h6",
+              "label": "H6"
+            }
+          ],
+          "label": "Heading Size"
+        },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "label": "Title",
+          "id": "title",
+          "type": "text"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Bg Hover",
+      "category": "Collection",
+      "blocks": [
+        {
+          "type": "item"
+        },
+        {
+          "type": "item"
+        },
+        {
+          "type": "item"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

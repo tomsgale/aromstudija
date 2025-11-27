@@ -1,0 +1,742 @@
+<!-- grid-banner.liquid -->
+
+<style>
+  .customstyle{{ section.id }}{
+    --g-gutter:{{ section.settings.gutter_padding }}px;
+    --g-hgutter: {{ section.settings.gutter_padding | divided_by: 2 }}px;
+  }
+  {%- if section.settings.show_overlay %}
+    {% assign hex2rgb_hex = section.settings.bg_overlay %}
+    .customstyle{{ section.id }} .banner-theme .banner-overlay{
+      position: absolute;
+      top:0;
+      right:0;
+      bottom:0;
+      left: 0;
+      {%- if section.settings.gradient_overlay -%}
+        background:linear-gradient(180deg, rgb({{ hex2rgb_hex.red }}, {{ hex2rgb_hex.green }}, {{ hex2rgb_hex.blue }}, 0) 0%, rgb({{ hex2rgb_hex.red }}, {{ hex2rgb_hex.green }}, {{ hex2rgb_hex.blue }},{{ section.settings.opacity_overlay }}) 100%);
+      {%- else -%}
+        background-color: rgb({{ hex2rgb_hex.red }}, {{ hex2rgb_hex.green }}, {{ hex2rgb_hex.blue }}, {{ section.settings.opacity_overlay }});
+      {%- endif -%}
+      opacity: 1;
+      z-index: 1;
+    }
+  {%- endif -%}
+</style>
+
+<div class="customstyle{{ section.id }}" data-aos="{{ section.settings.animation }}" >
+  {%- render 'style-section' -%}
+<div class="{{ section.settings.setwidth }}">
+  <div class="section-block">
+    {%- render 'section-heading' -%}
+    <div class="row gap-desktop {% if section.settings.no_gutter %}no-gutters{% endif %}">
+      {%- for block in section.blocks -%}
+        {%- liquid 
+            assign text_color = block.settings.colordef
+            assign enable_height_banner = block.settings.enable_height_banner
+            assign banner_height = block.settings.promo_banner_height
+            assign banner_height_mobile = block.settings.promo_banner_height_mobile
+        -%}
+
+      <div class="col-md-{{ block.settings.width }}" {{ block.shopify_attributes }} data-aos="{{ section.settings.animation }}" data-aos-delay="{{ forloop.index | times: 100 }}">
+        <figure class="m-0 banner-theme hv-image-saturate banner-theme-{{ block.settings.vertical }} banner-theme-{{ block.settings.horizontal }} text-{{ block.settings.text_align }} {% if section.settings.no_gutter %}m-0{% endif %} banner-theme-{{ block.id }}"
+        style="{% if text_color != 'transparent' %}--g-font-color-subtop: {{ text_color }};--g-color-heading :  {{ text_color }};--color-body-text : {{ text_color }};--color-body-text-rgb: {{ text_color.red }}, {{ text_color.green }},  {{ text_color.blue }} ;{% endif %} --g-figcaption-des: {{ block.settings.bg_color }};--g-figcaption-op: {{ block.settings.opacity_bg }};">
+          {%- if block.settings.image != blank -%}
+          <div class="img-grid-banner image-content__image-container overflow-hidden {% if block.settings.image_mobile != blank %} d-none d-lg-block {% endif %} ">
+            <div class="image-content__image-wrapper" 
+            style="{%- if enable_height_banner -%} --or-height-banner:{{ banner_height }}px;--or-height-banner_mobile:{{ banner_height_mobile }}px;{%- else -%}padding-top:{{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100 }}%;{%- endif -%}">
+                  <img
+                    srcset="
+                      {%- if block.settings.image.width >= 165 -%}{{ block.settings.image | image_url: width: 165 }} 165w,{%- endif -%}
+                      {%- if block.settings.image.width >= 360 -%}{{ block.settings.image | image_url: width: 360 }} 360w,{%- endif -%}
+                      {%- if block.settings.image.width >= 533 -%}{{ block.settings.image | image_url: width: 533 }} 533w,{%- endif -%}
+                      {%- if block.settings.image.width >= 720 -%}{{ block.settings.image | image_url: width: 720 }} 720w,{%- endif -%}
+                      {%- if block.settings.image.width >= 940 -%}{{ block.settings.image | image_url: width: 940 }} 940w,{%- endif -%}
+                      {%- if block.settings.image.width >= 1066 -%}{{ block.settings.image | image_url: width: 1066 }} 1066w,{%- endif -%}
+                      {{ block.settings.image | image_url }} {{ block.settings.image.width }}w
+                    "
+                    src="{{ block.settings.image | image_url: width: 1066 }}"
+                    sizes="(min-width: {{ settings.container }}px) {{ settings.container | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
+                    alt="{{ block.settings.image.alt | escape }}"
+                    class="image-content__image scale-in lazyload transition"
+                    data-sizes="auto"
+                    data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+                    loading="lazy"
+                    width="{{ block.settings.image.width }}"
+                    height="{{ block.settings.image.height }}"
+                  >
+                {% if block.settings.enable_video %}
+                  {%- liquid
+                    assign video = block.settings.video_hosted
+                    assign autoplay = true
+                  -%}
+                  <div class="video-banner" data-provider="hosted" >
+                    {% comment %} {{ video | video_tag: autoplay: autoplay, loop: true, controls: false, muted: true }} {% endcomment %}
+                    <video playsinline="playsinline" autoplay="{{ autoplay }}" loop="loop" muted="muted" preload="metadata" poster="{{ block.settings.image | image_url: width: 1066 }}">
+                      <source src="{{ video }}" type="video/mp4">
+                    </video>
+                  </div>
+                {% endif %}
+            </div>
+          </div>
+          {%- if block.settings.image_mobile != blank -%}
+          <div class="image-content__image-container overflow-hidden {% if block.settings.image_mobile != blank %} d-lg-none {% endif %} ">
+            <div class="image-content__image-wrapper" 
+            style="padding-top:{{ 1 | divided_by: block.settings.image_mobile.aspect_ratio | times: 100 }}%;">
+              {% assign img_url = block.settings.image_mobile | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
+                <img class="image-content__image scale-in lazyload transition"
+                  src="{{ block.settings.image_mobile | image_url: width: 1, height: 1 }}"
+                  data-src="{{ img_url }}"
+                  data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                  data-aspectratio="{{ block.settings.image_mobile.aspect_ratio }}"
+                  data-sizes="auto"
+                  alt="{{ block.settings.image_mobile.alt | escape }}"
+                  loading="lazy"
+                  width="{{ block.settings.image_mobile.width }}"
+                  height="{{ block.settings.image_mobile.height }}">
+            </div>
+          </div>
+          {%- endif -%}
+          
+          <a class="banner-overlay" href="{{ block.settings.button_link | default: "#" }}"></a>
+          {%- else -%}
+          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+          <figcaption class="figcaption--{{ block.id }}">
+              <div class="position-relative">
+                <div class="bg-des"></div>
+                <div class="position-relative {% if block.settings.opacity_bg > 0 %} p-4 {% endif %}" style="z-index: 3;">
+                  {%- if block.settings.subtitle != blank -%}
+                    <div class="subtop mb-3">{{ block.settings.subtitle }}</div>
+                  {%- endif -%}
+                  {%- if block.settings.title != blank -%}
+                <h3 class="{{ block.settings.space_heading }} {{ block.settings.size_text }} ">{{ block.settings.title }}</h3>
+                  {%- endif -%}
+                  {%- if block.settings.description != blank -%}
+                    <div class="rte-setting mb-4 txt-body">{{ block.settings.description }}</div>
+                  {%- endif -%}
+                  {%- if block.settings.button_text != blank -%}
+                    <div class="pt-1">
+                      <a href="{{ block.settings.button_link }}" class="btn {{ block.settings.style_btn }} ">
+                        {{ block.settings.button_text }}
+                      </a>
+                    </div>
+                    {%- endif -%}
+                </div>
+              </div>
+          </figcaption>		
+        </figure>
+      </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+</div>
+
+{% schema %}
+{
+  "name": "Grid banner",
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+      "label": "Background Section",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "title_top",
+      "label": "Sub Title Top",
+      "default": "Sub Title Top"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Grid banner"
+    },
+    {
+      "type": "textarea",
+      "id": "des",
+      "label": "HTML / Description"
+    },
+    {
+      "type": "select",
+      "id": "align-heading",
+      "label": "Align Heading",
+      "default": "center",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "no_gutter",
+      "label": "No gutters",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "gutter_padding",
+      "label": "Spacing Column",
+      "max": 40,
+      "min": 0,
+      "step": 1,
+      "unit": " px",
+      "default": 30
+    },
+    {
+      "type": "checkbox",
+      "id": "show_overlay",
+      "label": "Show overlay",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "gradient_overlay",
+      "label": "Gradient overlay",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "bg_overlay",
+      "label": "Background Overlay",
+      "default": "#000"
+    },
+    {
+      "type": "range",
+      "id": "opacity_overlay",
+      "label": "Opacity Overlay",
+      "max": 1,
+      "min": 0,
+      "step": 0.1,
+      "unit": " op",
+      "default": 0.4
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "banner",
+      "name": "Banner",
+      "settings": [
+        {
+          "type": "select",
+          "id": "width",
+          "label": "Width",
+          "default": "4",
+          "options": [
+            {
+              "value": "2",
+              "label": "16.67%"
+            },
+            {
+              "value": "3",
+              "label": "25%"
+            },
+            {
+              "value": "4",
+              "label": "33.33%"
+            },
+            {
+              "value": "5",
+              "label": "41.67%"
+            },
+            {
+              "value": "6",
+              "label": "50%"
+            },
+            {
+              "value": "7",
+              "label": "58.33%"
+            },
+            {
+              "value": "8",
+              "label": "66.67%"
+            },
+            {
+              "value": "9",
+              "label": "75%"
+            },
+            {
+              "value": "10",
+              "label": "83.33%"
+            },
+            {
+              "value": "12",
+              "label": "100%"
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "Height Banner"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_height_banner",
+          "label": "Enable Height Banner",
+          "default": false,
+          "info": "If disable height banner Image is height auto"
+        },
+        {
+          "type": "range",
+          "id": "promo_banner_height",
+          "min": 200,
+          "max": 800,
+          "step": 10,
+          "unit": "px",
+          "label": "Height Banner",
+          "default": 520
+        },
+        {
+          "type": "range",
+          "id": "promo_banner_height_mobile",
+          "min": 200,
+          "max": 800,
+          "step": 10,
+          "unit": "px",
+          "label": "Height Banner Mobile",
+          "default": 400
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "header",
+          "content": "Banner"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Image Mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_video",
+          "label": "Enable Video",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "video_hosted",
+          "label": "Video Banner",
+          "info":"Need to enable height banner and has image for desktop"
+        },
+        {
+          "type": "header",
+          "content": "Text"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Sub Title",
+          "default": "Sub Title"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Image with text"
+        },
+        {
+          "type": "select",
+          "id": "size_text",
+          "default": "h2",
+          "options": [
+            {
+              "value": "h2",
+              "label": "H2"
+            },
+            {
+              "value": "h3",
+              "label": "H3"
+            },
+            {
+              "value": "h4",
+              "label": "H4"
+            },
+            {
+              "value": "h5",
+              "label": "H5"
+            },
+            {
+              "value": "h6",
+              "label": "H6"
+            }
+          ],
+          "label": "Heading Size"
+        },
+        {
+          "type": "select",
+          "id": "space_heading",
+          "default": "mb-2",
+          "options": [
+            {
+              "value": "mb-0",
+              "label": "0"
+            },
+            {
+              "value": "mb-1",
+              "label": "1"
+            },
+            {
+              "value": "mb-2",
+              "label": "2"
+            },
+            {
+              "value": "mb-3",
+              "label": "3"
+            },
+            {
+              "value": "mb-4",
+              "label": "4"
+            },
+            {
+              "value": "mb-5",
+              "label": "5"
+            }
+          ],
+          "label": "Heading Space"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "HTML / Description",
+          "default": "<p>Lorem ipsum dolor sit amet</p>"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Background Description",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "colordef",
+          "label": "Color Description ",
+          "default": "#ffffff"
+        },
+        {
+          "type": "range",
+          "id": "opacity_bg",
+          "min": 0,
+          "max": 1,
+          "step": 0.1,
+          "unit": "opa",
+          "label": "Opacity Background",
+          "default": 0
+        },
+        {
+          "type": "select",
+          "id": "style_btn",
+          "label": "Style Button",
+          "default": "btn-underline btn-underline-white",
+          "options": [
+            {
+              "value": "btn-theme",
+              "label": "Button Box"
+            },
+            {
+              "value": "btn-theme btn-white",
+              "label": "Button Box White"
+            },
+            {
+              "value": "btn-underline",
+              "label": "Button Line"
+            },
+            {
+              "value": "btn-underline btn-underline-white",
+              "label": "Button Line White"
+            },
+            {
+              "value": "btn-outline",
+              "label": "Button Outline"
+            },
+            {
+              "value": "btn-outline btn-outline-white",
+              "label": "Button Outline White"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "View more"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        },
+        {
+          "type": "select",
+          "id": "vertical",
+          "label": "Vertical align",
+          "default": "bottom",
+          "options": [
+            {
+              "value": "top",
+              "label": "Top"
+            },
+            {
+              "value": "mid",
+              "label": "Mid"
+            },
+            {
+              "value": "bottom",
+              "label": "Bottom"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "horizontal",
+          "label": "Horizontal align",
+          "default": "center",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "text_align",
+          "label": "Text align",
+          "default": "center",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Grid banner",
+      "category": "Image",
+      "blocks": [
+        {
+          "type": "banner"
+        },
+        {
+          "type": "banner"
+        },
+        {
+          "type": "banner"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

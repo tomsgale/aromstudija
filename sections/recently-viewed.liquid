@@ -1,0 +1,335 @@
+{%- if section.settings.enable -%}
+<style>
+  .section-productsviewed h3{
+    font-weight: var(--g-h3-font-weight);
+    font-size: var(--g-h3-font-size);
+    line-height: var(--g-h3-font-lineheight);
+    letter-spacing: var(--g-h3-font-spacing);
+    text-transform:var(--g-h3-font-transform);
+  }
+  .productsviewed-grid{
+    display: grid;
+    grid-template-columns: repeat(var(--g-view-limit),1fr);
+    gap:var(--g-gutter);
+  }
+  @media(max-width:749px){
+    .productsviewed-grid{
+        grid-template-columns: repeat(2,1fr);
+    }
+    .section-productsviewed h3{
+      font-size: var(--g-h3-font-size-mobile);
+    }
+  }
+</style>
+{%- render 'style-section' -%}  
+<div class="customstyle{{ section.id }}" data-aos="{{ section.settings.animation }}" >
+  <recently-productsviewed section-id="{{ section.id }}" products-count="{{ section.settings.limit }}" class="d-block section-productsviewed" style="--g-view-limit:{{ section.settings.limit }}">
+    <div class="{{ section.settings.setwidth }}">
+      {%- render 'section-heading' -%}
+              <div class="productsviewed-grid">
+                {%- for product in predictive_search.resources.products -%}
+                  <div class="productsviewed-grid__item" data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}">
+                  {%- render 'product-card', product: product -%}
+                </div> 
+                {% endfor %}
+                
+        </div>
+    </div>
+  </recently-productsviewed>
+</div>
+
+<script>
+  class RecentlyViewedProducts extends HTMLElement {
+    constructor() {
+        super();
+        this.intersectionObserver = new IntersectionObserver(this.handleIntersection.bind(this), { threshold: 0.5 });
+    }
+
+    connectedCallback() {
+        this.intersectionObserver.observe(this);
+    }
+
+    async handleIntersection(entries, observer) {
+        entries.forEach(async entry => {
+            if (entry.isIntersecting) {
+                observer.unobserve(entry.target);
+                const searchQuery = this.generateSearchQuery();
+                if (!searchQuery) return;
+
+                try {
+                    const response = await fetch(`${window.routes.stSearchUrl}?q=${searchQuery}&resources[limit]=10&resources[type]=product&section_id=${this.sectionId}`);
+                    const html = await response.text();
+                    const parsedHtml = document.createElement("div");
+                    parsedHtml.innerHTML = html;
+                    const recentlyViewedProductsElement = parsedHtml.querySelector("recently-productsviewed");
+                    if (recentlyViewedProductsElement && recentlyViewedProductsElement.hasChildNodes()) {
+                        this.innerHTML = recentlyViewedProductsElement.innerHTML;
+                        AOS.init();
+                    }
+                } catch (error) {
+                    console.error("Error fetching recently viewed products:", error);
+                }
+            }
+        });
+    }
+
+    generateSearchQuery() {
+        const recentlyViewedItems = JSON.parse(localStorage.getItem("recentlyviewed") || "[]");
+        if (this.hasAttribute("exclude-product-id") && recentlyViewedItems.includes(parseInt(this.getAttribute("exclude-product-id")))) {
+            recentlyViewedItems.splice(recentlyViewedItems.indexOf(parseInt(this.getAttribute("exclude-product-id"))), 1);
+        }
+        return recentlyViewedItems.slice(0, this.productsCount).map(productId => "id:" + productId).join(" OR ");
+    }
+
+    get sectionId() {
+        return this.getAttribute("section-id");
+    }
+
+    get productsCount() {
+        return this.getAttribute("products-count") || 4;
+    }
+} 
+
+window.customElements.define("recently-productsviewed", RecentlyViewedProducts);
+
+  </script>
+  {%- endif -%}
+
+{% schema %}
+{
+  "name": "Recently Viewed",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable",
+      "label": "Enable",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Text Heading"
+    },
+    {
+      "type": "text",
+      "id": "title_top",
+      "label": "Sub Title Top",
+      "default": "Sub Title Top"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Recently viewed"
+    },
+    {
+      "type": "textarea",
+      "id": "des",
+      "label": "HTML / Description"
+    },
+    {
+      "type": "select",
+      "id": "align-heading",
+      "label": "Align Heading",
+      "default": "center",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "label": "Limit",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ]
+}
+{% endschema %}

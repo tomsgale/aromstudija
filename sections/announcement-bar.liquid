@@ -1,0 +1,549 @@
+{%- if section.settings.enable -%}
+{%-liquid
+    assign text_topbar = section.settings.text_topbar
+    assign enable_login_topbar = section.settings.enable_login_topbar
+    assign enable_money_topbar = section.settings.enable_money_topbar
+    assign enable_language_topbar = section.settings.enable_language_topbar
+    assign enable_social_topbar = section.settings.enable_social_topbar
+    assign buttonall_topbar = section.settings.buttonall_topbar
+    assign buttonall_link_topbar = section.settings.buttonall_link_topbar
+    assign enable_name = section.settings.enable_name
+    assign enable_image = section.settings.enable_image
+    assign gradient_bg = section.settings.gradient_bg
+    assign background = section.settings.background
+    assign text_color = section.settings.text_color
+    assign font_size_topbar = section.settings.font_size_topbar
+
+    assign enable_countdown = section.settings.enable_countdown
+    assign text_countdown = section.settings.text_countdown
+
+    assign topbar_phone = section.settings.topbar_phone
+    assign topbar_email = section.settings.topbar_email
+    assign topbar_store = section.settings.topbar_store
+    assign topbar_store_link = section.settings.topbar_store_link
+    assign topbar_appointment = section.settings.topbar_appointment
+    assign topbar_page_appointment = section.settings.topbar_page_appointment
+    assign enable_block_link = section.settings.enable_block_link
+
+-%}
+<style>
+    .announcement-bar{
+    padding: 0.6rem 0;
+    background:{%- if gradient_bg != blank -%} {{ gradient_bg }} {%- else -%} {{ background }} {%- endif -%};
+    }
+    #announcement-topbar{
+        {% if text_color != 'transparent' and text_color != 'rgba(0,0,0,0)' %}
+        --color-body-text : {{ text_color }};
+        --color-body-text-rgb: {{ text_color.red }}, {{ text_color.green }},  {{ text_color.blue }} ;
+      {% endif %}
+      --g-font-size : {{ font_size_topbar }}px;
+      color:var(--color-body-text);
+      font-size:var(--g-font-size);
+    }
+    #announcement-topbar .list-inline-item:not(:last-child){
+        margin-right: 1.5rem;
+    }
+    #announcement-topbar .social-icons li a{
+        color:var(--color-body-text);
+    }
+    #announcement-topbar .site-header__link{
+        color:var(--color-body-text);
+    }
+    #announcement-topbar #HeaderCountryForm .localization-form__select,  
+    #announcement-topbar #HeaderLanguageForm .localization-form__select{
+        color:var(--color-body-text);
+        font-size: var(--g-font-size);
+        font-weight: var(--g-font-weight-body);
+        text-transform:inherit;
+        letter-spacing:0;
+    }
+    #announcement-topbar .col-right .topbar-block{
+        padding-right: 2.5rem;
+    }
+    #announcement-topbar .col-right .topbar-block:last-child{
+        padding-right: 0rem;
+    }
+    #announcement-topbar .disclosure__list-wrapper{
+        z-index: 9999;
+        --color-body-text-rgb: {{ settings.color_body_text.red }}, {{ settings.color_body_text.green }}, {{ settings.color_body_text.blue }};
+    }
+    #announcement-topbar .link {
+    color: rgba(var(--color-body-text-rgb),1);
+    text-decoration-color: rgba(var(--color-body-text-rgb),1);
+    }
+    .announcement-bar .countdown-timer{
+    line-height:1;
+  }
+  .announcement-bar .countdown-timer ul{
+    display:flex;
+    column-gap:16px;
+  }
+  .announcement-bar .countdown-timer li{
+    text-align:center;
+    position:relative;
+    padding:0;
+  }
+  .announcement-bar .countdown-timer li:not(:last-child):before{
+  content:":";
+  position:absolute;
+  top:0;
+  right:-8px;
+  }
+    .announcement-bar .countdown-timer .countdown-time{
+      display:block;
+      text-align:center;
+      font-weight:500;
+      font-size: var(--g-font-size);
+      min-width: fit-content;
+    }
+    .announcement-bar .countdown-text{
+    font-size: 65% !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    }
+</style>
+
+
+<announcement-bar >
+  <div class="announcement-bar" data-aos="{{ section.settings.animation }}">
+    <div class="{{ section.settings.setwidth }}">
+        <div id="announcement-topbar">
+            <div class="row align-items-center">
+                
+                <div class="col-4 d-none d-lg-flex gap-4">
+                  {%- if enable_social_topbar -%}
+                    <div class="topbar-block">
+                    {%- render 'block-social' -%}
+                    </div>
+                  {%- endif -%}
+                  {%- if enable_block_link -%}
+                    {% if topbar_phone != blank %}
+                      <div class="d-flex">
+                        <a href="tel:{{ topbar_phone | strip }}"class="d-inline-flex align-items-center">
+                          {% render 'icon-mobile-phone' %}
+                          <span class="pl-2">{{ topbar_phone }}</span>
+                        </a>
+                      </div>
+                    {% endif %}
+                    {% if topbar_email != blank %}
+                      <div class="d-flex">
+                        <a href="mailto:{{ topbar_email }}"  class="d-inline-flex align-items-center">
+                          {% render 'icon-email' %}
+                          <span class="pl-2">{{ topbar_email }}</span>
+                        </a>
+                      </div>
+                    {% endif %}
+                    {% if topbar_store != blank %}
+                      <div class="d-flex">
+                        <a href="{{ topbar_store_link | default:"/pages/store" }}" class="d-inline-flex align-items-center">
+                          {% render 'icon-location' %}
+                          <span class="pl-2">{{ topbar_store }}</span>
+                        </a>
+                      </div>
+                    {% endif %}
+                    {% if topbar_appointment != blank %}
+                      <div class="d-flex">
+                        <a href="{{ topbar_page_appointment | default:"/pages/appointment" }}" class="d-inline-flex align-items-center">
+                          {% render 'icon-calendar' %}
+                          <span class="pl-2">{{ topbar_appointment }}</span>
+                        </a>
+                      </div>
+                    {% endif %}
+                  {%- endif -%}
+                  
+                  
+                </div>
+                
+                {%- if text_topbar != blank -%}
+                <div class="col-lg-4 col-left col-12">
+                <div class="text-center w-100 d-flex gap-2 justify-content-center text-body">
+                    {{ text_topbar }}
+                    {%- if buttonall_topbar != blank -%}
+                    <a href="{{ buttonall_link_topbar }}" class="link">
+                    {{ buttonall_topbar }}
+                    </a>
+                {%- endif -%}
+                </div>
+                </div>
+                {%- endif -%}
+                <div class="col-4 col-right text-right d-none d-lg-flex justify-content-end">
+                  {%- if enable_countdown -%}
+                  <div class="topbar-block d-flex">
+                  {% if text_countdown != blank %}
+                      <span class="mr-3"> {{ text_countdown }}</span>
+                    {% endif %}
+                    <countdown-timer class="countdown-timer countdown-item" data-time="{{ section.settings.data_countdown }}"></countdown-timer>  
+                 
+                  </div>
+                {%- endif -%}
+                  {% if enable_login_topbar %}
+                    {% if shop.customer_accounts_optional or shop.customer_accounts_enabled %}
+                    {% if customer %}
+                    <div class="header--acount d-none d-lg-inline-block topbar-block">
+                        <a href="/account"  title="{{ 'customer.account.title' | t }}"  class="site-header__link site-account ">
+                        <span class="account-text">{{ 'customer.account.title' | t }}</span>
+                        </a> | 
+                        <a href="/account/logout" title="{{ 'layout.customer.log_out' | t }}"  class="site-header__link site-logout ">
+                        <span class="logout-text">{{ 'layout.customer.log_out' | t }}</span>
+                        </a>
+                    </div>
+                    {% else %}
+                    {% if template != 'customers/login' %} {% comment DOES NOT APPEAR ON LOGIN PAGE - AVOID CONFLICT %} {% endcomment %}
+                    <div class="header--acount d-none d-lg-inline-block topbar-block pr-3" >
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#jsLogin" class="site-header__link site-account js-open-login pr-2">
+                        <span class="account-text">{{ 'customer.login.sign_in' | t }}</span>
+                        </a>  / 
+                        <a href="/account/register" class="site-header__link site-register pl-2">
+                        <span class="register-text">{{ 'customer.register.title' | t }}</span>
+                        </a>
+                    </div>
+                    {% endif %}
+                    {% endif %}
+                    {% endif %}  
+                    {% endif %}
+                {%- if enable_money_topbar and localization.available_countries.size > 1 -%}
+                    <div class="d-none d-sm-flex topbar-block text-left align-items-center">
+                    {% render 'localization', id: 'HeaderCountryForm', margin: 'topbar' , enable_image: enable_image, enable_name : enable_name %}
+                    </div>
+                {%- endif -%}
+                {%- if enable_language_topbar and localization.available_languages.size > 1 -%}
+                    <div class="d-none d-sm-flex topbar-block text-left align-items-center">
+                    {% render 'localization-language', id: 'HeaderLanguageForm', margin: 'topbar' , enable_name: enable_name %}
+                </div>
+                {%- endif -%}
+                
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</announcement-bar>
+<script>
+    class AnnouncementBar extends HTMLElement {
+      constructor() {
+        super();
+      }
+      connectedCallback() {
+        var rootElement = document.querySelector(':root');
+        rootElement.style.setProperty("--height-announcementbar", this.offsetHeight + "px");
+      }
+    }
+    customElements.define('announcement-bar', AnnouncementBar);
+    
+</script>
+{%- endif -%}
+{% schema %}
+
+{
+  "name": "Top Bar ",
+  "class":"header-announcement",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable",
+      "label": "Enable",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Color",
+      "info": "Background, Color"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#000000"
+    },
+    {
+      "id": "gradient_bg",
+      "type": "color_background",
+      "label": "Background Gradient"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Config"
+    },
+    {
+        "type": "range",
+        "id": "font_size_topbar",
+        "min": 10,
+        "max": 20,
+        "step": 1,
+        "unit": "px",
+        "label": "Font Size",
+        "default": 14
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_image",
+      "label": "Enable Image Currency",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_name",
+      "label": "Enable Country Name",
+      "default": true
+    },
+    {
+          "type": "checkbox",
+          "id": "enable_money_topbar",
+          "label": "Enable Currencies Topbar",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_language_topbar",
+          "label": "Enable Language Topbar",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_social_topbar",
+          "label": "Enable Social Topbar",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_login_topbar",
+          "label": "Enable Login Topbar",
+          "default": true
+        },
+       
+        {
+          "type": "header",
+          "content": "Text Middle"
+        },
+        {
+          "type": "textarea",
+          "id": "text_topbar",
+          "label": "Text on Topbar"
+        },
+        {
+          "type": "text",
+          "id": "buttonall_topbar",
+          "label": "Button" 
+        },
+        {
+          "type": "url",
+          "id": "buttonall_link_topbar",
+          "label": "Button Link"
+        },
+        
+        {
+          "type": "header",
+          "content": "Left Column"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_block_link",
+          "label": "Enable Block Link",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "topbar_phone",
+          "label": "Mobile Phone",
+          "default": "+012345678"
+        },
+        {
+          "type": "text",
+          "id": "topbar_email",
+          "label": "Mobile Email",
+          "default": "mailsupport@gmail.com"
+        },
+        {
+          "type": "text",
+          "id": "topbar_store",
+          "label": "Name Store",
+          "default": "Store"
+        },
+        {
+          "type": "url",
+          "id": "topbar_store_link",
+          "label": "Link Store Page"
+        },
+        {
+          "type": "text",
+          "id": "topbar_appointment",
+          "label": "Virtual Appointment",
+          "default": "Virtual Appointment"
+        },
+        {
+          "type": "url",
+          "id": "topbar_page_appointment",
+          "label": "Link Appointment Page"
+        },
+        {
+          "type": "header",
+          "content": "Right Column"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_countdown",
+          "label": "Enable CountDown",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "text_countdown",
+          "label": "Text Countdown",
+          "default": "Ends in"
+        },
+        {
+          "type": "text",
+          "id": "data_countdown",
+          "label": "Time count down",
+          "default": "2025-05-11T00:00:00",
+          "info": "2025-05-11T00:00:00"
+        }
+  ]
+  
+}
+{% endschema %}

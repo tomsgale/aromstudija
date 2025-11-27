@@ -1,0 +1,37 @@
+{% if shop.customer_accounts_optional or shop.customer_accounts_enabled %}
+  {% liquid
+    assign icon_login = section.settings.icon_login
+    assign e_link_login  =  section.settings.e_link_login
+    case icon_login
+    when 'text'
+      assign styleLogin = 'text'
+    when 'icon-text'
+      assign styleLogin = 'icon-text'
+    else
+      assign styleLogin = 'icon'
+    endcase
+  %}
+    {% if customer %}
+    <div class="header--acount d-none d-lg-flex topbar-block">
+      <a href="{{ routes.account_url }}" class="site-header__link site-account">
+        {%- render 'icon-user' -%}
+      </a>
+    </div>
+    {% else %}
+    {% if template != 'customers/login' %} {% comment DOES NOT APPEAR ON LOGIN PAGE - AVOID CONFLICT %} {% endcomment %}
+    <div class="header--acount d-none d-lg-inline-block topbar-block header-login-{{ styleLogin }}" >
+      {%- if e_link_login == 'popup' -%}
+      <button aria-label="login" data-toggle="modal" data-target="#jsLogin" class="btn site-header__link site-account js-open-login">
+        {%- render 'icon-user' -%}
+        <span class="account-text">{{ 'customer.login.sign_in' | t }}</span>
+      </button> 
+      {%- else -%}
+      <a href="{{ routes.account_login_url }}" class=" site-header__link site-account">
+        {%- render 'icon-user' -%}
+        <span class="account-text">{{ 'customer.login.sign_in' | t }}</span>
+      </a> 
+      {%- endif -%}
+    </div>
+    {% endif %}
+    {% endif %}
+    {% endif %}  

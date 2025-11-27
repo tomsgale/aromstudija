@@ -1,0 +1,627 @@
+<!-- quotes-special.liquid -->
+{%-liquid
+  assign image_size = section.settings.image_size
+  assign paddingTop = ''
+  case image_size
+    when 'portrait'
+    assign paddingTop = '120%'
+    when 'square'
+    assign paddingTop = '100%'
+    when 'landscape'
+    assign paddingTop = '75%'
+    when 'wide'
+    assign paddingTop = '56%'
+  endcase
+-%}
+{% style %}
+  .customstyle{{ section.id }}{
+    --g-padding-s-top: {{ paddingTop }} ;
+  }
+  .customstyle{{ section.id }} .rating li svg{
+    fill: {{ section.settings.color_rate }};
+  }
+  .customstyle{{ section.id }} .rating li.rated svg{
+    fill: {{ section.settings.color_rated }};
+  }
+  .author-right .image-content__image-wrapper.portrait{
+    padding-top: var(--g-padding-s-top) !important;
+    overflow: hidden;
+  }
+  .author-right .image-content__image-wrapper.square{
+    padding-top: var(--g-padding-s-top) !important;
+    overflow: hidden;
+  }
+  .author-right .image-content__image-wrapper.landscape{
+    padding-top: var(--g-padding-s-top) !important;
+    overflow: hidden;
+  }
+  .author-right .image-content__image-wrapper.wide{
+    padding-top: var(--g-padding-s-top) !important;
+    overflow: hidden;
+  }
+  .author-right .image-content__image-wrapper.portrait img,.author-right .image-content__image-wrapper.square img,.author-right .image-content__image-wrapper.landscape img,.author-right .image-content__image-wrapper.wide img{
+    height: 100%;
+    object-fit: cover;
+  }
+  .quote-product-item{
+    position:absolute;
+    bottom:1rem;
+    left:1rem;
+    max-width:300px;
+  }
+  .quote-product-item .product-card{
+    display:flex;
+    padding:1rem;
+  }
+  .quote-product-item .product-card__image-wr{
+    width: 72px;
+    flex: 0 0 72px;
+    margin-right: 1.5rem;
+  }
+  .quote-product-item .product-card__info{
+    padding: 0!important;
+    margin-bottom: 0;
+  }
+  .product-dark.quote-product-item .product-card{
+    background:rgba(var(--g-color-heading-rgb),0.3);
+    transition:background 0.3s ease;
+  }
+  .product-dark.quote-product-item .product-card:hover{
+    background:rgba(var(--g-color-heading-rgb),0.4);
+  }
+  .product-dark.quote-product-item .product-card__info{
+    background:transparent;
+  }
+  .product-dark .product-card__info{
+    --g-color-heading:white;
+    --g-color-heading-rgb:255,255,255;
+    --color-body-text-rgb:255,255,255;
+  }
+  .product-dark .product-card__price{
+    color: rgba(var(--color-body-text-rgb),1);
+  }
+  .product-dark .js-btn-quickview{
+    color: rgba(var(--color-body-text-rgb),1);
+    text-decoration-color: rgba(var(--color-body-text-rgb),1);
+  }
+{% endstyle %}
+{%- render 'style-section' -%}
+<div class="customstyle{{ section.id }} ">
+  <div class="{{ section.settings.setwidth }}">
+    <div class="section-block">
+      {%- render 'section-heading' -%}
+      {%- if section.blocks.size > 0 -%}
+      <div class="quotes-wrapper dots-negative quotes-2" > 
+        <div class="quotes-slider row" id="Quotes-{{ section.id }}" 
+             data-rows="{{ section.settings.rows }}"
+             data-slidesToShow="1"
+             data-slidestoscroll="1"
+             data-arrows="{{ section.settings.arrows }}"
+             data-dots="{{ section.settings.dots }}" 
+             data-draggable="{{ section.settings.draggable }}" 
+             data-infinite="{{ section.settings.infinite }}" 
+             data-section-id="{{ section.id }}" 
+             data-section-type="slickCarousels">
+          {%- for block in section.blocks -%}
+          <div class="quote__slide-wrapper carousel__slide-wrapper--{{ block.id }}" {{ block.shopify_attributes }}>
+            <div class="quote__slide">
+              <div class="quote-wrap row">
+                <div class="col-12 col-md-6" data-aos="{{ section.settings.animation }}" data-aos-duration="500">
+                    <div class="pb-5 px-3 px-lg-0">
+                    {%- if block.settings.title != blank -%}
+                        <div class="subtop pb-3">
+                        {{ block.settings.title }}
+                        </div>
+                        {%- endif -%}
+                        <div class="pt-3 pb-3">
+                          {%- if block.settings.rate > 0 -%}
+                            <ul class="rating mb-3">
+                              {%- for i in (1..5) -%}
+                                {%- assign iMax = block.settings.rate -%}
+                                {%- if i <= iMax -%}
+                                <li class="rated">
+                                  <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                                </li>
+                                    {%- else -%}
+                                <li>
+                                  <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                                </li>
+                                  {%- endif -%}
+                              {%- endfor -%}
+                            </ul>
+                          {%- endif -%}
+                          <div class="{{ section.settings.size_text }}">{{ block.settings.quote }}</div>
+                        </div>
+                        <div class=" font-family-2 mt-1">{{ block.settings.author }}</div>
+                        {%- if block.settings.info != blank -%}
+                        <i class="small">{{ block.settings.info }}</i>
+                    {%- endif -%}
+                  </div>
+                </div>
+                <div class="col-12 col-md-6" data-aos="{{ section.settings.animation }}" data-aos-duration="1500">
+                    
+                        <div class="pl-lg-5">
+                            <div class="position-relative">
+                            <div class="position-relative overflow-hidden author-right ">
+                              {%- if block.settings.avatar != blank -%}
+                              <div class="image-content__image-wrapper {{ image_size }}" style="padding-top:{{ 1 | divided_by: block.settings.avatar.aspect_ratio | times: 100 }}%;">
+                              {% assign image = block.settings.avatar %}
+                              {% comment %} <img class="image-content__image lazyload"
+                                  src="{{ block.settings.avatar | image_url: width: 1, height: 1 }}"
+                                  data-src="{{ img_url }}"
+                                  data-widths="[180, 360, 540, 720, 900, 1080, 1296]"
+                                  data-aspectratio="{{ block.settings.avatar.aspect_ratio }}"
+                                  data-sizes="auto"
+                                  alt="{{ block.settings.title }}"
+                                  width="{{ block.settings.avatar.width }}"
+                                  height="{{ block.settings.avatar.height }}"
+                                loading="lazy"> {% endcomment %}
+                                <img
+                                  srcset="
+                                    {%- if image.width >= 165 -%}{{ image | image_url: width: 165 }} 165w,{%- endif -%}
+                                    {%- if image.width >= 360 -%}{{ image | image_url: width: 360 }} 360w,{%- endif -%}
+                                    {%- if image.width >= 533 -%}{{ image | image_url: width: 533 }} 533w,{%- endif -%}
+                                    {%- if image.width >= 720 -%}{{ image | image_url: width: 720 }} 720w,{%- endif -%}
+                                    {%- if image.width >= 940 -%}{{ image | image_url: width: 940 }} 940w,{%- endif -%}
+                                    {%- if image.width >= 1066 -%}{{ image | image_url: width: 1066 }} 1066w,{%- endif -%}
+                                    {{ image | image_url }} {{ image.width }}w
+                                  "
+                                  src="{{ image | image_url: width: 720 }}"
+                                  sizes="(min-width: {{ settings.container }}px) {{ settings.container | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
+                                  alt="{{ image.alt | escape }}"
+                                  class="image-content__image lazyload scale-in"
+                                  data-sizes="auto"
+                                  data-aspectratio="{{ image.aspect_ratio }}"
+                                  loading="lazy"
+                                  width="{{ image.width }}"
+                                  height="{{ image.height }}"
+                                >
+                              </div>
+                              {%- else -%}
+                              <div class="image-content__image">
+                                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                              </div>
+                            {%- endif -%}
+                            </div>
+                            {%- if block.settings.product_item != blank -%}
+                              <div class="quote-product-item product-{{ block.settings.product_style }}">
+                              {% render 'product-grid-buywith', product: block.settings.product_item, firstimage: false, enablqv: true %}
+                              </div>
+                            {%- endif -%}
+                            </div>
+                        </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {%- endfor -%}
+        </div>
+      </div>
+      {%- endif -%}
+  
+      {%- if section.blocks.size == 0 -%}
+      {%- render 'no-blocks' -%}
+      {%- endif -%}
+    </div>
+  </div>
+  </div>
+  
+  {% schema %}
+{
+  "name": "Testimonials Split",
+  "class": "index-section",
+  "max_blocks": 10,
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+      "label": "Background Section",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "title_top",
+      "label": "Sub Title Top",
+      "default": "Sub Title Top"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "User reviews"
+    },
+    {
+      "type": "textarea",
+      "id": "des",
+      "label": "HTML / Description"
+    },
+    {
+      "type": "select",
+      "id": "align-heading",
+      "label": "Align Heading",
+      "default": "center",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "color_rate",
+      "label": "Color Rate",
+      "default": "#f1f1f1"
+    },
+    {
+      "type": "color",
+      "id": "color_rated",
+      "label": "Color Rated",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Size Image"
+    },
+    {
+      "type": "select",
+      "id": "image_size",
+      "options": [
+        {
+          "value": "auto",
+          "label": "Adapt to image"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait (2:3)"
+        },
+        {
+          "value": "landscape",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "wide",
+          "label": "Wide (16:9)"
+        },
+        {
+          "value": "square",
+          "label": "Square (1:1)"
+        }
+      ],
+      "default": "auto",
+      "label": "Image ratio"
+    },
+    {
+      "type": "select",
+      "id": "size_text",
+      "default": "p",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        },
+        {
+          "value": "p",
+          "label": "Body"
+        }
+      ],
+      "label": "Text Size"
+    },
+    {
+      "type": "header",
+      "content": "Carousel"
+    },
+    {
+      "type": "checkbox",
+      "id": "arrows",
+      "label": "Arrows",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "draggable",
+      "label": "Draggable",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "dots",
+      "label": "Dots",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "infinite",
+      "label": "Infinite",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "quote",
+      "name": "Quote",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Comment",
+          "default": "Comment"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Text",
+          "default": "Add customer reviews and testimonials to showcase your store’s happy customers."
+        },
+        {
+          "type": "range",
+          "id": "rate",
+          "min": 0,
+          "max": 5,
+          "step": 1,
+          "label": "Rating",
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author",
+          "default": "Author's name"
+        },
+        {
+          "type": "text",
+          "id": "info",
+          "label": "Author's info"
+        },
+        {
+          "type": "image_picker",
+          "id": "avatar",
+          "label": "Image"
+        },
+        {
+          "type": "product",
+          "id": "product_item",
+          "label": "Product"
+        },
+        {
+          "type": "select",
+          "id": "product_style",
+          "default": "light",
+          "options": [
+            {
+              "value": "light",
+              "label": "Light"
+            },
+            {
+              "value": "dark",
+              "label": "Dark"
+            }
+          ],
+          "label": "Product Style"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials Split",
+      "category": "Text",
+      "blocks": [
+        {
+          "type": "quote"
+        },
+        {
+          "type": "quote"
+        },
+        {
+          "type": "quote"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+  

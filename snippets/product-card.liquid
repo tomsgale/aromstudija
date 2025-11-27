@@ -1,0 +1,952 @@
+{%- comment -%} image {%- endcomment -%}
+{%- capture image_product -%}
+  {%- assign image = product.selected_or_first_available_variant.featured_image | default: product.featured_media -%}
+  {%- liquid
+    assign has_mockup = false
+    assign mockup_type = product.metafields.custom.mockup_type
+
+    if settings.enable_mockup_compositing and mockup_type != blank
+      assign has_mockup = true
+    endif
+  -%}
+
+  {%- if has_mockup -%}
+    {%- comment -%} Mockup Composite Rendering {%- endcomment -%}
+    <a class="product-card__image js image-content__image-wrapper mockup-composite-container {{ settings.size_image_grid }}"
+       href="{{ product.url | within: collection }}"
+       style="padding-top:{{ 1 | divided_by: image.aspect_ratio | times: 100 }}%;"
+       data-image-id="{{ image.id }}">
+      <canvas class="mockup-canvas lazyload scale-in first-image"
+              data-mockup-type="{{ mockup_type }}"
+              data-product-image="{{ image | image_url: width: 800 }}"
+              data-sizes="auto"
+              data-aspectratio="{{ image.aspect_ratio }}"
+              width="{{ image.width }}"
+              height="{{ image.height }}">
+      </canvas>
+      <noscript>
+        <img src="{{ image | image_url: width: 720 }}"
+             alt="{{ image.alt | escape }}"
+             width="{{ image.width }}"
+             height="{{ image.height }}">
+      </noscript>
+    </a>
+  {%- else -%}
+    {%- comment -%} Regular Image Rendering {%- endcomment -%}
+    <a class="product-card__image js image-content__image-wrapper {{ settings.size_image_grid }}" href="{{ product.url | within: collection }}" style="padding-top:{{ 1 | divided_by: image.aspect_ratio | times: 100 }}%;" data-image-id="{{ image.id }}">
+          <img
+                  srcset="
+                    {%- if image.width >= 165 -%}{{ image | image_url: width: 165 }} 165w,{%- endif -%}
+                    {%- if image.width >= 360 -%}{{ image | image_url: width: 360 }} 360w,{%- endif -%}
+                    {%- if image.width >= 533 -%}{{ image | image_url: width: 533 }} 533w,{%- endif -%}
+                    {%- if image.width >= 720 -%}{{ image | image_url: width: 720 }} 720w,{%- endif -%}
+                    {%- if image.width >= 940 -%}{{ image | image_url: width: 940 }} 940w,{%- endif -%}
+                    {%- if image.width >= 1066 -%}{{ image | image_url: width: 1066 }} 1066w,{%- endif -%}
+                    {{ image | image_url }} {{ image.width }}w
+                  "
+                  src="{{ image | image_url: width: 720 }}"
+                  sizes="(min-width: {{ settings.container }}px) {{ settings.container | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
+                  alt="{{ image.alt | escape }}"
+                  class="lazyload scale-in first-image {% if product.images.size > 1 %} hover__hide-image {% endif %}"
+                  data-sizes="auto"
+                  data-aspectratio="{{ image.aspect_ratio }}"
+                  loading="lazy"
+                  width="{{ image.width }}"
+                  height="{{ image.height }}"
+                >
+              {% render 'second-image' , product: product %}
+    </a>
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- comment -%} vendor {%- endcomment -%}
+{% capture vendor %}
+ {%- if settings.enable_type and product.vendor != blank -%}
+      <a class="mb-1 product-card__type d-inline-block" href="/collections/vendors?filter.p.vendor={{ product.vendor }}&q={{ product.vendor }}">{{ product.vendor }}</a>
+      {%- endif -%}
+{% endcapture %}
+
+{%- comment -%} price {%- endcomment -%}
+{% capture price %}
+  <div class="product-card__price {% if product.compare_at_price > product.price %} product-card__pricesale {% endif %}">
+  {%- if product.compare_at_price > product.price -%}
+  {%- if product.price_varies -%}
+  {%- assign sale_price = product.price | money -%}
+  {{ 'products.product.on_sale_from_html' | t: price: sale_price }}
+  {%- else -%}
+  <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+  {{ product.price | money }}
+  <s class="product-card__regular-price">{{ product.compare_at_price | money }}</s>
+  <span class="visually-hidden">{{ 'products.product.sale_price' | t }}</span>
+  {%- endif -%}
+  {%- else -%}
+  {%- if product.price_varies -%}
+  {%- assign price = product.price | money -%}
+  {{ 'products.product.from_text_html' | t: price: price }}
+  {%- else -%}
+  <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+  {{ product.price | money }}
+  {%- endif -%}
+  {%- endif -%}
+  </div>
+{% endcapture %}
+{% capture review %}
+  {%- if settings.enable_review -%}
+    <div style='{{ jm_style }}' class='jdgm-widget jdgm-preview-badge  py-1 small'  data-id='{{ product.id }}' data-auto-install="false" >
+      {{ product.metafields.judgeme.badge }}
+    </div>  
+  {%- endif -%}
+{% endcapture %}
+
+{%- capture show_option -%}
+  {%- if settings.enable_option -%}
+    <div class="small txt-body-70 mt-1">
+      {% for option in product.options_with_values %}
+        {{ option.values | join: ', ' }}{%- if forloop.last -%}{%- else -%}, {%- endif -%}
+      {% endfor %}
+    </div>
+  {%- endif -%}
+{%- endcapture -%}
+{%- liquid
+  assign item = settings.productgrid
+  if enable_edit_item 
+    assign item = select_item
+  else
+    assign item = settings.productgrid
+  endif
+-%}
+{%- assign enable_bg_info = settings.enable_bg_info -%}
+{%- for tag in product.tags -%}
+  {%- if tag contains 'preorder' -%}
+    {%- assign preorder = true -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- capture textCart -%}
+  {% unless product.available %}
+    {{ 'products.product.sold_out' | t }}
+  {% else %}
+      {%- if preorder == true -%}
+        {{ 'products.product.pre_order' | t }}
+      {%- else -%}
+        {{ 'products.product.add_to_cart' | t }}
+      {%- endif -%}
+  {% endunless %}
+{%- endcapture -%}
+
+{%- case item -%}
+  {%- when 'product-1' -%}
+    {%- comment -%} product-grid-1.liquid {%- endcomment -%}
+  <div class="product-card js-product-card product-card--style1 info-{{ enable_bg_info }}" data-price="{{ product.price }}"   >
+    <div class="product-card__image-wr">
+      {{ image_product }}
+      {%- render 'product-label', product: product , showlabel : true -%}
+      <div class="product-card__overlay d-flex justify-content-center flex-column">
+        {%- if settings.enable_wishlsit -%}
+        <span data-toggle="tooltip" data-placement="left" data-tooltipalltimes="true" class="btn btn-theme gradient-theme-vertical product-card__overlay-btn js-btn-wishlist" title="{{ 'products.product.wishlist_text' | t }}" data-handle="{{ product.handle }}">
+          {%- render 'icon-heart' -%}
+        </span>
+        {%- endif -%}
+        {%- if settings.qv_box -%}
+        <span data-tooltip="true" data-placement="left" class="btn btn-theme gradient-theme-vertical product-card__overlay-btn js-btn-quickview" 
+          title="{{ 'products.product.quickview_text' | t }}" 
+          data-toggle="modal" 
+          data-target="#jsQuickview" 
+          data-handle="{{ product.handle }}" 
+          data-tag="{%- if preorder == true -%}preorder{%- else -%} {%- endif -%}"
+          data-pavailable="{% if product.available %}true{% else %}false{% endif %}"
+          {% if settings.enable_review %} data-viewjdmg="<span class='jdgm-preview-badge' data-id='{{ product.id }}'>{{ product.metafields.judgeme.badge }}</span>" {% endif %} >
+          {%- render 'icon-view' -%}
+          <span>{{ 'products.product.quickview_text' | t }}</span>
+          {%- if product.metafields.info.shortdesc != blank -%}
+            <span class=" txt-short hide" >
+              {{ product.metafields.info.shortdesc | strip_html | truncatewords: 12 }}
+            </span>
+          {%- else -%}
+            <span class=" txt-short hide" >
+              {{ product.description | strip_html | truncatewords: 12 }}
+            </span>
+          {%- endif -%}
+        </span>
+        {%- endif -%}
+        {%- if settings.enable_compare -%}
+        <span data-tooltip="true" data-placement="left" class="btn btn-theme gradient-theme-vertical product-card__overlay-btn js-btn-compare" title="{{ 'products.product.compare_text' | t }}" data-handle="{{ product.handle }}">
+          {%- render 'icon-exchange' -%}
+          {%- render 'icon-close-solid' -%}
+          <span>{{ 'products.product.compare_text' | t }}</span>
+        </span>
+        {%- endif -%}
+        <span data-tooltip="true" data-placement="left" class="btn btn-theme gradient-theme-vertical product-card__overlay-btn js-grid-cart {% unless product.available %} disabled {% endunless %}" 
+          {% if product.available %}
+            title="{{ 'products.product.add_to_cart' | t }}" 
+          {% else %}
+            title="{{ 'products.product.sold_out' | t }}" 
+          {% endif %} 
+          data-id="{{ product.selected_or_first_available_variant.id }}">
+          {%- render 'icon-cart' -%}
+            <div class="product-card__loading spinner-{{ settings.loading }}" role="status"></div>
+            <span>{{ textCart }}</span>
+        </span>
+      </div>
+      {%- liquid
+        if settings.enable_countdown_card
+          render 'product-countdown', product : product
+        endif
+        render 'swatch-grid-1', product: product
+      -%}
+    </div>
+    <div class="product-card__info">
+      {{ vendor }}
+      <a href="{{ product.url | within: collection }}" title="{{ product.title }}" class=" d-block product-card__name {% if settings.t_product %} text-uppercase {% endif %}">{{ product.title }}</a>
+      {{ review }}
+      {{ price }}
+    </div>
+  </div>
+  {%- when 'product-2' -%} 
+  {%- comment -%} product-grid-2.liquid {%- endcomment -%}
+<div class="product-card js-product-card product-card--style2 text-left info-{{ enable_bg_info }}" data-price="{{ product.price }}">
+  <div class="product-card__image-wr">
+    {{ image_product }}
+    {%- liquid
+      if settings.enable_countdown_card
+          render 'product-countdown', product : product
+      endif
+      render 'product-label', product: product , showlabel : true
+    -%}
+    <div class="product-card__overlay product-card__overlay_wl d-flex justify-content-center flex-column">
+      {%- if settings.enable_wishlsit -%}
+      <span data-toggle="tooltip" data-placement="left" data-tooltipalltimes="true" class="btn btn-theme gradient-theme-vertical product-card__overlay-btn js-btn-wishlist" title="{{ 'products.product.wishlist_text' | t }}" data-handle="{{ product.handle }}">
+        {%- render 'icon-heart' -%}
+      </span>
+    {%- endif -%}
+    </div>
+  </div>
+  <div class="product-card__info">
+    {%- render 'swatch-grid-1', product: product -%}
+    {{ vendor }}
+    <a href="{{ product.url | within: collection }}" title="{{ product.title }}" class="d-block product-card__name {% if settings.t_product %} text-uppercase {% endif %}">{{ product.title }}</a>
+    {{ review }}
+    {{ price }}
+    <div class="product-form__item product-form__item--submit d-flex justify-content-end-lg flex-row align-items-center">
+      <span class="btn btn-theme btn-sm js-grid-cart d-inline-flex align-items-center {% unless product.available %} disabled{% endunless %}" 
+        title="{{ 'products.product.add_to_cart' | t }}" 
+        data-id="{{ product.selected_or_first_available_variant.id }}">
+        <div class="product-card__loading spinner-{{ settings.loading }}" role="status"></div>
+        <span>{{ textCart }}</span>
+      </span>
+      {%- if settings.qv_box -%}
+      <span  class="btn btn-theme js-btn-quickview product-card__overlay-btn" data-toggle="modal" 
+        data-target="#jsQuickview" data-handle="{{ product.handle }}"
+        data-tag="{%- if preorder == true -%}preorder{%- else -%} {%- endif -%}"
+        data-pavailable="{% if product.available %}true{% else %}false{% endif %}"
+        {% if settings.enable_review %} data-viewjdmg="<span class='jdgm-preview-badge' data-id='{{ product.id }}'>{{ product.metafields.judgeme.badge }}</span>" {% endif %}
+         >
+        <span class="d-block" title="{{ 'products.product.quickview_text' | t }}">
+        {%- render 'icon-view' -%}
+        <span class="icon__fallback-text">{{ 'products.product.quickview_text' | t }}</span>
+        {%- if product.metafields.info.shortdesc != blank -%}
+          <span class=" txt-short hide" >
+            {{ product.metafields.info.shortdesc | strip_html | truncatewords: 12 }}
+          </span>
+        {%- else -%}
+          <span class=" txt-short hide" >
+            {{ product.description | strip_html | truncatewords: 12 }}
+          </span>
+        {%- endif -%}
+      </span>
+      </span>
+      {%- endif -%}
+      {%- if settings.enable_compare -%}
+      <span class="btn btn-theme product-card__overlay-btn js-btn-compare" title="{{ 'products.product.compare_text' | t }}" data-handle="{{ product.handle }}">
+        {%- render 'icon-exchange' -%}
+        {%- render 'icon-close-solid' -%}
+        <span>{{ 'products.product.compare_text' | t }}</span>
+      </span>
+      {%- endif -%}
+      
+    </div>
+  </div>
+</div>
+  {%- when 'product-3' -%}
+    {%- comment -%} product-grid-3.liquid {%- endcomment -%}
+<div class="product-card js-product-card product-card--style3 info-{{ enable_bg_info }}" data-price="{{ product.price }}">
+  <div class="product-card__image-wr transition overflow-hidden">
+    {{ image_product }}
+    {%- liquid
+      if settings.enable_countdown_card
+          render 'product-countdown', product : product
+      endif
+      render 'product-label', product: product , showlabel : true
+    -%}
+  </div>
+  <div class="product-card__info">
+    {{ vendor }}
+    <a href="{{ product.url | within: collection }}" title="{{ product.title }}" class="d-block product-card__name {% if settings.t_product %} text-uppercase {% endif %}">{{ product.title }}</a>
+    {{ review }}
+    {{ price }}
+    {%- render 'swatch-grid-1', product : product -%}
+    <div class="product-card__overlay d-flex justify-content-center flex-row">
+     
+      <span class="btn btn-theme product-card__overlay-btn js-grid-cart {% unless product.available %} disabled{% endunless %}" 
+        title="{{ 'products.product.add_to_cart' | t }}" data-toggle="tooltip" data-placement="top"  
+        data-id="{{ product.selected_or_first_available_variant.id }}">
+        {%- render 'icon-cart' -%}
+        <div class="product-card__loading spinner-{{ settings.loading }}" role="status"></div>
+        <span>{{ 'products.product.add_to_cart' | t }}</span>
+      </span>
+
+      {%- if settings.qv_box -%}
+      <span data-tooltip="true" data-placement="top" 
+        class="btn btn-theme product-card__overlay-btn js-btn-quickview" 
+        title="{{ 'products.product.quickview_text' | t }}" 
+        data-toggle="modal" 
+        data-target="#jsQuickview" 
+        data-handle="{{ product.handle }}" 
+      data-tag="{%- if preorder == true -%}preorder{%- else -%} {%- endif -%}"
+        data-pavailable="{% if product.available %}true{% else %}false{% endif %}"
+        {% if settings.enable_review %} data-viewjdmg="<span class='jdgm-preview-badge' data-id='{{ product.id }}'>{{ product.metafields.judgeme.badge }}</span>" {% endif %} >
+        {%- render 'icon-view' -%}
+        <span>{{ 'products.product.quickview_text' | t }}</span>
+        {%- if product.metafields.info.shortdesc != blank -%}
+          <span class=" txt-short hide" >
+            {{ product.metafields.info.shortdesc | strip_html | truncatewords: 12 }}
+          </span>
+        {%- else -%}
+          <span class=" txt-short hide" >
+            {{ product.description | strip_html | truncatewords: 12 }}
+          </span>
+        {%- endif -%}
+      </span>
+      {%- endif -%}
+      
+      {%- if settings.enable_wishlsit -%}
+        <span data-toggle="tooltip" data-placement="top" data-tooltipalltimes="true" class="btn btn-theme product-card__overlay-btn js-btn-wishlist" title="{{ 'products.product.wishlist_text' | t }}" data-handle="{{ product.handle }}">
+          {%- render 'icon-heart' -%}
+        </span>
+      {%- endif -%}
+      {%- if settings.enable_compare -%}
+        <span data-tooltip="true" data-placement="top" class="btn btn-theme product-card__overlay-btn js-btn-compare" title="{{ 'products.product.compare_text' | t }}" data-handle="{{ product.handle }}">
+          {%- render 'icon-exchange' -%}
+          {%- render 'icon-close-solid' -%}
+          <span>{{ 'products.product.compare_text' | t }}</span>
+        </span>
+        {%- endif -%}
+    </div>
+  </div>
+</div>
+  {%- when 'product-4' -%} 
+  {% comment %} product-grid-4.liquid {% endcomment %}
+<div class="product-card js-product-card product-card--style1 product-card--style4 info-{{ enable_bg_info }}" data-price="{{ product.price }}">
+  <div class="product-card__image-wr overflow-hidden">
+    {{ image_product }}
+    <div class="product-card__overlay d-flex justify-content-center flex-column product-card__overlaytop">
+      {%- if settings.enable_wishlsit -%}
+      <span data-toggle="tooltip" data-placement="left" data-tooltipalltimes="true" class="btn btn-theme gradient-theme-vertical product-card__overlay-btn js-btn-wishlist" title="{{ 'products.product.wishlist_text' | t }}" data-handle="{{ product.handle }}">
+          {%- render 'icon-heart' -%}
+      </span>
+      {%- endif -%}
+      {%- if settings.enable_compare -%}
+      <span data-tooltip="true" data-placement="left" class="btn btn-theme gradient-theme-vertical product-card__overlay-btn js-btn-compare" title="{{ 'products.product.compare_text' | t }}" data-handle="{{ product.handle }}">
+        {%- render 'icon-exchange' -%}
+        {%- render 'icon-close-solid' -%}
+        <span>{{ 'products.product.compare_text' | t }}</span>
+      </span>
+      {%- endif -%}
+    </div>
+    <div  class="product-card__overlay d-flex justify-content-center flex-row product-card__overlaybottom">
+      {%- if settings.qv_box -%}
+      <span data-tooltip="false" data-placement="left" class="btn btn-theme gradient-theme-vertical js-btn-quickview" 
+        title="{{ 'products.product.quickview_text' | t }}" 
+        data-toggle="modal" data-target="#jsQuickview" 
+        data-handle="{{ product.handle }}" 
+        data-tag="{%- if preorder == true -%}preorder{%- else -%} {%- endif -%}"
+        data-pavailable="{% if product.available %}true{% else %}false{% endif %}"
+        {% if settings.enable_review %} data-viewjdmg="<span class='jdgm-preview-badge' data-id='{{ product.id }}'>{{ product.metafields.judgeme.badge }}</span>" {% endif %}>
+        <span>{{ 'products.product.quickview_text' | t }} </span>
+        {%- if product.metafields.info.shortdesc != blank -%}
+          <span class=" txt-short hide" >
+            {{ product.metafields.info.shortdesc | strip_html | truncatewords: 12 }}
+          </span>
+        {%- else -%}
+          <span class=" txt-short hide" >
+            {{ product.description | strip_html | truncatewords: 12 }}
+          </span>
+        {%- endif -%}
+      </span>
+      {%- endif -%}
+      <span data-tooltip="false" data-placement="left" class="btn btn-theme js-grid-cart {% unless product.available %} disabled{% endunless %}" title="{{ 'products.product.add_to_cart' | t }}" data-id="{{ product.selected_or_first_available_variant.id }}">
+        <span>
+          {{ textCart }}
+        </span>
+        <div class="product-card__loading spinner-{{ settings.loading }}" role="status"></div>
+        </span>
+    </div>
+    {%- liquid
+      if settings.enable_countdown_card
+      render 'product-countdown', product : product
+      endif
+      render 'product-label', product : product , showlabel : true
+    -%}
+  </div>
+  <div class="product-card__info">
+    {{ vendor }}
+    <a href="{{ product.url | within: collection }}" title="{{ product.title }}" class="d-block product-card__name {% if settings.t_product %} text-uppercase {% endif %}">{{ product.title }}</a>
+    {{ review }}
+    {{ price }}
+    {%- render 'swatch-grid-1', product: product -%}
+  </div>
+</div>
+  {%- when 'product-5' -%}
+    {% comment %} product-grid-5.liquid {% endcomment %}
+<div class="product-card js-product-card product-card--style1 product-card--style5 info-{{ enable_bg_info }}" data-price="{{ product.price }}">
+  <div class="product-card__image-wr overflow-hidden">
+   {{ image_product }}
+    <div class="product-card__overlay d-flex justify-content-center flex-column product-card__overlaytop">
+      {%- if settings.enable_wishlsit -%}
+      <span data-toggle="tooltip" data-placement="left" data-tooltipalltimes="true" class="btn btn-theme gradient-theme-vertical product-card__overlay-btn js-btn-wishlist" title="{{ 'products.product.wishlist_text' | t }}" data-handle="{{ product.handle }}">
+        {%- render 'icon-heart' -%}
+      </span>
+      {%- endif -%}
+    </div>
+    {%- if settings.qv_box -%}
+    <div  class="product-card__overlay d-flex justify-content-center flex-row product-card__overlaybottom">
+      <span data-tooltip="false" data-placement="left" 
+        class="btn btn-theme gradient-theme-vertical product-card__overlay-btn js-btn-quickview" 
+        title="{{ 'products.product.quickview_text' | t }}" 
+        data-toggle="modal" data-target="#jsQuickview" 
+        data-handle="{{ product.handle }}" 
+        data-pavailable="{% if product.available %}true{% else %}false{% endif %}"
+        data-tag="{%- if preorder == true -%}preorder{%- else -%} {%- endif -%}"
+        {% if settings.enable_review %} data-viewjdmg="<span class='jdgm-preview-badge' data-id='{{ product.id }}'>{{ product.metafields.judgeme.badge }}</span>" {% endif %}>
+        <span>{{ 'products.product.quickview_text' | t }}</span>
+        {%- if product.metafields.info.shortdesc != blank -%}
+          <span class=" txt-short hide" >
+            {{ product.metafields.info.shortdesc | strip_html | truncatewords: 12 }}
+          </span>
+        {%- else -%}
+          <span class=" txt-short hide" >
+            {{ product.description | strip_html | truncatewords: 12 }}
+          </span>
+        {%- endif -%}
+        </span>
+    </div>
+    {%- endif -%}
+    {%- liquid
+      if settings.enable_countdown_card
+        render 'product-countdown', product: product
+      endif
+      render 'product-label', product: product, showlabel : true
+    -%}
+  </div>
+  <div class="product-card__info">
+    {{ vendor }}
+    <a href="{{ product.url | within: collection }}" title="{{ product.title }}" class="d-block product-card__name {% if settings.t_product %} text-uppercase {% endif %}">{{ product.title }}</a>
+    {{ review }}
+    {{ price }}
+    {%- render 'swatch-grid-1' , product : product -%}
+  </div>
+</div>
+  {%- when 'product-6' -%} 
+  <!-- product-grid-6.liquid -->
+<div class="product-card js-product-card product-card--style1 product-card--style6 info-{{ enable_bg_info }}" data-price="{{ product.price }}">
+  <div class="product-card__image-wr overflow-hidden">
+    {{ image_product }}
+    <div class="product-card__overlay d-flex justify-content-center flex-row">
+      {%- if settings.enable_wishlsit -%}
+    <span data-toggle="tooltip" data-placement="top" data-tooltipalltimes="true" class="btn btn-theme gradient-theme-vertical product-card__overlay-btn js-btn-wishlist" title="{{ 'products.product.wishlist_text' | t }}" data-handle="{{ product.handle }}">
+      {%- render 'icon-heart' -%}
+    </span>
+    {%- endif -%}
+    
+    {%- if settings.qv_box -%}
+    <span data-tooltip="true" data-placement="top" 
+      class="btn btn-theme gradient-theme-vertical product-card__overlay-btn js-btn-quickview" 
+      title="{{ 'products.product.quickview_text' | t }}" data-toggle="modal" 
+      data-target="#jsQuickview" data-handle="{{ product.handle }}" 
+    data-tag="{%- if preorder == true -%}preorder{%- else -%} {%- endif -%}"
+      data-pavailable="{% if product.available %}true{% else %}false{% endif %}"
+      {% if settings.enable_review %} data-viewjdmg="<span class='jdgm-preview-badge' data-id='{{ product.id }}'>{{ product.metafields.judgeme.badge }}</span>" {% endif %}>
+      {%- render 'icon-view' -%}
+      <span>{{ 'products.product.quickview_text' | t }}</span>
+      {%- if product.metafields.info.shortdesc != blank -%}
+        <span class=" txt-short hide" >
+          {{ product.metafields.info.shortdesc | strip_html | truncatewords: 12 }}
+        </span>
+      {%- else -%}
+        <span class=" txt-short hide" >
+          {{ product.description | strip_html | truncatewords: 12 }}
+        </span>
+      {%- endif -%}
+    </span>
+    {%- endif -%}
+    {%- if settings.enable_compare -%}
+    <span data-tooltip="true" data-placement="top" class="btn btn-theme gradient-theme-vertical product-card__overlay-btn js-btn-compare" title="{{ 'products.product.compare_text' | t }}" data-handle="{{ product.handle }}">
+      {%- render 'icon-exchange' -%}
+      {%- render 'icon-close-solid' -%}
+      <span>{{ 'products.product.compare_text' | t }}</span>
+    </span>
+    {%- endif -%}
+    <span data-tooltip="true" data-placement="top" class="btn btn-theme gradient-theme-vertical product-card__overlay-btn js-grid-cart" title="{{ 'products.product.add_to_cart' | t }}" data-id="{{ product.selected_or_first_available_variant.id }}">
+      {%- render 'icon-cart' -%}
+      <div class="product-card__loading spinner-{{ settings.loading }}" role="status"></div>
+      <span>{{ 'products.product.add_to_cart' | t }}</span>
+    </span>
+    </div>
+    {%- liquid
+      if settings.enable_countdown_card
+        render 'product-countdown', product: product
+      endif
+      render 'product-label', product: product, showlabel : true
+    -%}
+  </div>
+  <div class="product-card__info">
+    {{ vendor }}
+    <a href="{{ product.url | within: collection }}" title="{{ product.title }}" class="d-block product-card__name {% if settings.t_product %} text-uppercase {% endif %}">{{ product.title }}</a>
+    {{ review }}
+    {{ price }}
+    {%- render 'swatch-grid-1', product: product -%}
+  </div>
+</div>
+  {%- when 'product-7' -%} 
+  <div class="product-card js-product-card product-card--style7 info-{{ enable_bg_info }}" data-price="{{ product.price }}" >
+    <div class="product-card__image-wr overflow-hidden">
+      {{ image_product }}
+      {%- if settings.enable_wishlsit -%}
+      <span  class="btn btn-theme product-card__overlay-btn js-btn-wishlist" title="{{ 'products.product.wishlist_text' | t }}"
+        data-toggle="tooltip" data-placement="left" 
+        data-handle="{{ product.handle }}">
+        {%- render 'icon-heart' -%}
+      </span>
+      {%- endif -%}
+      <div class="product-card__overlay d-flex justify-content-center flex-column">
+        <span class="btn product-card__overlay-btn js-grid-cart {% unless product.available %} disabled{% endunless %}" 
+          title="{{ 'products.product.add_to_cart' | t }}" data-toggle="tooltip" data-placement="left"  
+          data-id="{{ product.selected_or_first_available_variant.id }}">
+          {%- render 'icon-cart' -%}
+          <div class="product-card__loading spinner-{{ settings.loading }}" role="status"></div>
+          <span>{{ 'products.product.add_to_cart' | t }}</span>
+        </span>
+        {%- if settings.qv_box -%}
+        <span  class="btn js-btn-quickview product-card__overlay-btn" data-toggle="modal" 
+          data-target="#jsQuickview" data-handle="{{ product.handle }}"
+        data-tag="{%- if preorder == true -%}preorder{%- else -%} {%- endif -%}"
+          data-pavailable="{% if product.available %}true{% else %}false{% endif %}"
+          {% if settings.enable_review %} data-viewjdmg="<span class='jdgm-preview-badge' data-id='{{ product.id }}'>{{ product.metafields.judgeme.badge }}</span>" {% endif %}
+           >
+          <span class="d-block" data-toggle="tooltip" data-placement="left" title="{{ 'products.product.quickview_text' | t }}">
+          {%- render 'icon-view' -%}
+            <span class="icon__fallback-text">{{ 'products.product.quickview_text' | t }}</span>
+            {%- if product.metafields.info.shortdesc != blank -%}
+              <span class=" txt-short hide" >
+                {{ product.metafields.info.shortdesc | strip_html | truncatewords: 12 }}
+              </span>
+            {%- else -%}
+              <span class=" txt-short hide" >
+                {{ product.description | strip_html | truncatewords: 12 }}
+              </span>
+            {%- endif -%}
+          </span>
+        </span>
+        {%- endif -%}
+        {%- if settings.enable_compare -%}
+        <span class="btn  product-card__overlay-btn js-btn-compare" data-toggle="tooltip" data-placement="left" title="{{ 'products.product.compare_text' | t }}" data-handle="{{ product.handle }}">
+          {%- render 'icon-exchange' -%}
+          {%- render 'icon-close-solid' -%}
+          <span>{{ 'products.product.compare_text' | t }}</span>
+        </span>
+        {%- endif -%}
+      </div>
+      {%- liquid
+        render 'swatch-grid-1', product : product
+        if settings.enable_countdown_card
+        render 'product-countdown', product : product
+        endif
+      -%}
+      {%- render 'product-label', product : product, showlabel : true -%}
+    </div>
+    <div class="product-card__info  {% unless product.available %} disabled {% endunless %}">
+      {{ vendor }}
+      <a href="{{ product.url | within: collection }}" title="{{ product.title }}" class="product-card__name d-block {% if settings.t_product %} text-uppercase {% endif %}">{{ product.title }}</a>
+      {{ review }}
+      {{ price }}
+    </div>
+  </div>
+  {%- when 'product-8' -%}
+  {%- comment -%} product-grid-3.liquid {%- endcomment -%}
+    <div class="product-card js-product-card product-card--style8 info-{{ enable_bg_info }}" data-price="{{ product.price }}">
+      <div class="position-relative">
+    <div class="product-card__image-wr transition overflow-hidden">
+      {{ image_product }}
+      {%- liquid
+        if settings.enable_countdown_card
+            render 'product-countdown', product : product
+        endif
+        render 'product-label', product: product, showlabel : true
+      -%}
+    </div>
+    <div class="product-card__info">
+      {{ vendor }}
+      <a href="{{ product.url | within: collection }}" title="{{ product.title }}" class="d-block product-card__name {% if settings.t_product %} text-uppercase {% endif %}">{{ product.title }}</a>
+      {{ review }}
+      {{ price }}
+      {%- render 'swatch-grid-1', product : product -%}
+      <div class="product-card__overlay d-flex justify-content-center flex-row">
+      
+        <span class="btn btn-theme product-card__overlay-btn js-grid-cart {% unless product.available %} disabled{% endunless %}" 
+          title="{{ 'products.product.add_to_cart' | t }}" data-toggle="tooltip" data-placement="top"  
+          data-id="{{ product.selected_or_first_available_variant.id }}">
+          {%- render 'icon-cart' -%}
+          <div class="product-card__loading spinner-{{ settings.loading }}" role="status"></div>
+          <span>{{ 'products.product.add_to_cart' | t }}</span>
+        </span>
+
+        {%- if settings.qv_box -%}
+        <span data-tooltip="true" 
+          data-placement="top" 
+          class="btn btn-theme product-card__overlay-btn js-btn-quickview" 
+          title="{{ 'products.product.quickview_text' | t }}" 
+          data-toggle="modal" data-target="#jsQuickview" 
+          data-handle="{{ product.handle }}" 
+          data-tag="{%- if preorder == true -%}preorder{%- else -%} {%- endif -%}"
+          data-pavailable="{% if product.available %}true{% else %}false{% endif %}"
+          {% if settings.enable_review %} data-viewjdmg="<span class='jdgm-preview-badge' data-id='{{ product.id }}'>{{ product.metafields.judgeme.badge }}</span>" {% endif %}>
+          {%- render 'icon-view' -%}
+          <span>{{ 'products.product.quickview_text' | t }}</span>
+          {%- if product.metafields.info.shortdesc != blank -%}
+              <span class=" txt-short hide" >
+                {{ product.metafields.info.shortdesc | strip_html | truncatewords: 12 }}
+              </span>
+            {%- else -%}
+              <span class=" txt-short hide" >
+                {{ product.description | strip_html | truncatewords: 12 }}
+              </span>
+            {%- endif -%}
+        </span>
+        {%- endif -%}
+        
+        {%- if settings.enable_wishlsit -%}
+          <span data-toggle="tooltip" data-placement="top" data-tooltipalltimes="true" class="btn btn-theme product-card__overlay-btn js-btn-wishlist" title="{{ 'products.product.wishlist_text' | t }}" data-handle="{{ product.handle }}">
+            {%- render 'icon-heart' -%}
+          </span>
+        {%- endif -%}
+        {%- if settings.enable_compare -%}
+          <span data-tooltip="true" data-placement="top" class="btn btn-theme product-card__overlay-btn js-btn-compare" title="{{ 'products.product.compare_text' | t }}" data-handle="{{ product.handle }}">
+            {%- render 'icon-exchange' -%}
+            {%- render 'icon-close-solid' -%}
+            <span>{{ 'products.product.compare_text' | t }}</span>
+          </span>
+          {%- endif -%}
+      </div>
+    </div>
+    </div>
+    </div>
+    {%- when 'product-9' -%}
+      {%- comment -%} product style 9  {%- endcomment -%}
+    <div class="product-card js-product-card product-card--style1 product-card--style9 info-{{ enable_bg_info }}" data-price="{{ product.price }}" id="product-item-{{ product.id }}">
+      <div class="product-card__image-wr">
+        {{ image_product }}
+        {%- render 'product-label', product: product , showlabel : true -%}
+        <div class="product-card__overlay d-flex justify-content-center flex-column">
+          {%- if settings.enable_wishlsit -%}
+          <span data-toggle="tooltip" data-placement="left" data-tooltipalltimes="true" class="btn btn-theme gradient-theme-vertical product-card__overlay-btn js-btn-wishlist" title="{{ 'products.product.wishlist_text' | t }}" data-handle="{{ product.handle }}">
+            {%- render 'icon-heart' -%}
+          </span>
+          {%- endif -%}
+          {%- if settings.qv_box -%}
+          <span data-tooltip="true" data-placement="left" class="btn btn-theme gradient-theme-vertical product-card__overlay-btn js-btn-quickview" title="{{ 'products.product.quickview_text' | t }}" 
+          data-toggle="modal" 
+          data-target="#jsQuickview" 
+          data-handle="{{ product.handle }}" 
+          data-tag="{%- if preorder == true -%}preorder{%- else -%} {%- endif -%}"
+          data-pavailable="{% if product.available %}true{% else %}false{% endif %}"
+          {% if settings.enable_review %} data-viewjdmg="<span class='jdgm-preview-badge' data-id='{{ product.id }}'>{{ product.metafields.judgeme.badge }}</span>" {% endif %} >
+            {%- render 'icon-view' -%}
+            <span>{{ 'products.product.quickview_text' | t }}</span>
+            {%- if product.metafields.info.shortdesc != blank -%}
+              <span class=" txt-short hide" >
+                {{ product.metafields.info.shortdesc | strip_html | truncatewords: 12 }}
+              </span>
+            {%- else -%}
+              <span class=" txt-short hide" >
+                {{ product.description | strip_html | truncatewords: 12 }}
+              </span>
+            {%- endif -%}
+          </span>
+          {%- endif -%}
+          {%- if settings.enable_compare -%}
+          <span data-tooltip="true" data-placement="left" class="btn btn-theme gradient-theme-vertical product-card__overlay-btn js-btn-compare" title="{{ 'products.product.compare_text' | t }}" data-handle="{{ product.handle }}">
+            {%- render 'icon-exchange' -%}
+            {%- render 'icon-close-solid' -%}
+            <span>{{ 'products.product.compare_text' | t }}</span>
+          </span>
+          {%- endif -%}
+          
+        </div>
+        <div class="product-card-cart">
+          <span  class="btn btn-theme js-grid-cart w-100 {% unless product.available %} disabled {% endunless %}" 
+            {% if product.available %}
+              title="{{ 'products.product.add_to_cart' | t }}" 
+            {% else %}
+              title="{{ 'products.product.sold_out' | t }}" 
+            {% endif %} 
+            data-id="{{ product.selected_or_first_available_variant.id }}">
+              <div class="product-card__loading spinner-{{ settings.loading }}" role="status"></div>
+              <span>
+               {{ textCart }}
+              </span>
+          </span>
+        </div>
+        {%- liquid
+          if settings.enable_countdown_card
+            render 'product-countdown', product : product
+          endif
+        -%}
+      </div>
+      <div class="product-card__info text-left">
+        {{ vendor }}
+        <a href="{{ product.url | within: collection }}" title="{{ product.title }}" class=" d-block product-card__name {% if settings.t_product %} text-uppercase {% endif %}">{{ product.title }}</a>
+        {{ show_option }}
+        {{ review }}
+        {{ price }}
+        {% render 'swatch-grid-1', product: product %}
+      </div>
+    </div>
+    {%- when 'product-10' -%}
+      <div class="product-card js-product-card product-card--style10 info-{{ settings.enable_bg_info }}" data-price="{{ product.price }}" >
+        <div class="product-card__image-wr">
+          {{ image_product }}
+          {%- render 'product-label', product: product , showlabel : true -%}
+          <div class="product-card__overlay d-flex justify-content-center flex-column">
+            {%- if settings.enable_wishlsit -%}
+            <span data-toggle="tooltip" data-placement="left" data-tooltipalltimes="true" class="btn btn-theme gradient-theme-vertical product-card__overlay-btn js-btn-wishlist" title="{{ 'products.product.wishlist_text' | t }}" data-handle="{{ product.handle }}">
+              {%- render 'icon-heart' -%}
+            </span>
+            {%- endif -%}
+            {%- if settings.qv_box -%}
+            <span data-tooltip="true" data-placement="left" class="btn btn-theme gradient-theme-vertical product-card__overlay-btn js-btn-quickview" title="{{ 'products.product.quickview_text' | t }}" data-toggle="modal" data-target="#jsQuickview" data-handle="{{ product.handle }}" data-tag="{%- if preorder == true -%}preorder{%- else -%} {%- endif -%}" {% if settings.enable_review %} data-viewjdmg="<span class='jdgm-preview-badge' data-id='{{ product.id }}'>{{ product.metafields.judgeme.badge }}</span>" {% endif %} data-pavailable="{% if product.available %}true{% else %}false{% endif %}">
+              {%- render 'icon-view' -%}
+              <span>{{ 'products.product.quickview_text' | t }}</span>
+              {%- if product.metafields.info.shortdesc != blank -%}
+                <span class=" txt-short hide" >
+                  {{ product.metafields.info.shortdesc | strip_html | truncatewords: 12 }}
+                </span>
+              {%- else -%}
+                <span class=" txt-short hide" >
+                  {{ product.description | strip_html | truncatewords: 12 }}
+                </span>
+              {%- endif -%}
+            </span>
+            {%- endif -%}
+            {%- if settings.enable_compare -%}
+            <span data-tooltip="true" data-placement="left" class="btn btn-theme gradient-theme-vertical product-card__overlay-btn js-btn-compare" title="{{ 'products.product.compare_text' | t }}" data-handle="{{ product.handle }}">
+              {%- render 'icon-exchange' -%}
+              {%- render 'icon-close-solid' -%}
+              <span>{{ 'products.product.compare_text' | t }}</span>
+            </span>
+            {%- endif -%}
+            
+          </div>
+          
+          {%- liquid
+            if settings.enable_countdown_card
+              render 'product-countdown', product : product
+            endif
+          -%}
+        </div>
+        <div class="product-card__info">
+          {{ vendor }}
+          <a href="{{ product.url | within: collection }}" title="{{ product.title }}" class=" d-block product-card__name {% if settings.t_product %} text-uppercase {% endif %}">{{ product.title }}</a>
+          {{ review }}
+          {{ price }}
+          {% render 'swatch-grid-1', product: product %}
+          <div class="product-card-cart mt-2">
+            <span  class="btn btn-theme js-grid-cart w-100 {% unless product.available %} disabled {% endunless %}" 
+              {% if product.available %}
+                title="{{ 'products.product.add_to_cart' | t }}" 
+              {% else %}
+                title="{{ 'products.product.sold_out' | t }}" 
+              {% endif %} 
+              data-id="{{ product.selected_or_first_available_variant.id }}">
+                <div class="product-card__loading spinner-{{ settings.loading }}" role="status"></div>
+                <span>
+                 {{ textCart }}
+                </span>
+            </span>
+          </div>
+        </div>
+      </div>
+      {%- when 'product-11' -%} 
+        <!-- product-grid-11.liquid -->
+      <div class="product-card js-product-card product-card--style1 product-card--style6 product-card--style11 info-{{ enable_bg_info }}" data-price="{{ product.price }}">
+        <div class="product-card__image-wr overflow-hidden">
+          {%- assign image = product.selected_or_first_available_variant.featured_image | default: product.featured_image -%}
+          <a class="product-card__image js image-content__image-wrapper {{ settings.size_image_grid }}" href="{{ product.url | within: collection }}" style="padding-top:{{ 1 | divided_by: image.aspect_ratio | times: 100 }}%;" data-image-id="{{ image.id }}">
+                <img
+                srcset="
+                  {%- if image.width >= 165 -%}{{ image | image_url: width: 165 }} 165w,{%- endif -%}
+                  {%- if image.width >= 360 -%}{{ image | image_url: width: 360 }} 360w,{%- endif -%}
+                  {%- if image.width >= 533 -%}{{ image | image_url: width: 533 }} 533w,{%- endif -%}
+                  {%- if image.width >= 720 -%}{{ image | image_url: width: 720 }} 720w,{%- endif -%}
+                  {%- if image.width >= 940 -%}{{ image | image_url: width: 940 }} 940w,{%- endif -%}
+                  {%- if image.width >= 1066 -%}{{ image | image_url: width: 1066 }} 1066w,{%- endif -%}
+                  {{ image | image_url }} {{ image.width }}w
+                "
+                src="{{ image | image_url: width: 720 }}"
+                sizes="(min-width: {{ settings.container }}px) {{ settings.container | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
+                alt="{{ image.alt | escape }}"
+                class="lazyload scale-in first-image {% if product.images.size > 1 %} hover__hide-image {% endif %}"
+                data-sizes="auto"
+                data-aspectratio="{{ image.aspect_ratio }}"
+                loading="lazy"
+                width="{{ image.width }}"
+                height="{{ image.height }}"
+              >
+          </a>
+          
+          {%- liquid
+            if settings.enable_countdown_card
+              render 'product-countdown', product: product
+            endif
+            render 'product-label', product: product, showlabel : true
+          -%}
+        </div>
+        <div class="product-card__overlay d-flex justify-content-center flex-row">
+            {%- if settings.enable_wishlsit -%}
+          <span data-toggle="tooltip" data-placement="top" data-tooltipalltimes="true" class="btn btn-theme gradient-theme-vertical product-card__overlay-btn js-btn-wishlist" title="{{ 'products.product.wishlist_text' | t }}" data-handle="{{ product.handle }}">
+            {%- render 'icon-heart' -%}
+          </span>
+          {%- endif -%}
+          
+          {%- if settings.qv_box -%}
+          <span data-tooltip="true" data-placement="top" 
+            class="btn btn-theme gradient-theme-vertical product-card__overlay-btn js-btn-quickview" 
+            title="{{ 'products.product.quickview_text' | t }}" data-toggle="modal" 
+            data-target="#jsQuickview" data-handle="{{ product.handle }}" 
+            data-tag="{%- if preorder == true -%}preorder{%- else -%} {%- endif -%}"
+            data-pavailable="{% if product.available %}true{% else %}false{% endif %}"
+            {% if settings.enable_review %} data-viewjdmg="<span class='jdgm-preview-badge' data-id='{{ product.id }}'>{{ product.metafields.judgeme.badge }}</span>" {% endif %}>
+            {%- render 'icon-view' -%}
+            <span>{{ 'products.product.quickview_text' | t }}</span>
+            {%- if product.metafields.info.shortdesc != blank -%}
+              <span class=" txt-short hide" >
+                {{ product.metafields.info.shortdesc | strip_html | truncatewords: 12 }}
+              </span>
+            {%- else -%}
+              <span class=" txt-short hide" >
+                {{ product.description | strip_html | truncatewords: 12 }}
+              </span>
+            {%- endif -%}
+          </span>
+          {%- endif -%}
+          {%- if settings.enable_compare -%}
+          <span data-tooltip="true" data-placement="top" class="btn btn-theme gradient-theme-vertical product-card__overlay-btn js-btn-compare" title="{{ 'products.product.compare_text' | t }}" data-handle="{{ product.handle }}">
+            {%- render 'icon-exchange' -%}
+            {%- render 'icon-close-solid' -%}
+            <span>{{ 'products.product.compare_text' | t }}</span>
+          </span>
+          {%- endif -%}
+          <span data-tooltip="true" data-placement="top" class="btn btn-theme gradient-theme-vertical product-card__overlay-btn js-grid-cart" title="{{ 'products.product.add_to_cart' | t }}" data-id="{{ product.selected_or_first_available_variant.id }}">
+            {%- render 'icon-cart' -%}
+            <div class="product-card__loading spinner-{{ settings.loading }}" role="status"></div>
+            <span>{{ 'products.product.add_to_cart' | t }}</span>
+          </span>
+          </div>
+          <a href="{{ product.url | within: collection }}" class="link-second__image">
+        {% render 'second-image' , product: product %}
+        </a>
+        <div class="product-card__info">
+          {{ vendor }}
+          <a href="{{ product.url | within: collection }}" title="{{ product.title }}" class="d-block product-card__name {% if settings.t_product %} text-uppercase {% endif %}">{{ product.title }}</a>
+          {{ review }}
+          {{ price }}
+          {%- render 'swatch-grid-1', product: product -%}
+        </div>
+      </div>
+      {%- when 'product-12' -%} 
+        <!-- product-grid-12.liquid -->
+      <div class="product-card js-product-card product-card--style1 product-card--style12 info-{{ enable_bg_info }}" data-price="{{ product.price }}">
+        <div class="product-card__image-wr overflow-hidden">
+          {%- assign image = product.selected_or_first_available_variant.featured_image | default: product.featured_image -%}
+          <a class="product-card__image js image-content__image-wrapper {{ settings.size_image_grid }}" href="{{ product.url | within: collection }}" style="padding-top:{{ 1 | divided_by: image.aspect_ratio | times: 100 }}%;" data-image-id="{{ image.id }}">
+                <img
+                srcset="
+                  {%- if image.width >= 165 -%}{{ image | image_url: width: 165 }} 165w,{%- endif -%}
+                  {%- if image.width >= 360 -%}{{ image | image_url: width: 360 }} 360w,{%- endif -%}
+                  {%- if image.width >= 533 -%}{{ image | image_url: width: 533 }} 533w,{%- endif -%}
+                  {%- if image.width >= 720 -%}{{ image | image_url: width: 720 }} 720w,{%- endif -%}
+                  {%- if image.width >= 940 -%}{{ image | image_url: width: 940 }} 940w,{%- endif -%}
+                  {%- if image.width >= 1066 -%}{{ image | image_url: width: 1066 }} 1066w,{%- endif -%}
+                  {{ image | image_url }} {{ image.width }}w
+                "
+                src="{{ image | image_url: width: 720 }}"
+                sizes="(min-width: {{ settings.container }}px) {{ settings.container | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
+                alt="{{ image.alt | escape }}"
+                class="lazyload scale-in first-image {% if product.images.size > 1 %} hover__hide-image {% endif %}"
+                data-sizes="auto"
+                data-aspectratio="{{ image.aspect_ratio }}"
+                loading="lazy"
+                width="{{ image.width }}"
+                height="{{ image.height }}"
+              >
+          </a>
+          <div class="product-card__overlay d-flex justify-content-center flex-row">
+            {%- if settings.enable_wishlsit -%}
+          <span data-toggle="tooltip" data-placement="top" data-tooltipalltimes="true" class="btn btn-theme gradient-theme-vertical product-card__overlay-btn js-btn-wishlist" title="{{ 'products.product.wishlist_text' | t }}" data-handle="{{ product.handle }}">
+            {%- render 'icon-heart' -%}
+          </span>
+          {%- endif -%}
+          
+          {%- if settings.qv_box -%}
+          <span data-tooltip="true" data-placement="top" 
+            class="btn btn-theme gradient-theme-vertical product-card__overlay-btn js-btn-quickview" 
+            title="{{ 'products.product.quickview_text' | t }}" data-toggle="modal" 
+            data-target="#jsQuickview" data-handle="{{ product.handle }}" 
+            data-tag="{%- if preorder == true -%}preorder{%- else -%} {%- endif -%}"
+            data-pavailable="{% if product.available %}true{% else %}false{% endif %}"
+            {% if settings.enable_review %} data-viewjdmg="<span class='jdgm-preview-badge' data-id='{{ product.id }}'>{{ product.metafields.judgeme.badge }}</span>" {% endif %}>
+            {%- render 'icon-view' -%}
+            <span>{{ 'products.product.quickview_text' | t }}</span>
+            {%- if product.metafields.info.shortdesc != blank -%}
+              <span class=" txt-short hide" >
+                {{ product.metafields.info.shortdesc | strip_html | truncatewords: 12 }}
+              </span>
+            {%- else -%}
+              <span class=" txt-short hide" >
+                {{ product.description | strip_html | truncatewords: 12 }}
+              </span>
+            {%- endif -%}
+          </span>
+          {%- endif -%}
+          {%- if settings.enable_compare -%}
+          <span data-tooltip="true" data-placement="top" class="btn btn-theme gradient-theme-vertical product-card__overlay-btn js-btn-compare" title="{{ 'products.product.compare_text' | t }}" data-handle="{{ product.handle }}">
+            {%- render 'icon-exchange' -%}
+            {%- render 'icon-close-solid' -%}
+            <span>{{ 'products.product.compare_text' | t }}</span>
+          </span>
+          {%- endif -%}
+          <span data-tooltip="true" data-placement="top" class="btn btn-theme gradient-theme-vertical product-card__overlay-btn js-grid-cart" title="{{ 'products.product.add_to_cart' | t }}" data-id="{{ product.selected_or_first_available_variant.id }}">
+            {%- render 'icon-cart' -%}
+            <div class="product-card__loading spinner-{{ settings.loading }}" role="status"></div>
+            <span>{{ 'products.product.add_to_cart' | t }}</span>
+          </span>
+          </div>
+          {%- liquid
+            if settings.enable_countdown_card
+              render 'product-countdown', product: product
+            endif
+            render 'product-label', product: product, showlabel : true
+          -%}
+        </div>
+        
+          <a href="{{ product.url | within: collection }}" class="link-second__image">
+        {% render 'second-image' , product: product %}
+        </a>
+        <div class="product-card__info">
+          {{ vendor }}
+          <a href="{{ product.url | within: collection }}" title="{{ product.title }}" class="d-block product-card__name {% if settings.t_product %} text-uppercase {% endif %}">{{ product.title }}</a>
+          {{ review }}
+          {{ price }}
+          {%- render 'swatch-grid-1', product: product -%}
+        </div>
+      </div>
+{%- endcase -%}

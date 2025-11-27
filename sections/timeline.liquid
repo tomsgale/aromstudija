@@ -1,0 +1,745 @@
+<!-- s_timeline.liquid -->
+{%- render 'style-section' -%}
+<div class="customstyle{{ section.id }}" data-aos="{{ section.settings.animation }}" >
+    <div class="container">
+        <div class="section-block">
+            {%- render 'section-heading' -%}
+            <div class="stimeline__content">
+                <section class="or-timeline js-or-timeline">
+                <div class="or-timeline__container">
+                    {% for block in section.blocks %}
+                    <div class="or-timeline__block js-cd-block" {{ block.shopify_attributes }}>
+                    <div class="or-timeline__img js-cd-img" style="background-color:{{block.settings.bg}}">
+                        {% if block.settings.year != blank %}
+                        <span class="or-timeline__year h6">{{ block.settings.year }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="or-timeline__content js-cd-content">
+                        {% if block.settings.title != blank %}
+                        <h4>{{ block.settings.title }}</h4>
+                        {% endif %}
+                        {% if block.settings.description != blank %}
+                        <p class="txt-body">{{ block.settings.description }}</p>
+                        {% endif %}
+                        {% if block.settings.time != blank %}
+                        <div class="or-timeline__date pb-3 pb-lg-0 d-lg-inline-block d-block">{{block.settings.time}}</div>
+                        {% endif %}
+                        {% if block.settings.link != blank %}
+                        <a target="_blank" href="{{block.settings.link}}" title="{{ section.settings.button-text }}" class="mt-4 {{ section.settings.style_btn }}">{{section.settings.button-text}}</a>
+                        {% endif %}
+                        
+                    </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+  {
+  "name": "Timeline",
+  "class": "index-section",
+  "max_blocks": 1000,
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+      "label": "Background Section",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "title_top",
+      "label": "Sub Title Top",
+      "default": "Sub Title Top"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Grid banner"
+    },
+    {
+      "type": "textarea",
+      "id": "des",
+      "label": "HTML / Description"
+    },
+    {
+      "type": "select",
+      "id": "align-heading",
+      "label": "Align Heading",
+      "default": "center",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Timeline"
+    },
+    {
+      "type": "color",
+      "id": "border",
+      "label": "Border and lines",
+      "default": "#d7e4ed"
+    },
+    {
+      "type": "color",
+      "id": "caption-bg",
+      "label": "Caption background",
+      "default": "#fff"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Caption title",
+      "default": "#303e49"
+    },
+    {
+      "type": "text",
+      "id": "button-text",
+      "label": "Button text",
+      "default": "Read more"
+    },
+    {
+        "type": "select",
+        "id": "style_btn",
+        "label": "Style Button",
+        "default": "btn-underline",
+        "options": [
+        {
+            "value": "btn-theme",
+            "label": "Button Box"
+        },
+        {
+            "value": "btn-theme btn-white",
+            "label": "Button Box White"
+        },
+        {
+            "value": "btn-underline",
+            "label": "Button Line"
+        },
+        {
+            "value": "btn-underline btn-underline-white",
+            "label": "Button Line White"
+        },
+        {
+            "value": "btn-outline",
+            "label": "Button Outline"
+        },
+        {
+            "value": "btn-outline btn-outline-white",
+            "label": "Button Outline White"
+        }
+        ]
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "time",
+      "name": "Time",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Point"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Icon",
+          "info": "50 x 50px recommended"
+        },
+        {
+          "type": "color",
+          "id": "bg",
+          "label": "Background",
+          "default": "#75ce66"
+        },
+        {
+          "type": "header",
+          "content": "Caption"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Title of block"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla molestie mauris ac neque feugiat vestibulum placerat ut ligula. Pellentesque vehicula gravida eros dictum dapibus"
+        },
+        {
+          "type": "text",
+          "id": "time",
+          "label": "Date",
+          "default": "Jan 04"
+        },
+        {
+          "type": "text",
+          "id": "year",
+          "label": "Year",
+          "default": "1920"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "URL link",
+          "default": "/collections/all"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Timeline",
+      "category": "# Shopify section",
+      "settings": {
+      },
+      "blocks": [
+        {
+          "type": "time",
+          "settings": {
+            "image": "",
+            "bg": "#75ce66",
+            "title": "Title of block 1",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla molestie mauris ac neque feugiat vestibulum placerat ut ligula. Pellentesque vehicula gravida eros dictum dapibus",
+            "time": "Jan 04",
+            "link": "shopify://collections/all"
+          }
+        },
+        {
+          "type": "time",
+          "settings": {
+            "image": "",
+            "bg": "#c03b44",
+            "title": "Title of block 2",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum.",
+            "time": "Jan 17",
+            "link": "shopify://collections/all"
+          }
+        },
+        {
+          "type": "time",
+          "settings": {
+            "image": "",
+            "bg": "#f0ca45",
+            "title": "Title of block 3",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, obcaecati, quisquam id molestias eaque asperiores voluptatibus cupiditate error assumenda delectus odit similique earum voluptatem doloremque dolorem ipsam quae rerum quis. Odit, itaque, deserunt corporis vero ipsum nisi eius odio natus ullam provident pariatur temporibus quia eos repellat consequuntur perferendis enim amet quae quasi repudiandae sed quod veniam dolore possimus rem voluptatum eveniet eligendi quis fugiat aliquam sunt similique aut adipisci.",
+            "time": "Feb 10",
+            "link": "shopify://collections/all"
+          }
+        },
+        {
+          "type": "time",
+          "settings": {
+            "image": "",
+            "bg": "#75ce66",
+            "title": "Title of block 4",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut.",
+            "time": "Feb 28",
+            "link": "shopify://collections/all"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% style %}
+.customstyle{{ section.id }}{
+    --or-tl-border:{{ section.settings.border }};
+    --or-tl-bg : {{ section.settings.caption-bg }};
+    --or-tl-textcolor : {{ section.settings.title_color }};
+    
+}
+.or-timeline__container:before{
+    background-color:var(--or-tl-border);
+}
+.or-timeline__content{
+    border:1px solid var(--or-tl-border);
+    box-shadow: 4px 4px 0 0 var(--or-tl-border);
+    background:var(--or-tl-bg);
+}
+.customstyle{{ section.id }} .or-timeline__content{
+    --g-color-heading: var(--or-tl-textcolor);
+    --color-body-text-rgb: {{ section.settings.title_color.red }}, {{ section.settings.title_color.green }}, {{ section.settings.title_color.blue }};
+    --color-body-text: {{ section.settings.title_color }};
+}
+
+.or-timeline__container {
+  position: relative;
+}
+.or-timeline__container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 30px;
+  height: 100%;
+  width: 2px;
+}
+.or-timeline__container:after{
+    content: "";
+    position: absolute;
+    bottom:-10px;
+    left:20px;
+    border-top: 12px solid var(--or-tl-border);
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+
+}
+.or-timeline__block:after,
+.or-timeline__content:after {
+  content: "";
+  clear: both;
+}
+@media only screen and (min-width: 1170px) {
+  .cd-is-hidden {
+    visibility: hidden;
+  }
+  .or-timeline__container::before {
+    left: 50%;
+    margin-left: -2px;
+  }
+  .or-timeline__container:after{
+    left:calc(50% - 1px);
+    transform:translateX(-50%);
+}
+}
+.or-timeline__block {
+  position: relative;
+  margin: 2em 0;
+}
+.or-timeline__block:after {
+  display: table;
+}
+.or-timeline__block:first-child {
+  margin-top: 0;
+}
+.or-timeline__block:last-child {
+  margin-bottom: 0;
+}
+@media only screen and (min-width: 1170px) {
+  .or-timeline__block {
+    margin: 4em 0;
+  }
+}
+.or-timeline__img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: inherit;
+  height: 40px;
+  text-align: center;
+  border-radius: 24px;
+  border:2px solid var(--or-tl-border);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding: 4px 12px;
+}
+.or-timeline__img svg {
+  max-width: 15px;
+  vertical-align: middle;
+}
+.or-timeline__img img {
+  display: block;
+  width: 30px;
+  height: 30px;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  margin-left: -15px;
+  margin-top: -15px;
+}
+@media only screen and (min-width: 1170px) {
+  .or-timeline__img {
+    min-width: 120px;
+    left: 50%;
+    margin-left:-60px;
+    transform:translateZ(0);
+  }
+  .or-timeline__img.or-timeline__img--bounce-in {
+    visibility: visible;
+    -webkit-animation: cd-bounce-1 0.6s;
+    animation: cd-bounce-1 0.6s;
+  }
+}
+@-webkit-keyframes cd-bounce-1 {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+  }
+  60% {
+    opacity: 1;
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+@keyframes cd-bounce-1 {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+  }
+  60% {
+    opacity: 1;
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+.or-timeline__content {
+  position: relative;
+  margin-left: 80px;
+  border-radius: 0.5rem;
+  padding: 1em;
+}
+.or-timeline__content:after {
+  display: table;
+}
+.or-timeline__content::before {
+  content: "";
+  position: absolute;
+  top: 16px;
+  right: 100%;
+  height: 0;
+  width: 0;
+  border: 7px solid transparent;
+}
+.or-timeline__content p {
+  margin: 1em 0;
+  line-height: 1.6;
+}
+.or-timeline__date,
+.or-timeline__read-more {
+  display: inline-block;
+}
+.or-timeline__read-more {
+  float: right;
+  padding: 12px 15px;
+  color: #fff !important;
+  border-radius: 0px;
+  -webkit-transition: ease 0.3s;
+  -o-transition: ease 0.3s;
+  transition: ease 0.3s;
+}
+@media only screen and (min-width: 1170px) {
+  .or-timeline__content {
+    margin-left: 0;
+    padding: 1.5rem;
+    width: 40%;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+  .or-timeline__content::before {
+    top: 24px;
+    left: 100%;
+    border-color: transparent;
+  }
+  .or-timeline__read-more {
+    float: left;
+  }
+  .or-timeline__block:nth-child(even) .or-timeline__content,
+  .or-timeline__block:nth-child(even) .or-timeline__read-more {
+    float: right;
+  }
+  .or-timeline__date {
+    position: absolute;
+    width: 100%;
+    left: 142%;
+    top: 6px;
+  }
+  .or-timeline__block:nth-child(even) .or-timeline__content::before {
+    top: 24px;
+    left: auto;
+    right: 100%;
+    border-color: transparent;
+  }
+  .or-timeline__block:nth-child(even) .or-timeline__date {
+    left: auto;
+    right: 142%;
+    text-align: right;
+  }
+  .or-timeline__content.or-timeline__content--bounce-in {
+    visibility: visible;
+    -webkit-animation: cd-bounce-2 0.6s;
+    animation: cd-bounce-2 0.6s;
+  }
+  .or-timeline__block:nth-child(even)
+    .or-timeline__content.or-timeline__content--bounce-in {
+    -webkit-animation: cd-bounce-2-inverse 0.6s;
+    animation: cd-bounce-2-inverse 0.6s;
+  }
+}
+@-webkit-keyframes cd-bounce-2 {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(-100px);
+    transform: translateX(-100px);
+  }
+  60% {
+    opacity: 1;
+    -webkit-transform: translateX(20px);
+    transform: translateX(20px);
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+@keyframes cd-bounce-2 {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(-100px);
+    transform: translateX(-100px);
+  }
+  60% {
+    opacity: 1;
+    -webkit-transform: translateX(20px);
+    transform: translateX(20px);
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+@-webkit-keyframes cd-bounce-2-inverse {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(100px);
+    transform: translateX(100px);
+  }
+  60% {
+    opacity: 1;
+    -webkit-transform: translateX(-20px);
+    transform: translateX(-20px);
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+@keyframes cd-bounce-2-inverse {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(100px);
+    transform: translateX(100px);
+  }
+  60% {
+    opacity: 1;
+    -webkit-transform: translateX(-20px);
+    transform: translateX(-20px);
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+
+
+{% endstyle %}
+
+{% javascript %}
+  !function(){function e(e){this.element=e,this.blocks=this.element.getElementsByClassName("js-cd-block"),this.images=this.element.getElementsByClassName("js-cd-img"),this.contents=this.element.getElementsByClassName("js-cd-content"),this.offset=.8,this.hideBlocks()}e.prototype.hideBlocks=function(){if(!(!1 in document.documentElement))for(var e,t=this,s=0;s<this.blocks.length;s++)e=s,t.blocks[e].getBoundingClientRect().top>window.innerHeight*t.offset&&(t.images[e].classList.add("cd-is-hidden"),t.contents[e].classList.add("cd-is-hidden"))},e.prototype.showBlocks=function(){if(!(!1 in document.documentElement))for(var e,t=this,s=0;s<this.blocks.length;s++)e=s,t.contents[e].classList.contains("cd-is-hidden")&&t.blocks[e].getBoundingClientRect().top<=window.innerHeight*t.offset&&(t.images[e].classList.add("or-timeline__img--bounce-in"),t.contents[e].classList.add("or-timeline__content--bounce-in"),t.images[e].classList.remove("cd-is-hidden"),t.contents[e].classList.remove("cd-is-hidden"))};var t,s=document.getElementsByClassName("js-or-timeline"),n=[],i=!1;if(s.length>0){for(var o=0;o<s.length;o++)t=o,n.push(new e(s[t]));window.addEventListener("scroll",function(e){i||(i=!0,window.requestAnimationFrame?window.requestAnimationFrame(c):setTimeout(c,250))})}function c(){n.forEach(function(e){e.showBlocks()}),i=!1}}();
+{% endjavascript %}

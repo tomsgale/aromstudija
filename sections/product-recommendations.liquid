@@ -1,0 +1,419 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+  .product-recommendations .product-card .product-countdown{display:none !important;}
+  {%- if section.settings.nowrap -%}
+    .section-{{ section.id }}-padding{
+      overflow:hidden;
+    }
+   .product-recommendations .swiper-container {
+        overflow: visible;
+    }
+  {%- endif -%}
+{%- endstyle -%}
+<div class="section-{{ section.id }}-padding" data-aos="{{ section.settings.animation }}" >
+  <div class="{{ section.settings.setwidth }}">
+    <product-recommendations class="product-recommendations   isolate product-recommendations--loaded" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.products_to_show }}">
+      {% if recommendations.performed and recommendations.products_count > 0 %}
+        <h2 class="product-recommendations__heading mb-5 text-{{ section.settings.heading_align }} {{ section.settings.heading_size }}">{{ section.settings.heading | escape }}</h2>
+        <div class="swiper-container swipercol-{{ section.id }} product-grid" 
+          data-id="{{ section.id }}"  
+          data-perview-desktop="{{ section.settings.perviewDesktop }}"
+          data-space-between="{{ section.settings.spaceBetween }}" role="list">
+          <div class="swiper-wrapper">
+            {% for recommendation in recommendations.products %}
+              <div class="grid__item swiper-slide" >
+                {%- render 'product-card', product: recommendation -%}
+              </div>
+            {% endfor %}
+              {%- if section.settings.scrollbar -%}
+              <div class="swiper-scrollbar"></div>
+              {%- endif -%}
+            
+          </div>
+          {%- if section.settings.arrows -%}
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        {%- endif -%}
+        </div>
+      {% endif %}
+    </product-recommendations>
+  </div>
+</div>
+
+{% javascript %}
+ 
+class ProductRecommendations extends HTMLElement {
+    constructor() {
+      super();
+
+      const handleIntersection = (entries, observer) => {
+        if (!entries[0].isIntersecting) return;
+        observer.unobserve(this);
+
+        fetch(this.dataset.url)
+          .then(response => response.text())
+          .then(text => {
+            const html = document.createElement('div');
+            html.innerHTML = text;
+            const recommendations = html.querySelector('product-recommendations');
+
+            if (recommendations && recommendations.innerHTML.trim().length) {
+              this.innerHTML = recommendations.innerHTML;
+            }
+
+            if (html.querySelector('.grid__item')) {
+              this.classList.add('product-recommendations--loaded');
+              const swiperContainer = this.querySelector('.swiper-container');
+              const getID = swiperContainer.getAttribute("data-id");
+              const swiperID = this.querySelector(`.swipercol-${getID}`);
+              const spaceBetween = parseInt(swiperContainer.getAttribute('data-space-between'), 10);
+              const perviewDesktop = swiperContainer.getAttribute('data-perview-desktop');
+              if (swiperContainer) {
+                new Swiper(swiperContainer, {
+                  slidesPerView: "auto",
+                  freeMode: false,
+                  autoHeight: true,
+                  calculateHeight:true,
+                  freeModeSticky: true,
+                  centeredSlides: false,
+                  grabCursor: true,
+                  watchSlidesVisibility: true,
+                  watchSlidesProgress: true,
+                  preloadImages: true,
+                  updateOnImagesReady: true,
+                  spaceBetween: spaceBetween,
+                  observer: true,
+                  observeParents: true,
+                  parallax:true,
+                  a11y: true,
+                  keyboard: {
+                    enabled: true,
+                  },
+                  breakpoints: {
+                    320: {
+                      slidesPerView: 2,
+                      spaceBetween: 20
+                    },
+                    576: {
+                      slidesPerView: 2,
+                    },
+                    768: {
+                      slidesPerView: 3,
+                    },
+                    992: {
+                      slidesPerView: perviewDesktop,
+                    }
+                  },
+                  scrollbar: {
+                    el: this.querySelector(".swiper-scrollbar"),
+                  },
+                  navigation: {
+                    nextEl: this.querySelector(".swiper-button-next"),
+                    prevEl: this.querySelector(".swiper-button-prev"),
+                  },
+                });
+              } else {
+                console.error('No element with class "swiper-container" found.');
+              }
+            }
+            if(typeof jdgm !== 'undefined'){
+              jdgm.customizeBadges();
+            }
+            if (window.SPR && theme.review ) {
+              if ($('.shopify-product-reviews-badge').length > 0) {
+                return window.SPR.registerCallbacks(), window.SPR.initRatingHandler(), window.SPR.initDomEls(), window.SPR.loadProducts(), window.SPR.loadBadges();
+              };
+            }
+          })
+          .catch(e => {
+            console.error(e);
+          });
+      }
+
+      new IntersectionObserver(handleIntersection.bind(this), {rootMargin: '0px 0px 500px 0px'}).observe(this);
+    }
+  }
+
+  customElements.define('product-recommendations', ProductRecommendations);
+
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Product recommendations",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Dynamic recommendations use order and product information to change and improve over time. [Learn more](https://help.shopify.com/themes/development/recommended-products)"
+    },
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "You may also like",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h1",
+          "label": "H1"
+        }
+      ],
+      "default": "h3",
+      "label": "Heading size"
+    },
+    {
+      "type": "select",
+      "id": "heading_align",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Heading align"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "default": 4,
+      "label": "Maximum products to show"
+    },
+    {
+      "type": "range",
+      "id": "spaceBetween",
+      "label": "Space Between",
+      "max": 40,
+      "min": 0,
+      "step": 1,
+      "unit": " px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "perviewDesktop",
+      "label": "Per View Desktop",
+      "max": 6,
+      "min": 1,
+      "step": 1,
+      "unit": " c",
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "nowrap",
+      "label": "Wrap Box",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "arrows",
+      "label": "Arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "scrollbar",
+      "label": "Scroll Bar",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 36
+    }
+  ]
+}
+{% endschema %}

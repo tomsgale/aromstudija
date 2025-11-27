@@ -1,0 +1,59 @@
+/**
+ * Mockup Composite Styles
+ *
+ * Styles for canvas-based mockup compositing
+ */
+
+/* Mockup canvas container */
+.mockup-composite-container {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+/* Canvas element styling */
+.mockup-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Improve rendering quality on high-DPI displays */
+@media (min-width: 750px) {
+  .mockup-canvas {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Loading state - hide canvas until rendered */
+.mockup-canvas:not([data-rendered="true"]) {
+  opacity: 0;
+}
+
+.mockup-canvas[data-rendered="true"] {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Fallback for noscript */
+.mockup-composite-container noscript {
+  display: block;
+}
+
+.mockup-composite-container noscript img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Hide fallback when JS is enabled */
+.mockup-composite-container.js-enabled noscript {
+  display: none;
+}

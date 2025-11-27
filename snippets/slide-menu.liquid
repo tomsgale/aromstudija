@@ -1,0 +1,429 @@
+{{ 'slide-menu.css' | asset_url | stylesheet_tag }}
+{%-liquid
+ assign linksMenu = linklists[section.settings.main_linklist_vertical].links 
+ assign blocks = section.blocks
+ assign linksList = linklists[section.settings.menu_linklist].links 
+-%}
+<menu-orange class="menu-natur side-menu__wrap"> 
+    <div class="side-menu__header">
+      <nav class="nav-bar d-flex" role="navigation">
+        <ul class="side-menu_nav d-flex list-unstyled">
+          {%- for link in linksMenu -%}
+            {%- if link.links != blank -%}
+            <li class="side-menu__item">
+              <a href="{{ link.url }}" data-link="tab-{{ link.title | strip | downcase | handle }}" class="p-0 tablinks side-menu__link btn site-nav__link " {% if link.active %} aria-current="page" {% endif %}>
+                <span class="site-nav__title" data-link="tab-{{ link.title | strip | downcase | handle }}">
+                    {{ link.title }}
+                </span>
+              </a>
+            </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+        <div class="modal-header position-relative ml-auto">
+            <button type="button" class="close" aria-label="close"></button>
+        </div>
+      </nav>
+    </div>
+    <div class="side-menu__body d-flex flex-column justify-content-between h-100">
+        <div class="pb-5 side-menu__tabwrap border-bottom">
+        {%- for link in linksMenu -%}
+            {%- liquid
+                assign hasMega = false
+                assign titleCheckMega = link.title | strip | split: '[' | first | downcase | handle
+                
+                for block in blocks
+                assign block = block
+                assign menu_title_lv1 = block.settings.menu_title_lv1 | strip | downcase | handle
+                assign image_menu_lv1 = block.settings.image_menu_lv1
+                assign enable_menu_banner_lv1 = block.settings.enable_menu_banner_lv1
+                assign title_menu_banner_lv1 =  block.settings.title_menu_banner_lv1
+                assign des_menu_banner_lv1 =  block.settings.des_menu_banner_lv1
+                assign btn_menu_banner_lv1 =  block.settings.btn_menu_banner_lv1
+                assign btn_link_menu_banner_lv1 =  block.settings.btn_link_menu_banner_lv1
+                assign menu_banner_position_text_lv1 = block.settings.menu_banner_position_text_lv1
+                assign subtitle_menu_banner_lv1 = block.settings.subtitle_menu_banner_lv1
+                assign menu_banner_size_title_lv1  = block.settings.menu_banner_size_title_lv1
+                assign menu_gradient_bg_lv1 = block.settings.menu_gradient_bg_lv1
+
+                if titleCheckMega == menu_title_lv1
+                    assign hasMega = true
+                    break 
+                endif 
+                
+                endfor
+            
+            -%}
+            {%- if link.links != blank -%}
+            <div class="side-menu__tab tab-content" id="tab-{{ link.title | strip | downcase | handle }}">
+                <ul class="side-menu__tablist list-unstyled d-flex flex-column">
+                    {% for childlink in link.links %}
+                    <li class="side-menu__dropdown-container side-menu__second-level">
+                        {% assign childlink_url = childlink.url %}
+                        {%- liquid
+                            assign hasMega_lv2 = false
+                            assign titleCheckMega_lv2 = childlink.title | strip | split: '[' | first | downcase | handle
+                            
+                            for block in blocks
+                            assign block = block
+                            assign menu_title_lv2 = block.settings.menu_title_lv2 | strip | downcase | handle
+                            assign image_menu_lv2 = block.settings.image_menu_lv2
+                            assign enable_menu_banner_lv2 = block.settings.enable_menu_banner_lv2
+                            assign title_menu_banner_lv2 =  block.settings.title_menu_banner_lv2
+                            assign des_menu_banner_lv2 =  block.settings.des_menu_banner_lv2
+                            assign btn_menu_banner_lv2 =  block.settings.btn_menu_banner_lv2
+                            assign btn_link_menu_banner_lv2 =  block.settings.btn_link_menu_banner_lv2
+                            assign menu_banner_position_text_lv2 = block.settings.menu_banner_position_text_lv2
+                            assign subtitle_menu_banner_lv2 = block.settings.subtitle_menu_banner_lv2
+                            assign menu_banner_size_title_lv2  = block.settings.menu_banner_size_title_lv2
+                            assign menu_gradient_bg_lv2 = block.settings.menu_gradient_bg_lv2
+                            
+                            if titleCheckMega_lv2 == menu_title_lv2
+                                assign hasMega_lv2 = true
+                                break 
+                            endif 
+                            endfor
+                        
+                        -%}
+                        {% if childlink.links != blank %}
+                        <a href="{{ childlink_url }}" class="d-flex side-menu__tablist_link side-menu__tablist-second-level" {% if childlink.active %} aria-current="page"{% endif %}>
+                            {{ childlink.title }}
+                            {% render 'icon-arrow-right' %}
+                        </a>
+                        <div class="side-menu__dropdown side-menu__dropdown--third-level">
+                            <div class="d-flex flex-column justify-content-between h-100" style="overflow-y:auto;">
+                                <ul class="side-menu__list list-unstyled">
+                                    {% for grandchildlink in childlink.links %}
+                                    <li class="side-menu__third-level">
+                                    <a href="{{ grandchildlink.url }}" class="side-menu__link py-1 d-flex"{% if grandchildlink.active %} aria-current="page"{% endif %}>
+                                    {{ grandchildlink.title }}
+                                    </a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                                {%- if hasMega_lv2 and enable_menu_banner_lv2 -%}
+                                    {%- liquid
+                                        case menu_banner_position_text_lv2
+                                        when 'top-left'
+                                        assign positiontxt_lv2 = 'align-items-start justify-content-start'
+                                        when 'top-center'
+                                        assign positiontxt_lv2 = 'align-items-start justify-content-center text-center'
+                                        when 'top-right'
+                                        assign positiontxt_lv2 = 'align-items-start justify-content-end text-right'
+                                        when 'mid-left'
+                                        assign positiontxt_lv2 = 'align-items-center justify-content-start'
+                                        when 'mid-center'
+                                        assign positiontxt_lv2 = 'align-items-center justify-content-center text-center'
+                                        when 'mid-right'
+                                        assign positiontxt_lv2 = 'align-items-center justify-content-end text-right'
+                                        when 'bot-left'
+                                        assign positiontxt_lv2 = 'align-items-end justify-content-start'
+                                        when 'bot-center'
+                                        assign positiontxt_lv2 = 'align-items-end justify-content-center text-center'
+                                        when 'bot-right'
+                                        assign positiontxt_lv2 = 'align-items-end justify-content-end text-right'
+                                        else 
+                                        assign positiontxt_lv2 = 'align-items-end justify-content-start'
+                                      endcase
+                                    -%}
+                                    <div class="side-menu__banner_lv2">
+                                        {%- if image_menu_lv2 != blank -%}
+                                            <noscript>
+                                              <img loading="lazy" src="{{ image_menu_lv2 | image_url: width: 600 }}" alt="{{ image_menu_lv2.alt }}" class="image-content__image"  
+                                                width="{{ image_menu_lv2.width }}"
+                                                height="{{ image_menu_lv2.height }}">
+                                            </noscript>
+                                            <div class="image-content__image-container">
+                                              <div class="image-content__image-wrapper" style="padding-top:{{ 1 | divided_by: image_menu_lv2.aspect_ratio | times: 100 }}%;">
+                                                {% assign img_url = image_menu_lv2 | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
+                                                <img class="image-content__image lazyload"
+                                                  src="{{ image_menu_lv2 | image_url: width: 1, height: 1 }}"
+                                                  data-src="{{ img_url }}"
+                                                  data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                                                  data-aspectratio="{{ image_menu_lv2.aspect_ratio }}"
+                                                  data-sizes="auto"
+                                                  loading="lazy"
+                                                  width="{{ image_menu_lv2.width }}"
+                                                  height="{{ image_menu_lv2.height }}"
+                                                  alt="{{ image_menu_lv2.alt | escape }}">
+                                              </div>
+                                            </div>
+                                          {%- else -%}
+                                            <div class="image-content__image">
+                                              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                                            </div>
+                                          {%- endif -%}
+                                          <a class="side-menu__banner--content d-flex {{ positiontxt_lv2 }} " href="{{ btn_link_menu_banner_lv2 }}" style="--menu-gradient-bg:{{ menu_gradient_bg_lv2 }};">
+                                            <div class=" p-4 ">
+                                                {%- if subtitle_menu_banner_lv2 != blank -%}
+                                                    <div class="subtop mb-1"> {{ subtitle_menu_banner_lv2 }}</div>
+                                                {%- endif -%}
+                                                {%- if title_menu_banner_lv2 != blank -%}
+                                                    <div class="{{ menu_banner_size_title_lv2 }} mb-3">{{ title_menu_banner_lv2 }}</div>
+                                                {%- endif -%}
+                                                {%- if des_menu_banner_lv2 != blank -%}
+                                                    <div class="rte-setting txt-body mb-4">{{ des_menu_banner_lv2 }}</div>
+                                                {%- endif -%}
+                                                {%- if btn_menu_banner_lv2 != blank -%}
+                                                    <span class="btn btn-theme btn-white " >{{ btn_menu_banner_lv2 }}</span>
+                                                {%- endif -%}
+                                            </div>
+                                        </a>
+                                    </div>
+                                {%- endif -%}
+                            </div>
+                        </div>
+                        {% else %}
+                        <a href="{{ childlink_url }}" class="d-flex side-menu__tablist_link side-menu__tablist-second-level"{% if childlink.active %} aria-current="page"{% endif %}>
+                            {{ childlink.title }}
+                        </a>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+                {%- if hasMega and enable_menu_banner_lv1 -%}
+                    <div class="side-menu__banner">
+                        {%- liquid
+                            
+                            case menu_banner_position_text_lv1
+                            when 'top-left'
+                            assign positiontxt = 'align-items-start justify-content-start'
+                            when 'top-center'
+                            assign positiontxt = 'align-items-start justify-content-center text-center'
+                            when 'top-right'
+                            assign positiontxt = 'align-items-start justify-content-end text-right'
+                            when 'mid-left'
+                            assign positiontxt = 'align-items-center justify-content-start'
+                            when 'mid-center'
+                            assign positiontxt = 'align-items-center justify-content-center text-center'
+                            when 'mid-right'
+                            assign positiontxt = 'align-items-center justify-content-end text-right'
+                            when 'bot-left'
+                            assign positiontxt = 'align-items-end justify-content-start'
+                            when 'bot-center'
+                            assign positiontxt = 'align-items-end justify-content-center text-center'
+                            when 'bot-right'
+                            assign positiontxt = 'align-items-end justify-content-end text-right'
+                            else 
+                            assign positiontxt = 'align-items-end justify-content-start'
+                          endcase
+                        -%}
+                        {%- if image_menu_lv1 != blank -%}
+                            <noscript>
+                              <img loading="lazy" src="{{ image_menu_lv1 | image_url: width: 600 }}" alt="{{ image_menu_lv1.alt }}" class="image-content__image"  
+                                width="{{ image_menu_lv1.width }}"
+                                height="{{ image_menu_lv1.height }}">
+                            </noscript>
+                            <div class="image-content__image-container">
+                              <div class="image-content__image-wrapper" style="padding-top:{{ 1 | divided_by: image_menu_lv1.aspect_ratio | times: 100 }}%;">
+                                {% assign img_url = image_menu_lv1 | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
+                                <img class="image-content__image lazyload"
+                                  src="{{ image_menu_lv1 | image_url: width: 1, height: 1 }}"
+                                  data-src="{{ img_url }}"
+                                  data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                                  data-aspectratio="{{ image_menu_lv1.aspect_ratio }}"
+                                  data-sizes="auto"
+                                  loading="lazy"
+                                  width="{{ image_menu_lv1.width }}"
+                                  height="{{ image_menu_lv1.height }}"
+                                  alt="{{ image_menu_lv1.alt | escape }}">
+                              </div>
+                            </div>
+                          {%- else -%}
+                            <div class="image-content__image">
+                              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                            </div>
+                          {%- endif -%}
+                        <a class="side-menu__banner--content side-menu__banner--content--lv1 d-flex {{ positiontxt }}" href="{{ btn_link_menu_banner_lv1 }}" style="--menu-gradient-bg:{{ menu_gradient_bg_lv1 }};">
+                            <div class=" p-4 ">
+                                {%- if subtitle_menu_banner_lv1 != blank -%}
+                                    <div class="subtop mb-1"> {{ subtitle_menu_banner_lv1 }}</div>
+                                {%- endif -%}
+                                {%- if title_menu_banner_lv1 != blank -%}
+                                    <div class="{{ menu_banner_size_title_lv1 }} mb-3">{{ title_menu_banner_lv1 }}</div>
+                                {%- endif -%}
+                                {%- if des_menu_banner_lv1 != blank -%}
+                                    <div class="rte-setting txt-body mb-4">{{ des_menu_banner_lv1 }}</div>
+                                {%- endif -%}
+                                {%- if btn_menu_banner_lv1 != blank -%}
+                                    <span class="btn btn-theme btn-white " >{{ btn_menu_banner_lv1 }}</span>
+                                {%- endif -%}
+                            </div>
+                        </a>
+                    </div>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+        {%- endfor -%}
+        </div>
+        <div class="menu-link">
+            <ul class="menu-link__sub list-unstyled">
+                {%- for link in linksList -%}
+                    <li>
+                        <a href="{{ link.url }}" class="sub-menu__link py-1 d-flex">
+                            {{ link.title }}
+                          </a>
+                    </li>
+                {%- endfor -%}
+                {% if settings.mobile_phone != blank %}
+                    <li class="">
+                      <a href="tel:{{ settings.mobile_phone | strip }}" class="sub-menu__link py-1 d-inline-flex font-weight-normal pr-1 d-flex align-items-center letter-spacing-0">
+                        {% render 'icon-mobile-phone' %}
+                        <span class="pl-2">{{ settings.mobile_phone }}</span>
+                      </a>
+                    </li>
+                  {% endif %}
+                  {% if settings.mobile_email != blank %}
+                  <li class="">
+                    <a href="mailto:{{ settings.mobile_email }}" class="sub-menu__link py-1 d-inline-flex font-weight-normal pr-1 d-flex align-items-center letter-spacing-0">
+                      {% render 'icon-email' %}
+                      <span class="pl-2">{{ settings.mobile_email }}</span>
+                    </a>
+                  </li>
+                {% endif %}
+                {%- if settings.login_enable -%}
+                    {%- if shop.customer_accounts_optional or shop.customer_accounts_enabled -%}
+                      {%- if customer -%}
+                        <li class="">
+                          <a href="/account" class=" d-flex align-items-center py-1">
+                            <span class="account-text letter-spacing-0 pl-2">{{ 'layout.customer.account' | t }}
+                            </span>
+                          </a>
+                        </li>
+                      {%- else -%}
+                        <li class=" d-flex align-items-center d-flex align-items-center py-1">
+                          <a href="/account" class=" pr-1 d-flex align-items-center">
+                            {% render 'icon-user' %}
+                            <span class="account-text letter-spacing-0 pl-2">{{ 'customer.login.sign_in' | t }}
+                            </span>
+                          </a> 
+                          <span class="small px-1">/</span> 
+                          <a href="/account/register" class=" pl-1 letter-spacing-0 d-flex align-items-center">
+                            {{ 'customer.register.title' | t }}
+                          </a>
+                        </li>
+                      {%- endif -%}
+                    {%- endif -%}
+                  {%- endif -%}
+                  
+                  <li class=" py-2 d-flex">
+                    {%- liquid
+                        assign enable_image = settings.currency_enable_image
+                        assign enable_name = settings.selector_enable_name 
+                    -%}
+                    {%- if settings.currency_enable and localization.available_countries.size > 1 -%}
+                        {% render 'localization' id: 'HeaderCountryFormSidebar' , header-left : 'header-left', enable_image: enable_image, enable_name: enable_name %}
+                    {%- endif -%}
+                    {%- if settings.lang_enable  and localization.available_languages.size > 1 -%}
+                    {% render 'localization-language', id: 'HeaderLanguageFormSidebar', header-left : 'header-left', enable_name: enable_name %}
+                  {%- endif -%}
+                  </li>
+            </ul>
+        </div>
+    </div>
+</menu-orange>
+<div class="menu-natur-overlay">
+</div>
+<script>
+      class MenuOrange extends HTMLElement {
+        connectedCallback() {
+          this.addEventListener("mouseover", this.handleTabMouseOver);
+          this.openDefaultTab();
+          this.openSidebar();
+          this.openMenu();
+        }
+      
+        disconnectedCallback() {
+          this.removeEventListener("mouseover", this.handleTabMouseOver);
+        }
+        openMenu(){
+            const siteMenu = document.querySelector(".site-click-menu");
+            const menuOrange = document.querySelector("menu-orange");
+            const overlay = document.querySelector('.menu-natur-overlay');
+            const close = this.querySelector('.close');
+            siteMenu.addEventListener("click", function(){
+                menuOrange.classList.add("active");
+                overlay.classList.add("active");
+            });
+            overlay.addEventListener("click", function(){
+                menuOrange.classList.remove("active");
+                this.classList.remove("active");
+            });
+            close.addEventListener("click", function(){
+              menuOrange.classList.remove("active");
+              overlay.classList.remove("active");
+          });
+        }
+        openSidebar(){
+            const outerMenuItems = document.getElementsByClassName("outer-menu-item");
+            const menuNatur = document.querySelector("menu-orange");
+            const overlay = document.querySelector('.menu-natur-overlay');
+            const close = this.querySelector('.close');
+
+              close.addEventListener("click", function(){
+                menuNatur.classList.remove("active");
+                overlay.classList.remove("active");
+            });
+
+            for (let i = 0; i < outerMenuItems.length; i++) {
+            outerMenuItems[i].addEventListener("mouseover", function() {
+                menuNatur.classList.add("active");
+                overlay.classList.add("active");
+            });
+
+            overlay.addEventListener("click", function(){
+                menuNatur.classList.remove("active");
+                this.classList.remove("active");
+            });
+            }
+
+            for (let i = 0; i < outerMenuItems.length; i++) {
+                outerMenuItems[i].addEventListener("mouseover", function(event) {
+                const tabName = event.target.getAttribute("data-link");
+                console.log(tabName);
+                if (tabName) {
+                menuNatur.openTab(tabName);
+                }
+            });
+            }
+      
+        }
+        openTab(tabName) {
+          const tabcontent = this.getElementsByClassName("side-menu__tab");
+          for (let i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+          }
+      
+          const tablinks = this.getElementsByClassName("tablinks");
+          for (let i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("active");
+          }
+      
+          const targetTab = this.querySelector(`#${tabName}`);
+          if (targetTab) {
+            targetTab.style.display = "block";
+            const correspondingTablink = this.querySelector(`[data-link="${tabName}"]`);
+            if (correspondingTablink) {
+              correspondingTablink.classList.add("active");
+            }
+          }
+        }
+      
+        openDefaultTab() {
+          const tablinks = this.getElementsByClassName("tablinks");
+          if (tablinks.length > 0) {
+            const defaultTabName = tablinks[0].getAttribute("data-link");
+            this.openTab(defaultTabName);
+          }
+        }
+      
+        handleTabMouseOver(event) {
+          const link = event.target.getAttribute("data-link");
+          if (link) {
+            this.openTab(link);
+          }
+        }
+      }
+      customElements.define("menu-orange", MenuOrange);
+      
+</script>

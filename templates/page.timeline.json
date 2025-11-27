@@ -1,0 +1,203 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+      }
+    },
+    "54a6a770-9002-4dcf-ad18-910a69016474": {
+      "type": "parallax-banner",
+      "blocks": {
+        "template--21227282268440__54a6a770-9002-4dcf-ad18-910a69016474-sub_title-1": {
+          "type": "sub_title",
+          "settings": {
+            "subtitle": "well-being"
+          }
+        },
+        "template--21227282268440__54a6a770-9002-4dcf-ad18-910a69016474-heading-1": {
+          "type": "heading",
+          "settings": {
+            "title": "Certified sustainable",
+            "size_text": "h1"
+          }
+        },
+        "template--21227282268440__54a6a770-9002-4dcf-ad18-910a69016474-paragraph-1": {
+          "type": "paragraph",
+          "settings": {
+            "subtext": "Making ethical choices should be easy – and we’re putting in the work so you don’t have to. Our styles are designed in Copenhagen and produced ethically in partnership with innovative factories that align with our values"
+          }
+        }
+      },
+      "block_order": [
+        "template--21227282268440__54a6a770-9002-4dcf-ad18-910a69016474-sub_title-1",
+        "template--21227282268440__54a6a770-9002-4dcf-ad18-910a69016474-heading-1",
+        "template--21227282268440__54a6a770-9002-4dcf-ad18-910a69016474-paragraph-1"
+      ],
+      "settings": {
+        "animation": "fade",
+        "setwidth": "container",
+        "bgsection": "#ffffff",
+        "parrallax_enable": true,
+        "image": "shopify:\/\/shop_images\/BodyButterBundle2_02.jpg",
+        "height_section": "550",
+        "height_section_mobile": "450",
+        "align": "center",
+        "position_text": "mid-center",
+        "bg_box": "#ffffff",
+        "opacity_bgbox": 0,
+        "title_color": "#ffffff",
+        "bg_overlay": "#000000",
+        "gradient_bg": "",
+        "opacity_bg_overlay": 0.2,
+        "paddingsection": "0px 0px 0px 0px",
+        "marginsection": "0px 0px 0px 0px"
+      }
+    },
+    "c96b8168-4d48-43d1-aeea-c7ab9ce67cb9": {
+      "type": "timeline",
+      "blocks": {
+        "template--21227282268440__c96b8168-4d48-43d1-aeea-c7ab9ce67cb9-time-1": {
+          "type": "time",
+          "settings": {
+            "bg": "#e4ffdf",
+            "title": "A small business in Aarhus",
+            "description": "What began in 1997 as an independent retail business in Aarhus, Denmark, has since developed into an international fashion brand. Minimum arose from the common desire to design clothes that are accessible and yet fashionable, that impress down to the last detail and that are of the right quality and fit.",
+            "time": "Jan 04",
+            "year": "1920",
+            "link": "shopify:\/\/collections\/all"
+          }
+        },
+        "template--21227282268440__c96b8168-4d48-43d1-aeea-c7ab9ce67cb9-time-2": {
+          "type": "time",
+          "settings": {
+            "bg": "#ffd7db",
+            "title": "The vision of Peder Tang",
+            "description": "Not backed by any big corporation we are still a proud and independent business spearheaded by our founder and owner Peder Tang",
+            "time": "Jan 17",
+            "year": "1930",
+            "link": "shopify:\/\/collections\/all"
+          }
+        },
+        "template--21227282268440__c96b8168-4d48-43d1-aeea-c7ab9ce67cb9-time-3": {
+          "type": "time",
+          "settings": {
+            "bg": "#fff5d2",
+            "title": "At the heart of the creation",
+            "description": "Some call Aarhus the world’s largest provincial town – we just call it home. At our spacious and industrial head quarter on the harbor we currently employ 50+ ambitious doers on a mission to form a healthy workspace, create excellent products, and maintain and develop a strong business.",
+            "time": "Feb 10",
+            "year": "1940",
+            "link": "shopify:\/\/collections\/all"
+          }
+        },
+        "template--21227282268440__c96b8168-4d48-43d1-aeea-c7ab9ce67cb9-time-4": {
+          "type": "time",
+          "settings": {
+            "bg": "#cdedfc",
+            "title": "Industry completely",
+            "description": "It rewrote horologic history with its remarkable accuracy, smaller size, while at the same time making wristwatches affordable.",
+            "time": "Feb 28",
+            "year": "1970",
+            "link": "shopify:\/\/collections\/all"
+          }
+        }
+      },
+      "block_order": [
+        "template--21227282268440__c96b8168-4d48-43d1-aeea-c7ab9ce67cb9-time-1",
+        "template--21227282268440__c96b8168-4d48-43d1-aeea-c7ab9ce67cb9-time-2",
+        "template--21227282268440__c96b8168-4d48-43d1-aeea-c7ab9ce67cb9-time-3",
+        "template--21227282268440__c96b8168-4d48-43d1-aeea-c7ab9ce67cb9-time-4"
+      ],
+      "settings": {
+        "animation": "",
+        "setwidth": "container",
+        "bgsection": "#ffffff",
+        "title_top": "",
+        "title": "Our history",
+        "des": "ineteenth century America idealized white woman’s modesty",
+        "align-heading": "center",
+        "border": "#202025",
+        "caption-bg": "#fff6ed",
+        "title_color": "#202025",
+        "button-text": "",
+        "style_btn": "btn-underline",
+        "paddingsection": "80px 0px 80px 0px",
+        "paddingmobile": "40px 0px 40px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    },
+    "41ecad90-81ec-4319-8539-f0829f7b6230": {
+      "type": "advanced-content",
+      "blocks": {
+        "55609591-6e67-4809-8f1b-94a81376f04c": {
+          "type": "promo",
+          "settings": {
+            "width": "50%",
+            "align": "auto",
+            "sub_title_block": "",
+            "title_block": "",
+            "promo_banner_height": 400,
+            "promo_banner_height_mobile": 400,
+            "image": "shopify:\/\/shop_images\/Rectangle_1476.png",
+            "promo_subheading": "Hurry up",
+            "promo_heading": "Special Collection",
+            "promo_size_title": "h3",
+            "space_heading": "mb-4",
+            "promo_paragraph": "",
+            "promo_btn": "Shop now",
+            "promo_link": "shopify:\/\/collections\/special",
+            "style_btn": "btn-theme btn-white",
+            "promo_color": "#ffffff",
+            "promo_overlay": "#000000",
+            "promo_opacity": 16,
+            "promo_position": "mid-center",
+            "padding-left": false,
+            "padding-right": false
+          }
+        },
+        "5c8df68d-1a05-40ff-9f80-9d3eac300afe": {
+          "type": "bgvideo",
+          "settings": {
+            "width": "50%",
+            "link_video": "https:\/\/cdn.shopify.com\/videos\/c\/o\/v\/8e104bd9437748038769b64b65d8ab5f.mp4",
+            "height_video": 400,
+            "height_video_mobile": 400
+          }
+        }
+      },
+      "block_order": [
+        "55609591-6e67-4809-8f1b-94a81376f04c",
+        "5c8df68d-1a05-40ff-9f80-9d3eac300afe"
+      ],
+      "settings": {
+        "animation": "fade-up",
+        "setwidth": "container",
+        "text_color": "rgba(0,0,0,0)",
+        "bgsection": "#ffffff",
+        "rangebg": 0,
+        "bgbefore": "rgba(0,0,0,0)",
+        "e_size": "auto",
+        "e_repeat": "no-repeat",
+        "e_position": "center center",
+        "title_top": "",
+        "title": "",
+        "des": "",
+        "align-heading": "center",
+        "padding": true,
+        "gutter_padding": 30,
+        "col_center": false,
+        "paddingsection": "40px 0px 80px 0px",
+        "paddingmobile": "40px 0px 40px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "54a6a770-9002-4dcf-ad18-910a69016474",
+    "c96b8168-4d48-43d1-aeea-c7ab9ce67cb9",
+    "41ecad90-81ec-4319-8539-f0829f7b6230"
+  ]
+}

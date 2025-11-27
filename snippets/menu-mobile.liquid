@@ -1,0 +1,96 @@
+<div id="NavDrawer" class="drawer drawer--left">
+  <div class="drawer__inner">
+    <div class="modal-header js-drawer-close py-4">
+        <button type="button" class="close" ></button>
+    </div>
+    <ul class="drawer__nav menu-mobile-footer-content">
+      {%- for link in linklists[settings.main_linklist].links -%}
+        {%- assign child_list_handle = link.title | handleize -%}
+        {%- if link.links != blank -%}
+          <li class="drawer__nav-item">
+            <div class="drawer__nav-has-sublist">
+              <a href="{{ link.url }}" class="drawer__nav-link drawer__nav-link--top-level drawer__nav-link--split" id="DrawerLabel-{{ child_list_handle }}" {% if link.active %} aria-current="page"{% endif %}>
+                {%- render 'processMenuTitle' , itemName: link.title -%}
+                {%- render 'processMenuLabel' , itemName: link.title -%}
+              </a>
+              <button data-toggle="collapse" data-target="#DrawerLinklist-{{ child_list_handle }}" for="DrawerLinklist-{{ child_list_handle }}" type="button" aria-controls="DrawerLinklist-{{ child_list_handle }}" class="text-link drawer__nav-toggle-btn collapsed" aria-label="{%- render 'processMenuTitle' , itemName: link.title -%}" aria-expanded="true">
+                <span class="drawer__nav-toggle--open">
+                  {%- render 'icon-plus' -%}
+                </span>
+                <span class="drawer__nav-toggle--close">
+                  {%- render 'icon-minus' -%}
+                </span>
+              </button>
+            </div>
+            <div class="collapse meganav meganav--drawer" id="DrawerLinklist-{{ child_list_handle }}" aria-labelledby="DrawerLabel-{{ child_list_handle }}" role="navigation">
+              <ul class="meganav__nav">
+                {%- render 'drawer-nav', link: link -%}
+              </ul>
+            </div>
+          </li>
+        {%- else -%}
+          <li class="drawer__nav-item">
+            <a href="{{ link.url }}" class="drawer__nav-link drawer__nav-link--top-level" {% if link.active %} aria-current="page"{% endif %}>
+              {%- render 'processMenuTitle' , itemName: link.title -%}
+              {%- render 'processMenuLabel' , itemName: link.title -%}
+            </a>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+      
+    </ul>
+    <ul class="menu-mobile-footer drawer__nav">
+      {% if settings.mobile_phone != blank %}
+        <li class="drawer__nav-item drawer-nav__item--secondary">
+          <a href="tel:{{ settings.mobile_phone | strip }}" class="drawer__nav-link drawer__nav-link--top-level font-weight-normal pr-1 d-flex align-items-center letter-spacing-0">
+            {% render 'icon-mobile-phone' %}
+            <span class="pl-2">{{ settings.mobile_phone}}</span>
+          </a>
+        </li>
+      {% endif %}
+      {% if settings.mobile_email != blank %}
+      <li class="drawer__nav-item drawer-nav__item--secondary">
+        <a href="mailto:{{ settings.mobile_email }}" class="drawer__nav-link drawer__nav-link--top-level font-weight-normal pr-1 d-flex align-items-center letter-spacing-0">
+          {% render 'icon-email' %}
+          <span class="pl-2">{{ settings.mobile_email }}</span>
+        </a>
+      </li>
+    {% endif %}
+      {%- if settings.login_enable -%}
+        {%- if shop.customer_accounts_optional or shop.customer_accounts_enabled -%}
+          {%- if customer -%}
+            <li class="drawer__nav-item drawer-nav__item--secondary">
+              <a href="/account" class="drawer__nav-link drawer__nav-link--top-level font-weight-normal d-flex align-items-center">
+                <span class="account-text letter-spacing-0 pl-2">{{ 'layout.customer.account' | t }}
+                </span>
+              </a>
+            </li>
+          {%- else -%}
+            <li class="drawer__nav-item drawer-nav__item--secondary d-flex align-items-center d-flex align-items-center">
+              <a href="/account" class="drawer__nav-link drawer__nav-link--top-level font-weight-normal pr-1 d-flex align-items-center">
+                {% render 'icon-user' %}
+                <span class="account-text letter-spacing-0 pl-2">{{ 'customer.login.sign_in' | t }}
+                </span>
+              </a> 
+              <span class="drawer__nav-link--top-level small px-1">/</span> 
+              <a href="/account/register" class="drawer__nav-link drawer__nav-link--top-level font-weight-normal pl-1 letter-spacing-0 d-flex align-items-center">
+                {{ 'customer.register.title' | t }}
+              </a>
+            </li>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endif -%}
+      
+      <li class="drawer__nav-item drawer-nav__item--secondary py-3 pl-2 d-flex">
+        {%- if settings.currency_enable -%}
+          <span class="pr-4">
+            {% render 'localization' id: 'HeaderCountryFormMobile' , header-left : 'header-left' %}
+          </span>
+        {%- endif -%}
+        {%- if settings.lang_enable -%}
+        {% render 'localization-language', id: 'HeaderLanguageFormMobile', header-left : 'header-left' %}
+      {%- endif -%}
+      </li>
+    </ul>
+  </div>
+</div>

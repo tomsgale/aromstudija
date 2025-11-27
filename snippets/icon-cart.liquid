@@ -1,0 +1,52 @@
+
+{%- if section.settings.svg_cart -%}
+  {%- assign svg_cart = section.settings.svg_cart -%}
+{%- else -%}
+{%- assign svg_cart = settings.svg_cart -%}
+{%- endif -%}
+
+{%- case svg_cart -%}
+  {%- when 'cart-1' -%}
+    <svg aria-hidden="true" fill="none" focusable="false" width="24" class="svg-cart" viewBox="0 0 24 24"><path d="M10 7h13l-4 9H7.5L5 3H1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+          <circle cx="9" cy="20" r="1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle>
+          <circle cx="17" cy="20" r="1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle>
+    </svg>
+  {%- when 'cart-2' -%}
+    <svg class="svg-cart" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 4.00024H19L20 20.0002H4L5 4.00024Z" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M9 7C9 7.79565 9.31607 8.5587 9.87868 9.12131C10.4413 9.68392 11.2044 9.99998 12 9.99998C12.7956 9.99998 13.5587 9.68392 14.1213 9.12131C14.6839 8.5587 15 7.79565 15 7" stroke="currentColor" stroke-width="1.5"/>
+    </svg> 
+  {%- when 'cart-3' -%}
+    <svg class="svg-cart" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g>
+      <path d="M11.5238 8.76185V3.28564H12.9524V8.76185H22L18.3638 20.1905H5.63619L2 8.76185H11.5238ZM3.95333 10.1904L6.68095 18.7619H17.319L20.0467 10.1904H3.95238H3.95333Z" fill="currentColor"/>
+      </g>
+    </svg>
+  {%- when 'cart-4' -%}
+    <svg class="svg-cart"  width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M15.914 11.1088C15.8187 9.84444 15.796 8.46587 15.6347 7.06251C15.3753 4.81446 14.2386 3.28271 12.0009 3.28271C9.76329 3.28271 8.62655 4.81446 8.36712 7.06162C8.20581 8.46587 8.18317 9.84356 8.08789 11.1079" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="bevel"/>
+    <path d="M20.1004 19.9089V9.10889H3.90039V19.9089H20.1004Z" stroke="currentColor" stroke-width="1.35" stroke-miterlimit="10"/>
+    </svg>
+
+  {%- when 'cart-5' -%}
+    <svg class="svg-cart" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.5727 7.45459H6.42926C5.47205 7.45459 4.67878 8.19674 4.61511 9.15183L3.94845 19.1519C3.87848 20.2012 4.71085 21.091 5.76259 21.091H18.2393C19.2912 21.091 20.1235 20.2012 20.0535 19.1519L19.3869 9.15183C19.3232 8.19674 18.5299 7.45459 17.5727 7.45459Z" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M15.638 10.1818V6.54542C15.638 4.53711 14.0099 2.90906 12.0016 2.90906C9.99329 2.90906 8.36523 4.53711 8.36523 6.54542V10.1818" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+    </svg>
+  {%- when 'cart-6' -%}
+    <svg class="svg-cart" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M3.94727 6.86532L6.67857 3.56785V3.47363H17.4154L20.0525 6.86532M3.94727 6.86532V18.8304C3.94727 19.7725 4.79491 20.5263 5.73674 20.5263H18.263C19.2049 20.5263 20.0525 19.7725 20.0525 18.8304V6.86532M3.94727 6.86532H20.0525M15.6259 10.257C15.6259 12.1413 14.0248 13.6487 12.047 13.6487C10.0692 13.6487 8.37385 12.1413 8.37385 10.257" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    {%- when 'cart-7' -%}
+    <svg aria-hidden="true" fill="none" focusable="false" width="24" class="svg-cart" viewBox="0 0 24 24"><path d="M2 10h20l-4 11H6L2 10Zm14-3a4 4 0 0 0-8 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+  {%- else -%}
+
+  <svg aria-hidden="true" fill="none" focusable="false" width="24" class="svg-cart" viewBox="0 0 24 24"><path d="M10 7h13l-4 9H7.5L5 3H1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+  <circle cx="9" cy="20" r="1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle>
+  <circle cx="17" cy="20" r="1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+{%- endcase -%}
+
+
+
+
+

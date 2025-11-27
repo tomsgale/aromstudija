@@ -1,0 +1,462 @@
+
+<!-- featured-collection-4.liquid -->
+
+{{ 'component-categories-inspire.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'categories-inspire.js' | asset_url }}" defer="defer"></script>
+{%-liquid
+  assign text_color = section.settings.title_color
+  assign height_section = section.settings.height_section
+  assign height_section_mobile = section.settings.height_section_mobile
+  assign size_text = section.settings.size_text
+  assign opacity_bg_overlay = section.settings.opacity_bg_overlay
+  assign bg_overlay = section.settings.bg_overlay
+  assign enable_first = section.settings.enable_first
+-%}
+<div class="collection-list{{ section.id }}" data-aos="{{ section.settings.animation }}" style="--g-color-heading : {{ text_color }};--g-collection-op-overlay:{{ opacity_bg_overlay }};--g-collection-bg-overlay:{{ bg_overlay }};">
+    <div class="block-section bgcollection-{{ section.id }}" {%- if section.settings.custom_space != blank -%} style="{{ section.settings.custom_space }};background-color: {{ section.settings.bg_section }}" {%- endif -%}  data-section-id="{{ section.id }}">
+      <div class="block_content bgcollection-wrapper">
+          <categories-inspire class="categories-i-grid d-block" style="--st-collection-height : {%- if height_section == 'full-screen' -%} calc(100vh - var(--height-announbar) - var(--height-header) - var(--height-announcementbar)) {%- else -%}{{ height_section }}px {%- endif -%};--st-collection-height-mb : {%- if height_section_mobile == 'full-screen' -%} 100vh  {%- else -%}{{ height_section_mobile }}px {%- endif -%};" >
+            {%- if section.settings.image != blank -%}
+              {%- assign widths = '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840' -%}
+              {%- assign sizes  = '100vw' -%}
+              {{
+                section.settings.image
+                  | image_url: width: 3840
+                  | image_tag: sizes: sizes, widths: widths, fetchpriority: 'high', class:'scale-in lazyload bg-loading'
+              }}
+          {%- endif -%}
+          
+          <div class="categories-i-grid__bg">
+              {%- for block in section.blocks limit: section.blocks.size -%}
+                    <div class="categories-i-bg {% if forloop.first and enable_first %} active {% endif %}" data-index="{{ forloop.index }}">
+                        {%- if block.settings.image != blank -%}
+                            {%- assign widths = '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840' -%}
+                            {%- assign sizes  = '100vw' -%}
+                        {{
+                            block.settings.image
+                            | image_url: width: 3840
+                            | image_tag: sizes: sizes, widths: widths, fetchpriority: 'high', class:'scale-in lazyload'
+                        }}
+                        {%- else -%}
+                            {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                        {%- endif -%}
+                    </div>
+                {%- endfor -%}
+            </div>
+            <div class="full h-100">
+              <div class="categories-i-container" style="--g-categories-grid:{{ section.blocks.size }}">
+                  {%- for block in section.blocks limit: section.blocks.size -%}
+                  {%- liquid
+                    assign title = block.settings.title
+                    assign link = block.settings.link
+                    assign menu_link = block.settings.menu_link
+                  -%}
+                  <div class="categories-i-col" data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}">
+                      <div class="categories-i-box disabled-anchor h-100 w-100 d-flex align-items-center flex-md-row flex-column  {% if forloop.first and enable_first %} active {% endif %}" {{ block.shopify_attributes }}   data-index="{{ forloop.index }}" style="--g-bg-inspire:{{ block.settings.bg_column }}">
+                        {%- if block.settings.image != blank -%}
+                            {%- assign widths = '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840' -%}
+                            {%- assign sizes  = '100vw' -%}
+                            <div class="categories-i-box--mobile d-md-none mb-4">
+                              <div class="categories-i-box--wrap">
+                        {{
+                            block.settings.image
+                            | image_url: width: 3840
+                            | image_tag: sizes: sizes, widths: widths, fetchpriority: 'high', class:'scale-in lazyload '
+                        }}
+                      </div>
+                      </div>
+                        {%- else -%}
+                            {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                        {%- endif -%}
+                        <div class="categories-bg-1 categories-bg" > </div>
+                        <div class="categories-bg-2 categories-bg" > </div>
+                        <div class="d-flex w-100 flex-column px-lg-5 position-relative categories-i-head">
+                          <h3 class="categories-i-box--title mb-2 {{ size_text }}">
+                              {%- if title != blank -%}
+                                  {{ title }}
+                              {%- else -%}
+                                {{ 'homepage.onboarding.collection_title' | t }}
+                              {%- endif -%}
+                          </h3>
+                          <div>
+                            <a href="{{ link | default: '#' }}" class="btn btn-underline"> Shop now</a>
+                          </div>
+                        </div>
+                        <div class="categories-i-headhover d-flex p-lg-5 flex-column justify-content-end">
+                            {%- if menu_link != blank -%}
+                                <ul class="list-unstyled mb-5 txt-body" >
+                                {%- for link in linklists[menu_link].links -%}
+                                    <li class="py-1"><a href="{{ link.url }}">{{ link.title }}</a></li>
+                                {%- endfor -%}
+                              </ul>
+                            {%- endif -%}
+                            <div>
+                                <h3 class="categories-i-box--title mb-2 {{ size_text }}">
+                                    {%- if title != blank -%}
+                                        {{ title }}
+                                    {%- else -%}
+                                      {{ 'homepage.onboarding.collection_title' | t }}
+                                    {%- endif -%}
+                                </h3>
+                                <div>
+                                  <a href="{{ link | default: '#' }}" class="btn btn-underline btn-underline-white d-none d-lg-inline-block"> Shop now</a>
+                                  <a href="{{ link | default: '#' }}" class="btn btn-underline d-lg-none"> Shop now</a>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                  </div>
+                  {%- endfor -%}
+              </div>
+            </div>
+          </categories-inspire>
+      </div>
+    </div>
+</div>
+<script>
+ 
+</script>
+
+{% schema %}
+{
+  "name": "Categories Inspire",
+  "class": "index-section",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+      "label": "Background Section",
+      "default": "#ffffff"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "bg_overlay",
+      "label": "Background Overlay",
+      "default": "#000"
+    },
+    {
+      "type": "range",
+      "id": "opacity_bg_overlay",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "label": "Opacity Overlay",
+      "default": 0.1
+    },
+    {
+      "type": "select",
+      "id": "height_section",
+      "label": "Height Section",
+      "default": "550",
+      "options": [
+        {
+          "label": "450px",
+          "value": "450"
+        },
+        {
+          "label": "550px",
+          "value": "550"
+        },
+        {
+          "label": "650px",
+          "value": "650"
+        },
+        {
+          "label": "750px",
+          "value": "750"
+        },
+        {
+          "label": "Full Screen",
+          "value": "full-screen"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "height_section_mobile",
+      "label": "Height Section Mobile",
+      "default": "450",
+      "options": [
+        {
+          "label": "350px",
+          "value": "350"
+        },
+        {
+          "label": "450px",
+          "value": "450"
+        },
+        {
+          "label": "550px",
+          "value": "550"
+        },
+        {
+          "label": "650px",
+          "value": "650"
+        },
+        {
+          "label": "Full Screen",
+          "value": "full-screen"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_first",
+      "label": " First Active",
+      "default": true
+    },
+    {
+          "type": "select",
+          "id": "size_text",
+          "default": "h2",
+          "options": [
+            {
+              "value": "h1",
+              "label": "H1"
+            },
+            {
+              "value": "h2",
+              "label": "H2"
+            },
+            {
+              "value": "h3",
+              "label": "H3"
+            },
+            {
+              "value": "h4",
+              "label": "H4"
+            },
+            {
+              "value": "h5",
+              "label": "H5"
+            },
+            {
+              "value": "h6",
+              "label": "H6"
+            }
+          ],
+          "label": "Heading Size"
+        },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "color",
+          "id": "bg_column",
+          "label": "Background Column Hover",
+          "default": "#E8C872"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "label": "Title",
+          "id": "title",
+          "type": "text"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "link_list",
+          "id": "menu_link",
+          "label": "Select menu"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Categories Inspire",
+      "blocks": [
+        {
+          "type": "item"
+        },
+        {
+          "type": "item"
+        },
+        {
+          "type": "item"
+        },
+        {
+            "type": "item"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

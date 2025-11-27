@@ -1,0 +1,174 @@
+{%- if section.settings.enable -%}
+  <style>
+    .product-notification-img{
+      position: relative;
+      overflow: hidden;
+      background-color: var(--color-item-product);
+    }
+    .product-notification-img.portrait {
+      padding-top: var(--g-img-portrait) !important;
+    }
+    .product-notification-img.square {
+      padding-top: var(--g-img-square) !important;
+    }
+    .product-notification-img.wide {
+      padding-top: var(--g-img-wide) !important;
+    }
+    .product-notification-img.landscape {
+      padding-top: var(--g-img-landscape) !important;
+    }
+    .product-notification-img.portrait img,.product-notification-img.square img,.product-notification-img.wide img,.product-notification-img.landscape img{
+      position: absolute;
+      top:0;
+      left:0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+<section class="product-notification" data-time="{{ section.settings.duration | times: 1000 }}" >
+  <span  title="Close" class="close-notifi">{% render 'icon-close-solid' %}</span>
+  <div class="product-suggest ">
+    <a class="product-image " href="/" title="">
+      <span class="w-100 d-block product-notification-img position-relative {{ settings.size_image_grid }}">
+        <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" loading="lazy" width="150" height="">
+      </span>
+    </a>
+    <div class="column-right">
+      <label class="pr-2 mb-1">{{ section.settings.text }} <a class="product-name" href="/"></a></label>
+      <div class="from-ago"></div>
+      <div class="d-flex gap-3">
+        <div class="d-flex gap-1 align-items-center">
+          <svg class="txt-body-70" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 3C7.03125 3 3 7.03125 3 12C3 16.9688 7.03125 21 12 21C16.9688 21 21 16.9688 21 12C21 7.03125 16.9688 3 12 3Z" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"/>
+          <path d="M12 6V12.75H16.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div class="time-ago small txt-body-70"></div>
+        </div>
+        {% if section.settings.verify != blank %}
+        <div class="d-flex gap-1 align-items-center">
+          <svg class="svg-verified" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19.5 6L9 18L4.5 13.5" stroke="#108043" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="small txt-verified"> {{ section.settings.verify }} </span>
+        </div>
+        {% endif %}
+      </div>
+      
+    </div>
+  </div>
+  <div class="hide">
+    {%- for block in section.blocks -%}
+    {%- assign product = all_products[block.settings.product] -%}
+    {%- if product != blank -%}
+    <div class="data-product" 
+         data-id="{{ product.id }}" 
+         data-image="{{ product.featured_image | image_url: width: 160 }}" 
+         data-wimage = "{{ product.featured_image.width }}"
+         data-himage = "{{ product.featured_image.height }}"
+         data-url="{{ product.url | within: collection }}" 
+         data-title="{{ product.title }}" 
+         data-alt="{{ product.featured_image.alt }}" 
+         data-local="{{ block.settings.local }}" 
+         data-time="{{ block.settings.time }}"></div>
+    {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+{%- endif -%}
+{% schema %}
+{
+  "name": "Product Suggest",
+  "max_blocks": 100,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable",
+      "label": "Enable"
+    },
+    {
+      "type": "range",
+      "id": "duration",
+      "label": "Duration Time",
+      "min": 5,
+      "max": 20,
+      "step": 1,
+      "unit": "s",
+      "default": 7
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Pretext",
+      "default": "Someone recently bought "
+    },
+    {
+          "type": "text",
+          "id": "verify",
+          "label": "Verify",
+          "default": "Verified"
+        }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "local",
+          "label": "Local",
+          "default": "in Blackburn, UK"
+        },
+        {
+          "type": "text",
+          "id": "time",
+          "label": "Time",
+          "default": "about 21 minutes ago"
+        }
+        
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% style %}
+@keyframes progressbar-countdown {
+  0% {
+    width: 100%;
+  }
+  100% {
+    width: 0%;
+  }
+}
+.product-notification{position:fixed;bottom:10vh;left:1.5rem;background:#fff;width:350px;opacity:0;z-index:998;border:1px solid #eee;border-radius:0px;visibility:hidden;transition:all ease 1s}.product-notification.active{opacity:1;bottom:1.5rem;visibility:visible}.product-notification .close-notifi{border-radius: 50%;display:-webkit-flex;display:-ms-flexbox;display:flex;width:100%;-ms-flex-align:center;-webkit-align-items:center;-moz-align-items:center;-ms-align-items:center;-o-align-items:center;align-items:center;-webkit-justify-content:center;-moz-justify-content:center;-ms-justify-content:center;justify-content:center;width:27px;height:27px;position:absolute;right:4px;top:4px}.product-notification .product-suggest{background:white;display:-webkit-flex;display:-ms-flexbox;display:flex;width:100%;-ms-flex-align:center;-webkit-align-items:center;-moz-align-items:center;-ms-align-items:center;-o-align-items:center;align-items:center}.product-notification .product-name{font-weight:600}.product-notification .product-image{max-width:100px;display:block;padding: 16px 0 16px 16px;flex:0 0 100px;}.product-notification .column-right{padding:16px;line-height:24px;font-size:calc(var(--g-font-size) - 2px)} .product-notification .column-right svg{ fill:none;}.product-notification label{display:block;line-height:1.35;}@media (max-width:480px){.product-notification{display:none}}@media (max-width:767px){ .product-notification{left:20px;}}
+.txt-verified{
+  color:#108043;
+}
+.svg-verified{
+  stroke:#108043;
+}
+.product-notification:before{
+  content:"";
+  height:2px;
+  left:0;
+  bottom:-1px;
+  background:var(--g-color-heading);
+  position:absolute;
+  width:0%;
+}
+.product-notification.active:before{
+  animation: progressbar-countdown;
+  animation-duration: {{ section.settings.duration | times: 1000 }}ms;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+}
+
+{% endstyle %}

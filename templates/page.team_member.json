@@ -1,0 +1,143 @@
+{
+  "sections": {
+    "0b30ed92-eb34-4adc-a194-3b7d43f393ce": {
+      "type": "parallax-banner",
+      "blocks": {
+        "template--21109129412888__0b30ed92-eb34-4adc-a194-3b7d43f393ce-sub_title-1": {
+          "type": "sub_title",
+          "settings": {
+            "subtitle": "Meet Our Team"
+          }
+        },
+        "template--21109129412888__0b30ed92-eb34-4adc-a194-3b7d43f393ce-heading-1": {
+          "type": "heading",
+          "settings": {
+            "title": "We Pride Ourselves",
+            "size_text": "h1"
+          }
+        },
+        "template--21109129412888__0b30ed92-eb34-4adc-a194-3b7d43f393ce-paragraph-1": {
+          "type": "paragraph",
+          "settings": {
+            "subtext": "Our team brings a wealth of experience from some of the world’s most formidable production studios, agencies and startups."
+          }
+        }
+      },
+      "block_order": [
+        "template--21109129412888__0b30ed92-eb34-4adc-a194-3b7d43f393ce-sub_title-1",
+        "template--21109129412888__0b30ed92-eb34-4adc-a194-3b7d43f393ce-heading-1",
+        "template--21109129412888__0b30ed92-eb34-4adc-a194-3b7d43f393ce-paragraph-1"
+      ],
+      "settings": {
+        "animation": "",
+        "setwidth": "container",
+        "bgsection": "#ffffff",
+        "parrallax_enable": true,
+        "image": "shopify:\/\/shop_images\/blog_doctorsvisit.webp",
+        "height_section": "550",
+        "height_section_mobile": "450",
+        "align": "center",
+        "position_text": "mid-center",
+        "bg_box": "#ffffff",
+        "opacity_bgbox": 0,
+        "title_color": "#ffffff",
+        "bg_overlay": "#000000",
+        "gradient_bg": "",
+        "opacity_bg_overlay": 0.2,
+        "paddingsection": "0px 0px 0px 0px",
+        "marginsection": "0px 0px 0px 0px"
+      }
+    },
+    "main": {
+      "type": "s_team_member",
+      "blocks": {
+        "template--16716887458110__abb14abe-2a33-4a6b-aaa1-d36d5422d78d-1666689151286d1fe7-2": {
+          "type": "member",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/269940302_937550767163597_7117100006991752427_n_24.jpg",
+            "name": "Michella Ore",
+            "position": "Developer",
+            "twitter": "https:\/\/twitter.com\/",
+            "google": "https:\/\/plus.google.com",
+            "facebook": "https:\/\/www.facebook.com\/",
+            "linkedin": "https:\/\/www.linkedin.com\/"
+          }
+        },
+        "template--16716887458110__abb14abe-2a33-4a6b-aaa1-d36d5422d78d-1666689151286d1fe7-1": {
+          "type": "member",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/1269940302_937550767163597_7117100006991752427_n_23.jpg",
+            "name": "Vera Duncan",
+            "position": "Producer",
+            "twitter": "https:\/\/twitter.com\/",
+            "google": "https:\/\/plus.google.com",
+            "facebook": "https:\/\/www.facebook.com\/",
+            "linkedin": "https:\/\/www.linkedin.com\/"
+          }
+        },
+        "template--16716887458110__abb14abe-2a33-4a6b-aaa1-d36d5422d78d-1666689151286d1fe7-0": {
+          "type": "member",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/2169940302_937550767163597_7117100006991752427_n_22.jpg",
+            "name": "Abdul Khalek",
+            "position": "CEO & Founder",
+            "twitter": "https:\/\/twitter.com\/",
+            "google": "https:\/\/plus.google.com",
+            "facebook": "https:\/\/www.facebook.com\/",
+            "linkedin": "https:\/\/www.linkedin.com\/"
+          }
+        },
+        "ef393f42-f5c0-45d5-a2a1-4b393bd9d289": {
+          "type": "member",
+          "disabled": true,
+          "settings": {
+            "name": "Jennifer C.",
+            "position": "Designer",
+            "twitter": "#",
+            "google": "#",
+            "facebook": "#",
+            "linkedin": "#"
+          }
+        },
+        "f919b4ce-0fea-4c28-abf7-e08700202918": {
+          "type": "member",
+          "disabled": true,
+          "settings": {
+            "name": "Slava Fedutik",
+            "position": "Designer",
+            "twitter": "#",
+            "google": "#",
+            "facebook": "#",
+            "linkedin": "#"
+          }
+        }
+      },
+      "block_order": [
+        "template--16716887458110__abb14abe-2a33-4a6b-aaa1-d36d5422d78d-1666689151286d1fe7-2",
+        "template--16716887458110__abb14abe-2a33-4a6b-aaa1-d36d5422d78d-1666689151286d1fe7-1",
+        "template--16716887458110__abb14abe-2a33-4a6b-aaa1-d36d5422d78d-1666689151286d1fe7-0",
+        "ef393f42-f5c0-45d5-a2a1-4b393bd9d289",
+        "f919b4ce-0fea-4c28-abf7-e08700202918"
+      ],
+      "settings": {
+        "animation": "fade",
+        "setwidth": "container",
+        "bgsection": "",
+        "title_top": "Top Team",
+        "title": "Team Of Highly",
+        "des": "",
+        "align-heading": "center",
+        "items": "3",
+        "layout": "2",
+        "paddingsection": "60px 0px 40px 0px",
+        "paddingmobile": "60px 0px 40px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    }
+  },
+  "order": [
+    "0b30ed92-eb34-4adc-a194-3b7d43f393ce",
+    "main"
+  ]
+}

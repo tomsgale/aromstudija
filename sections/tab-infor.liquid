@@ -1,0 +1,414 @@
+<!-- tab-info.liquid -->
+{{ 'component-tab-infor.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'tab-infor.js' | asset_url }}" defer="defer"></script>
+<section class="customstyle{{ section.id }} " data-aos="{{ section.settings.animation }}" >
+  {%- render 'style-section' -%}
+  <div class="{{ section.settings.setwidth }}">
+    <tab-info class="section-block">
+        <div class="row">
+            <div class="col-lg-6 col-12 pr-lg-5">
+                <div class="d-flex h-100 flex-column justify-content-between">
+                    <div class="top-info">
+                        {%- if section.settings.title_top != blank -%}
+                            <div class="subtop mb-2"> {{ section.settings.title_top }}</div>
+                        {%- endif -%}
+                        {%- if section.settings.title != blank -%}
+                        <h2 class="mb-3 {{ section.settings.size_text }}">{{ section.settings.title }}</h2>
+                        {%- endif -%}
+                        {%- if section.settings.description != blank -%}
+                            <div class="rte mb-4">{{ section.settings.description }}</div>
+                        {%- endif -%}
+                    </div>
+                    <div class="tab-info">
+                    {%- for block in section.blocks -%}
+                            <div class="tab-info__head tab-info__js py-3 d-flex gap-3" data-tab="tab-{{- block.id -}}" data-id={{ block.id }} {{ block.shopify_attributes }} >
+                                <div class="tab-info__number">{{ forloop.index | prepend: '00' | slice: -2, 2 | append: '.' }}</div>
+                                <div>
+                                    <h5 class="{{ block.settings.size_text }}">{{ block.settings.title_tab }}</h5>
+                                    <div class="tab-info__content">{{ block.settings.des_tab }}</div>
+                                </div>
+                            </div>
+                    {%- endfor -%}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-12">
+                <div class="tab-container mt-4 mt-lg-0">
+                {%- for block in section.blocks -%}
+                  <div id="tab-{{- block.id -}}" class="tab-info-content">
+                {%- if block.settings.image != blank -%}
+                    {%- assign widths = '198, 432, 642, 900, 1284, 1800' -%}
+                    {%- capture sizes -%}
+                    (min-width: {{ settings.container }}px) {{ settings.container | minus: 100 | divided_by: 1.6667 }}px,
+                    (min-width: 750px) calc((100vw - 130px) / 1.667), calc((100vw - 50px) / 1.667)
+                    {%- endcapture -%}
+                    
+                        <div class="image-content__image-container overflow-hidden tab-image__container">
+                          <div class="image-content__image-wrapper" style="padding-top:{{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100 }}%;">
+                              {{
+                                  block.settings.image
+                                  | image_url: width: 1500
+                                  | image_tag: sizes: sizes, widths: widths, fetchpriority: 'auto', class: 'lazyload scale-in'
+                                }}
+                          </div>
+                        </div>
+                    {%- else -%}
+                        <div class="image-content__image">
+                        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                        </div>
+                    {%- endif -%}
+                    {%- if block.settings.product_item != blank -%}
+                      <div class="tab-product-item tab-product-{{ block.settings.product_style }}">
+                      {% render 'product-grid-buywith', product: block.settings.product_item, firstimage: false, enablqv: true %}
+                      </div>
+                    {%- endif -%}
+                    </div>
+                {%- endfor -%}
+            </div>
+            </div>
+        </div>
+      {%- if section.blocks.size == 0 -%}
+      {%- render 'no-blocks' -%}
+      {%- endif -%}
+    </tab-info>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Tab Information",
+  "class": "index-section",
+  "max_blocks": 20,
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+      "label": "Background Section",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Column Left "
+    },
+    {
+      "type": "text",
+      "id": "title_top",
+      "label": "Sub Title Top",
+      "default": "Sub Title Top"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Tab Information"
+    },
+    {
+      "type": "select",
+      "id": "size_text",
+      "default": "h3",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        }
+      ],
+      "label": "Heading Size"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p></p>"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title_tab",
+          "label": "Title Tab",
+          "default": "Title Tab"
+        },
+        {
+          "type": "select",
+          "id": "size_text",
+          "default": "h5",
+          "options": [
+            {
+              "value": "h1",
+              "label": "H1"
+            },
+            {
+              "value": "h2",
+              "label": "H2"
+            },
+            {
+              "value": "h3",
+              "label": "H3"
+            },
+            {
+              "value": "h4",
+              "label": "H4"
+            },
+            {
+              "value": "h5",
+              "label": "H5"
+            },
+            {
+              "value": "h6",
+              "label": "H6"
+            }
+          ],
+          "label": "Heading Size"
+        },
+        {
+          "type": "richtext",
+          "id": "des_tab",
+          "label": "Description Tab",
+          "default": "<p>Description Tab</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "product",
+          "id": "product_item",
+          "label": "Product"
+        },
+        {
+          "type": "select",
+          "id": "product_style",
+          "default": "light",
+          "options": [
+            {
+              "value": "light",
+              "label": "Light"
+            },
+            {
+              "value": "dark",
+              "label": "Dark"
+            }
+          ],
+          "label": "Product Style"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tab Information",
+      "category": "Image",
+      "blocks": [
+        {
+          "type": "tab"
+        },
+        {
+          "type": "tab"
+        },
+        {
+          "type": "tab"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

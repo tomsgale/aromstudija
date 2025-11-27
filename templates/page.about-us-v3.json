@@ -1,0 +1,673 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+      }
+    },
+    "49b0a5ba-1ebd-493b-ae50-1ec847159046": {
+      "type": "image-content",
+      "blocks": {
+        "template--21250050228504__49b0a5ba-1ebd-493b-ae50-1ec847159046-text_block-1": {
+          "type": "text_block",
+          "settings": {
+            "width": "75%",
+            "bgtext": "#e7e8e3",
+            "title_color": "rgba(0,0,0,0)",
+            "subtitle": "The Best",
+            "title": "Skin care adapted to your specific needs,that yield real results.",
+            "size_text": "h2",
+            "text": "",
+            "answer_content": "<p>Our personalized treatments effectively address all your skin concerns, with visible results in 28 days.<\/p>",
+            "style_btn": "btn-underline btn-underline-white",
+            "button": "",
+            "link": "",
+            "enable_padding": true,
+            "block_align": "center",
+            "align": "left"
+          }
+        },
+        "template--21250050228504__49b0a5ba-1ebd-493b-ae50-1ec847159046-image_block-2": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/208680888_319712343194128_7612377786848510981_n.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "template--21250050228504__49b0a5ba-1ebd-493b-ae50-1ec847159046-text_block-1",
+        "template--21250050228504__49b0a5ba-1ebd-493b-ae50-1ec847159046-image_block-2"
+      ],
+      "settings": {
+        "animation": "fade",
+        "setwidth": "full",
+        "bgsection": "#e7e8e3",
+        "rangebg": 0,
+        "bgbefore": "rgba(0,0,0,0)",
+        "bg_pos": "left",
+        "enable_padding": false,
+        "align_center": true,
+        "paddingsection": "0px 0px 0px 0px",
+        "paddingmobile": "40px 0px 0px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    },
+    "f172e7b1-989c-4feb-a20b-ac2934933476": {
+      "type": "rich-text",
+      "blocks": {
+        "02d7795e-308f-44d9-b007-aa374d77dbcb": {
+          "type": "heading",
+          "settings": {
+            "title": "Our Culture",
+            "size_text": "h2"
+          }
+        },
+        "5b0f48ed-12f4-43e7-a7fd-3e3ea948966e": {
+          "type": "paragraph",
+          "settings": {
+            "subtext": "Since 1983, Running Bare has been privately owned and operated by the Powell family with my mother, Corin and myself at the helm. As lifelong Sydneysiders, and women in business, it is very important that we continue to support our local community — just as we have done for almost 40 years of being in the activewear trade. All activewear fabrics are cut on site at our headquarters in sunny Sydney, Australia, while just one suburb over, garments are being crafted and sewn. Being so close to the action means we can personally check production at a moment’s notice. At Running Bare, we are on a mission to keep it local, which not only guarantees exceptionally high quality, but also boosts our local economy and gifts people from all over the world a little slice of iconic Sydney."
+          }
+        }
+      },
+      "block_order": [
+        "02d7795e-308f-44d9-b007-aa374d77dbcb",
+        "5b0f48ed-12f4-43e7-a7fd-3e3ea948966e"
+      ],
+      "settings": {
+        "animation": "fade-up",
+        "setwidth": "container",
+        "bgsection": "#ffffff",
+        "gradient_bg": "",
+        "title_color": "rgba(0,0,0,0)",
+        "title_top": "",
+        "title": "",
+        "text": "",
+        "align-heading": "center",
+        "align-content": "left",
+        "paddingsection": "80px 0px 90px 0px",
+        "paddingmobile": "40px 0px 40px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    },
+    "b2ef3f00-5f4f-4e93-8187-3970a28a8f9e": {
+      "type": "parallax-banner",
+      "blocks": {
+        "template--19549173514560__b2ef3f00-5f4f-4e93-8187-3970a28a8f9e-sub_title-1": {
+          "type": "sub_title",
+          "disabled": true,
+          "settings": {
+            "subtitle": "DAQUÏNI® active"
+          }
+        },
+        "template--19549173514560__b2ef3f00-5f4f-4e93-8187-3970a28a8f9e-heading-1": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "title": "We do a premium activewear",
+            "size_text": "h1"
+          }
+        },
+        "94c7371c-d71f-4781-892e-d23c731daa77": {
+          "type": "paragraph",
+          "disabled": true,
+          "settings": {
+            "subtext": "Clothing may not change the world, but the women who wear them will"
+          }
+        }
+      },
+      "block_order": [
+        "template--19549173514560__b2ef3f00-5f4f-4e93-8187-3970a28a8f9e-sub_title-1",
+        "template--19549173514560__b2ef3f00-5f4f-4e93-8187-3970a28a8f9e-heading-1",
+        "94c7371c-d71f-4781-892e-d23c731daa77"
+      ],
+      "settings": {
+        "animation": "fade",
+        "setwidth": "full",
+        "bgsection": "#ffffff",
+        "parrallax_enable": true,
+        "image": "shopify:\/\/shop_images\/Best_Sellers_17442_Stacked_V1-2.webp",
+        "height_section": "650",
+        "height_section_mobile": "450",
+        "align": "center",
+        "position_text": "mid-center",
+        "bg_box": "#ffffff",
+        "opacity_bgbox": 0,
+        "title_color": "#ffffff",
+        "bg_overlay": "#000000",
+        "gradient_bg": "",
+        "opacity_bg_overlay": 0,
+        "paddingsection": "0px 0px 0px 0px",
+        "marginsection": "0px 0px 0px 0px"
+      }
+    },
+    "3a37a7d4-3633-4dd9-93c8-8609cd17d9c4": {
+      "type": "image-content",
+      "blocks": {
+        "18d2b540-6aa2-4967-b7fd-c7eefd2bd1e5": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/72156666_152952589291853_7402511038358473267_n.jpg"
+          }
+        },
+        "e3cdf781-1586-4bad-94d6-ba09691910ac": {
+          "type": "text_block",
+          "settings": {
+            "width": "75%",
+            "bgtext": "rgba(0,0,0,0)",
+            "title_color": "#ffffff",
+            "subtitle": "premium products",
+            "title": "Accessible care that deliver results",
+            "size_text": "h2",
+            "text": "",
+            "answer_content": "<p>Cosmeticians before becoming masters in their own respective fields –<br\/> Andrea in business administration, and Rachelle in pharmaceutical <br\/>science, a fulfilled chemist – they both joined forces to found the <br\/>inclusive and innovative company of their dreams.<\/p><p>Using meticulously selected <br\/>ingredients of proven efficacy, they have developed a line of <br\/>personalized skin care products that target a broad spectrum of skin <br\/>concerns specific to each individual, with optimal efficacy.<\/p><p><\/p>",
+            "style_btn": "btn-underline btn-underline-white",
+            "button": "",
+            "link": "",
+            "enable_padding": true,
+            "block_align": "center",
+            "align": "left"
+          }
+        }
+      },
+      "block_order": [
+        "18d2b540-6aa2-4967-b7fd-c7eefd2bd1e5",
+        "e3cdf781-1586-4bad-94d6-ba09691910ac"
+      ],
+      "settings": {
+        "animation": "fade",
+        "setwidth": "full",
+        "bgsection": "#344a52",
+        "rangebg": 0,
+        "bgbefore": "rgba(0,0,0,0)",
+        "bg_pos": "left",
+        "enable_padding": false,
+        "align_center": true,
+        "paddingsection": "0px 0px 0px 0px",
+        "paddingmobile": "0px 0px 40px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "40px 0px 0px 0px"
+      }
+    },
+    "2d11636f-e0da-4a86-b3b5-c1eda5735347": {
+      "type": "rich-text",
+      "blocks": {
+        "7407acef-3e90-41f5-9ecf-356bd562c30b": {
+          "type": "heading",
+          "settings": {
+            "title": "Skin Concerns",
+            "size_text": "h2"
+          }
+        },
+        "8a950665-fd5a-43a3-bf89-8ba1c9967e92": {
+          "type": "paragraph",
+          "settings": {
+            "subtext": "The Running Bare all-female design team is a collective of in-house designers, pattern makers & machinists who work together to create garments of the highest level. Working with stretch fabrics, we have always understood the importance of the perfect fit & flawless patterns – these are keystones of our longevity & success. Our pattern makers are the craftswomen who create the perfect Running Bare silhouettes, to compliment every woman’s shape from sizes 8 -22 in both classic and petite fits. Having perfected our pattern blocks over decades, our pattern makers expertly customise and craft our designs specific to fabric, function, size & fit. Every garment design is tested, re-tested & then tested again, to ensure we deliver the perfect Running Bare fit for which we are now famous. We want you to live in our products, so we make them to last. The ability to control every step & to focus on the detailed aspects of the manufacturing process is at the heart of everything we do at Running Bare."
+          }
+        }
+      },
+      "block_order": [
+        "7407acef-3e90-41f5-9ecf-356bd562c30b",
+        "8a950665-fd5a-43a3-bf89-8ba1c9967e92"
+      ],
+      "settings": {
+        "animation": "fade-up",
+        "setwidth": "container",
+        "bgsection": "#ffffff",
+        "gradient_bg": "",
+        "title_color": "rgba(0,0,0,0)",
+        "title_top": "",
+        "title": "",
+        "text": "",
+        "align-heading": "center",
+        "align-content": "left",
+        "paddingsection": "80px 0px 90px 0px",
+        "paddingmobile": "40px 0px 40px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    },
+    "d72bcc8c-88fe-4415-96f0-06511b070083": {
+      "type": "image-content-6",
+      "blocks": {
+        "template--16716887458110__d72bcc8c-88fe-4415-96f0-06511b070083-16666725974cf35e4d-0": {
+          "type": "image_block",
+          "settings": {
+            "style_content": "default",
+            "w_image": 40,
+            "pos_image": 78,
+            "e_image": "right",
+            "image": "shopify:\/\/shop_images\/269940302_937550767163597_7117100006991752427_n_21.jpg",
+            "image2": "shopify:\/\/shop_images\/269940302_937550767163597_7117100006991752427_n_20.jpg",
+            "enable_video": false,
+            "overlay_color": "#000000",
+            "overlay_opacity": 30,
+            "text_circle": "New Fashion style store",
+            "video_url": "https:\/\/www.youtube.com\/watch?v=Yghmzsr3S14&ab_channel=Kandra"
+          }
+        },
+        "template--16716887458110__d72bcc8c-88fe-4415-96f0-06511b070083-16666725974cf35e4d-1": {
+          "type": "text_block",
+          "settings": {
+            "bgtext": "rgba(0,0,0,0)",
+            "subtitle": "sustainable",
+            "title": "Who we are?",
+            "size_text": "h2",
+            "text": "",
+            "answer_content": "<p>Daquïni is an independent, female-founded activewear label dedicated to creating chic, confident, and effortlessly cool active garments that are both functional and genuinely luxurious.<\/p>",
+            "button": "discover now",
+            "link": "",
+            "style_btn": "btn-underline",
+            "align": "left",
+            "enable_padding_left": true,
+            "enable_padding_right": false
+          }
+        }
+      },
+      "block_order": [
+        "template--16716887458110__d72bcc8c-88fe-4415-96f0-06511b070083-16666725974cf35e4d-0",
+        "template--16716887458110__d72bcc8c-88fe-4415-96f0-06511b070083-16666725974cf35e4d-1"
+      ],
+      "settings": {
+        "animation": "fade",
+        "setwidth": "container",
+        "bgsection": "#f3efe9",
+        "size": "50-50",
+        "enable_padding": true,
+        "align_center": true,
+        "paddingsection": "100px 0px 100px 0px",
+        "paddingmobile": "60px 0px 0px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    },
+    "76e2a71a-c94f-41bf-8fad-ee23089b50a8": {
+      "type": "parallax-banner",
+      "blocks": {
+        "3e4e84ba-bf5f-4c9a-829c-d6154831ff2b": {
+          "type": "sub_title",
+          "disabled": true,
+          "settings": {
+            "subtitle": "DAQUÏNI® active"
+          }
+        },
+        "22d4e948-bf31-4460-897a-7e573c719d07": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "title": "We do a premium activewear",
+            "size_text": "h1"
+          }
+        },
+        "843eb0cd-170d-4a3e-958f-48bef5c376ae": {
+          "type": "paragraph",
+          "disabled": true,
+          "settings": {
+            "subtext": "Clothing may not change the world, but the women who wear them will"
+          }
+        }
+      },
+      "block_order": [
+        "3e4e84ba-bf5f-4c9a-829c-d6154831ff2b",
+        "22d4e948-bf31-4460-897a-7e573c719d07",
+        "843eb0cd-170d-4a3e-958f-48bef5c376ae"
+      ],
+      "disabled": true,
+      "settings": {
+        "animation": "fade",
+        "setwidth": "full",
+        "bgsection": "#ffffff",
+        "parrallax_enable": true,
+        "image": "shopify:\/\/shop_images\/versed-on-the-rise-firming-serum-tout-80564384338747be82cee39a3b236e2d.jpg",
+        "height_section": "650",
+        "height_section_mobile": "450",
+        "align": "center",
+        "position_text": "mid-center",
+        "bg_box": "#ffffff",
+        "opacity_bgbox": 0,
+        "title_color": "#ffffff",
+        "bg_overlay": "#000000",
+        "gradient_bg": "",
+        "opacity_bg_overlay": 0,
+        "paddingsection": "0px 0px 0px 0px",
+        "marginsection": "0px 0px 0px 0px"
+      }
+    },
+    "24a28133-2e01-4361-8b00-ad164f72336f": {
+      "type": "image-content",
+      "blocks": {
+        "template--16716887458110__24a28133-2e01-4361-8b00-ad164f72336f-1666686767d1a98887-1": {
+          "type": "text_block",
+          "settings": {
+            "width": "100%",
+            "bgtext": "#ffffff",
+            "title_color": "rgba(0,0,0,0)",
+            "subtitle": "Our Mission",
+            "title": "Ethical and sustainable",
+            "size_text": "h2",
+            "text": "<div class=\"pr-lg-5 mr-lg-4\">\n<p>Need a little newness in your life? We've got you covered. Bringing you \nthe latest drop of more killer clothes, versatile accessories, stand-out \nfootwear, and much, much more. Update those lifesaving essentials \nor bag a knock-out, night-out number.<\/p>\n      <div class=\"mt-5 pt-4 px-lg-5\">\n        <img class=\"lazyload\" loading=\"lazy\" data-src=\"https:\/\/cdn.shopify.com\/s\/files\/1\/0830\/3722\/5240\/files\/Rectangle_2_4_1.webp?v=1696176878\">\n      <\/div>\n    \n<\/div>",
+            "answer_content": "",
+            "style_btn": "btn-underline btn-underline-white",
+            "button": "",
+            "link": "",
+            "enable_padding": false,
+            "block_align": "center",
+            "align": "left"
+          }
+        },
+        "template--16716887458110__24a28133-2e01-4361-8b00-ad164f72336f-1666686767d1a98887-0": {
+          "type": "image_block",
+          "settings": {
+          }
+        }
+      },
+      "block_order": [
+        "template--16716887458110__24a28133-2e01-4361-8b00-ad164f72336f-1666686767d1a98887-1",
+        "template--16716887458110__24a28133-2e01-4361-8b00-ad164f72336f-1666686767d1a98887-0"
+      ],
+      "disabled": true,
+      "settings": {
+        "animation": "fade",
+        "setwidth": "container",
+        "bgsection": "#ffffff",
+        "rangebg": 0,
+        "bgbefore": "rgba(0,0,0,0)",
+        "bg_pos": "left",
+        "enable_padding": true,
+        "align_center": false,
+        "paddingsection": "100px 0px 100px 0px",
+        "paddingmobile": "60px 0px 60px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    },
+    "ee7e9ebd-b251-4a10-a5c6-5ccd33043f75": {
+      "type": "image-content-3",
+      "settings": {
+        "animation": "fade-up",
+        "bgsection": "#ffffff",
+        "subtitle": "Our history",
+        "title": "Doing better for those forgotten by the dermo-cosmetics industry",
+        "size_text": "h2",
+        "des": "Need a little newness in your life? We've got you covered. Bringing you the latest drop of more killer clothes, versatile accessories, stand-out footwear, and much, much more. Update those lifesaving essentials or bag a knock-out, night-out number.",
+        "button": "",
+        "link": "",
+        "style_btn": "btn-theme",
+        "image": "shopify:\/\/shop_images\/70388626_506976053469619_1277511355843378665_n.jpg",
+        "linkimg": "",
+        "bgimage": "#c08b75",
+        "enable_subbg": true,
+        "leftimage": false,
+        "paddingsection": "100px 0px 100px 0px",
+        "paddingmobile": "40px 0px 40px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    },
+    "559f6024-64db-446e-a9dc-976582972dce": {
+      "type": "quotes",
+      "blocks": {
+        "template--16716887458110__559f6024-64db-446e-a9dc-976582972dce-16666891474b2efc36-0": {
+          "type": "quote",
+          "settings": {
+            "title": "Perfect !",
+            "author": "John Alvy",
+            "info": "Engineer",
+            "rate": 5,
+            "quote": "These are comfortable and they look great. I love that the sole is not super thick and oversized like other shoes. Much more subtle understated..."
+          }
+        },
+        "template--16716887458110__559f6024-64db-446e-a9dc-976582972dce-16666891474b2efc36-1": {
+          "type": "quote",
+          "settings": {
+            "title": "Awesome !",
+            "author": "Jacquelyn Rizzo",
+            "info": "Producer",
+            "rate": 5,
+            "quote": "I love this shirt. It feels like a soft sweater but lightweight like a shirt. I wore it to work today. It was 85 and I was fine running around."
+          }
+        },
+        "template--16716887458110__559f6024-64db-446e-a9dc-976582972dce-16666891474b2efc36-2": {
+          "type": "quote",
+          "settings": {
+            "title": "Amazing !",
+            "author": "Hailee Parsons",
+            "info": "Designer",
+            "rate": 5,
+            "quote": "Just right for fall and winter. Quality is there. Order usual size unless you want over sized. Absolutely beautiful and looks amazingly flattering..."
+          }
+        }
+      },
+      "block_order": [
+        "template--16716887458110__559f6024-64db-446e-a9dc-976582972dce-16666891474b2efc36-0",
+        "template--16716887458110__559f6024-64db-446e-a9dc-976582972dce-16666891474b2efc36-1",
+        "template--16716887458110__559f6024-64db-446e-a9dc-976582972dce-16666891474b2efc36-2"
+      ],
+      "settings": {
+        "animation": "fade",
+        "setwidth": "container",
+        "bgsection": "#202025",
+        "title_color": "#ffffff",
+        "title_top": "",
+        "title": "We Love Our Clients",
+        "des": "We are very fortunate to have formed excellent \npartnerships with many of our clients.",
+        "align-heading": "center",
+        "aligntext": "text-left",
+        "style": "style-2",
+        "color_rate": "#f1f1f1",
+        "color_rated": "#ffce00",
+        "size_text": "txt-body",
+        "bg_item": "#343a40",
+        "widthcolumn": 100,
+        "enable_padding_inner": true,
+        "show": 3,
+        "arrows": true,
+        "draggable": true,
+        "dots": false,
+        "infinite": true,
+        "paddingsection": "100px 0px 100px 0px",
+        "paddingmobile": "60px 0px 60px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    },
+    "abb14abe-2a33-4a6b-aaa1-d36d5422d78d": {
+      "type": "s_team_member",
+      "blocks": {
+        "template--16716887458110__abb14abe-2a33-4a6b-aaa1-d36d5422d78d-1666689151286d1fe7-0": {
+          "type": "member",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/269940302_937550767163597_7117100006991752427_n_24.jpg",
+            "name": "Abdul Khalek",
+            "position": "CEO & Founder",
+            "twitter": "https:\/\/twitter.com\/",
+            "google": "https:\/\/plus.google.com",
+            "facebook": "https:\/\/www.facebook.com\/",
+            "linkedin": "https:\/\/www.linkedin.com\/"
+          }
+        },
+        "template--16716887458110__abb14abe-2a33-4a6b-aaa1-d36d5422d78d-1666689151286d1fe7-1": {
+          "type": "member",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/1269940302_937550767163597_7117100006991752427_n_23.jpg",
+            "name": "Vera Duncan",
+            "position": "Producer",
+            "twitter": "https:\/\/twitter.com\/",
+            "google": "https:\/\/plus.google.com",
+            "facebook": "https:\/\/www.facebook.com\/",
+            "linkedin": "https:\/\/www.linkedin.com\/"
+          }
+        },
+        "template--16716887458110__abb14abe-2a33-4a6b-aaa1-d36d5422d78d-1666689151286d1fe7-2": {
+          "type": "member",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/2169940302_937550767163597_7117100006991752427_n_22.jpg",
+            "name": "Michella Ore",
+            "position": "Developer",
+            "twitter": "https:\/\/twitter.com\/",
+            "google": "https:\/\/plus.google.com",
+            "facebook": "https:\/\/www.facebook.com\/",
+            "linkedin": "https:\/\/www.linkedin.com\/"
+          }
+        },
+        "da71da3f-22ff-40d5-be4f-f445f70629e5": {
+          "type": "member",
+          "disabled": true,
+          "settings": {
+            "name": "John Smith",
+            "position": "CEO",
+            "twitter": "#",
+            "google": "#",
+            "facebook": "#",
+            "linkedin": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--16716887458110__abb14abe-2a33-4a6b-aaa1-d36d5422d78d-1666689151286d1fe7-0",
+        "template--16716887458110__abb14abe-2a33-4a6b-aaa1-d36d5422d78d-1666689151286d1fe7-1",
+        "template--16716887458110__abb14abe-2a33-4a6b-aaa1-d36d5422d78d-1666689151286d1fe7-2",
+        "da71da3f-22ff-40d5-be4f-f445f70629e5"
+      ],
+      "settings": {
+        "animation": "fade",
+        "setwidth": "container",
+        "bgsection": "",
+        "title_top": "",
+        "title": "Team Of Highly Skilled",
+        "des": "We are very fortunate to have formed excellent partnerships with many of our clients.",
+        "align-heading": "center",
+        "items": "3",
+        "layout": "2",
+        "paddingsection": "90px 0px 40px 0px",
+        "paddingmobile": "60px 0px 40px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    },
+    "a035e328-7cfe-4cf0-81d0-e2f5f0188740": {
+      "type": "map",
+      "settings": {
+        "heading": "Our store",
+        "address": "<p>123 Fake St.<br\/>Toronto, Canada<\/p><p>Mon - Fri, 10am - 9pm<br\/>Saturday, 11am - 9pm<br\/>Sunday, 11am - 5pm<\/p>",
+        "map_address": "301 Front St W, Toronto",
+        "button_text": "Get directions",
+        "show_pin": true,
+        "api_key": "",
+        "map_code": "<div class=\"mapouter\"><div class=\"gmap_canvas\">\n<iframe width=\"600\" height=\"500\" id=\"gmap_canvas\" src=\"https:\/\/maps.google.com\/maps?q=CN%20Tower,%20301%20Front%20St%20W,%20Toronto,%20ON%20M5V%202T6,%20Canada&t=&z=13&ie=UTF8&iwloc=&output=embed\" frameborder=\"0\" scrolling=\"no\" marginheight=\"0\" marginwidth=\"0\" loading=\"lazy\" allowfullscreen><\/iframe><br><style>.mapouter{position:relative;text-align:right;height:500px;width:600px;}<\/style>\n<a href=\"https:\/\/www.embedgooglemap.net\">google maps code generator<\/a><style>.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:600px;}<\/style>\n<\/div><\/div>",
+        "background_image_position": "center center"
+      }
+    },
+    "e07a205a-2023-4ca5-b589-a46cd70b3237": {
+      "type": "contact-form",
+      "disabled": true,
+      "settings": {
+        "animation": "",
+        "bgsection": "#ffffff",
+        "title_top": "Questions?",
+        "title": "Send us an email",
+        "des": "",
+        "align-heading": "center",
+        "answer_content": "<p>This site is protected by reCAPTCHA and the Google <a href=\"https:\/\/policies.google.com\/privacy\">Privacy Policy<\/a> and <a href=\"https:\/\/policies.google.com\/terms\">Terms of Service<\/a> apply.<\/p>",
+        "paddingsection": "100px 0px 100px 0px",
+        "paddingmobile": "40px 0px 40px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    },
+    "895c09e5-5c6d-4c4d-8492-727381e40aa0": {
+      "type": "service",
+      "blocks": {
+        "16485444103c52f5e9-0": {
+          "type": "service",
+          "settings": {
+            "bgblock": "rgba(0,0,0,0)",
+            "title": "Free shipping",
+            "description": "Estimated 3-5 days",
+            "type_icon": "svg",
+            "icon": "<svg aria-hidden=\"true\" focusable=\"false\" role=\"presentation\" class=\"icon icon-truck\" viewbox=\"0 0 82 82\"><path d=\"M7.238 68.717H1.867V2.12H58.4v16.736h3.886c9.755 0 17.663 7.908 17.663 17.663v32.199h-5.917M55.781 68.717H25.487\"><\/path><path d=\"M58.334 42.124h15.068v-4.27c0-6.82-5.53-12.35-12.351-12.35h-2.718v16.62M73.909 70.236a9.125 9.125 0 1 0-18.013-2.931 9.125 9.125 0 0 0 18.013 2.93ZM25.367 70.235a9.125 9.125 0 1 0-18.012-2.931 9.125 9.125 0 0 0 7.54 10.471 9.125 9.125 0 0 0 10.472-7.54Z\"><\/path><path d=\"M13.723 77.507c-3.966.658-7.937 1.51-11.857 2.593M60.373 76.736c-10.512-1.212-24.298-1.969-38.645-.451M79.768 80.121s-4.96-1.222-12.975-2.395\"><\/path><\/svg>"
+          }
+        },
+        "8fb6874d-8c42-405c-9da3-134f7a8a0c73": {
+          "type": "service",
+          "settings": {
+            "bgblock": "rgba(0,0,0,0)",
+            "title": "The Beach Club",
+            "description": "Be rewarded every time",
+            "type_icon": "svg",
+            "icon": "<svg aria-hidden=\"true\" focusable=\"false\" role=\"presentation\" class=\"icon icon-plant-based\" viewbox=\"0 0 82 82\"><path d=\"M41 20.701V80M56.735 26.294c0 8.703-7.045 15.758-15.735 15.758s-15.735-7.055-15.735-15.758C25.265 14.719 41 2 41 2s15.735 12.719 15.735 24.294ZM30.479 46.972c6.145 6.154 6.145 16.132 0 22.285-6.145 6.154-16.107 6.154-22.252 0C.054 61.072 2.2 40.936 2.2 40.936s20.106-2.149 28.279 6.036Z\"><\/path><path d=\"M41 77.861S27.525 60.403 10.092 50.177M51.412 46.972c-6.145 6.154-6.145 16.132 0 22.285 6.145 6.153 16.107 6.154 22.252 0 8.173-8.185 6.027-28.321 6.027-28.321s-20.106-2.149-28.279 6.036Z\"><\/path><path d=\"M40.891 77.861s13.475-17.458 30.908-27.684\"><\/path><\/svg>"
+          }
+        },
+        "16485444103c52f5e9-1": {
+          "type": "service",
+          "settings": {
+            "bgblock": "rgba(0,0,0,0)",
+            "title": "Instant Refunds",
+            "description": "Return money within 30 days",
+            "type_icon": "svg",
+            "icon": "<svg aria-hidden=\"true\" focusable=\"false\" role=\"presentation\" class=\"icon icon-package\" viewbox=\"0 0 82 82\"><path d=\"M80 21v39L41 80 2 60V21L41 2l39 19Z\"><\/path><path d=\"m2 21 39 20 38.571-19.807M41 41.478v38.338\"><\/path><path d=\"m27.715 8.643 38.409 19.473v17.543l-11.617 6.067V33.83L16.098 14.355\"><\/path><\/svg>"
+          }
+        },
+        "16485444103c52f5e9-2": {
+          "type": "service",
+          "settings": {
+            "bgblock": "rgba(0,0,0,0)",
+            "title": "Wear Now",
+            "description": "Pay in easy instalments.",
+            "type_icon": "svg",
+            "icon": "<svg aria-hidden=\"true\" focusable=\"false\" role=\"presentation\" class=\"icon icon-shield\" viewbox=\"0 0 64 64\"><defs><style>.a{fill:none;stroke:#000;stroke-width:2px}<\/style><\/defs><path class=\"a\" d=\"M21.18 31.69L28.54 39l15.91-15.88\"><\/path><path class=\"a\" d=\"M53 12.54v15.24a31.41 31.41 0 0 1-3.7 14.95A25.46 25.46 0 0 1 32 56a25.46 25.46 0 0 1-17.3-13.27A31.41 31.41 0 0 1 11 27.78V12.54C24.88 13.67 32 8 32 8s7.12 5.67 21 4.54z\"><\/path><\/svg>"
+          }
+        }
+      },
+      "block_order": [
+        "16485444103c52f5e9-0",
+        "8fb6874d-8c42-405c-9da3-134f7a8a0c73",
+        "16485444103c52f5e9-1",
+        "16485444103c52f5e9-2"
+      ],
+      "settings": {
+        "animation": "fade-up",
+        "setwidth": "container",
+        "bgsection": "#ffffff",
+        "title_top": "",
+        "title": "",
+        "des": "",
+        "align-heading": "center",
+        "paddingbox": "0px 0px 0px 0px",
+        "iconcolor": "#202025",
+        "titlecolor": "#202025",
+        "subcolor": "#5f6c79",
+        "size": 44,
+        "service_heading": "h5",
+        "layout": "style-2",
+        "enable_carousel": false,
+        "arrows": false,
+        "draggable": true,
+        "dots": true,
+        "infinite": false,
+        "paddingsection": "30px 0px 30px 0px",
+        "paddingmobile": "30px 0px 10px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "49b0a5ba-1ebd-493b-ae50-1ec847159046",
+    "f172e7b1-989c-4feb-a20b-ac2934933476",
+    "b2ef3f00-5f4f-4e93-8187-3970a28a8f9e",
+    "3a37a7d4-3633-4dd9-93c8-8609cd17d9c4",
+    "2d11636f-e0da-4a86-b3b5-c1eda5735347",
+    "d72bcc8c-88fe-4415-96f0-06511b070083",
+    "76e2a71a-c94f-41bf-8fad-ee23089b50a8",
+    "24a28133-2e01-4361-8b00-ad164f72336f",
+    "ee7e9ebd-b251-4a10-a5c6-5ccd33043f75",
+    "559f6024-64db-446e-a9dc-976582972dce",
+    "abb14abe-2a33-4a6b-aaa1-d36d5422d78d",
+    "a035e328-7cfe-4cf0-81d0-e2f5f0188740",
+    "e07a205a-2023-4ca5-b589-a46cd70b3237",
+    "895c09e5-5c6d-4c4d-8492-727381e40aa0"
+  ]
+}

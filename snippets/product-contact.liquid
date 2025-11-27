@@ -1,0 +1,81 @@
+{% if enable_question %}
+    
+<span class="btn js-btn-contact p-0 d-flex align-items-center" data-toggle="modal" data-target="#jsContact">                    
+<svg xmlns="http://www.w3.org/2000/svg" class="ionicon w-20 mr-2" viewBox="0 0 512 512"><rect x="48" y="96" width="416" height="320" rx="40" ry="40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M112 160l144 112 144-112"/></svg>
+{{ 'contact.product.ask_question' | t }}
+</span>
+<div class="modal fade" id="jsContact" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-form-product  modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">{%- render 'icon-close' -%}</button>
+      </div>
+        <div class="modal-body">
+            <div class="d-flex flex-column">
+            {%- form 'contact', class: 'isolate', id: 'contact_form-product' -%}
+            {{ form.errors | default_errors }}
+                <div class="text-center mb-5">
+                    <h3>{{ 'contact.product.title_question' | t }}</h3>
+                    <p>{{ 'contact.product.des_question' | t }}</p>
+                </div>
+                <div class="px-0 px-lg-4 pb-4">
+                    <input class="field__input form-control hidden hide" type="text" id="ContactProduct-name" name="{{ product.title }}" value="" placeholder="">
+                    <div class="field form-group">
+                        <input class="field__input form-control" autocomplete="name" type="text" id="ContactFormProduct-name" name="contact[{{ 'contact.form.name' | t }}]" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}" placeholder="{{ 'contact.form.name' | t }}">
+                        <label class="field__label" for="ContactFormProduct-name">{{ 'contact.form.name' | t }}</label>
+                    </div>
+                    <div class="field field--with-error form-group">
+                        <input
+                            autocomplete="email"
+                            type="email"
+                            id="ContactFormProduct-email"
+                            class="field__input form-control"
+                            name="contact[email]"
+                            spellcheck="false"
+                            autocapitalize="off"
+                            value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                            aria-required="true"
+                            {% if form.errors contains 'email' %}
+                            aria-invalid="true"
+                            aria-describedby="ContactFormProduct-email-error"
+                            {% endif %}
+                            placeholder="{{ 'contact.form.email' | t }}"
+                        >
+                        <label class="field__label" for="ContactFormProduct-email">{{ 'contact.form.email' | t }} <span aria-hidden="true">*</span></label>
+                        {%- if form.errors contains 'email' -%}
+                            <small class="contact__field-error" id="ContactFormProduct-email-error">
+                            <span class="visually-hidden">{{ form.errors | default_errors }}</span>
+                            <span class="form__message">{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}</span>
+                            </small>
+                        {%- endif -%}
+                    </div>
+                    <div class="field form-group">
+                    <input type="tel" id="ContactFormProduct-phone" class="field__input form-control" autocomplete="tel" name="contact[{{ 'contact.form.phone' | t }}]" pattern="[0-9\-]*" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}" placeholder="{{ 'contact.form.phone' | t }}">
+                    <label class="field__label" for="ContactFormProduct-phone">{{ 'contact.form.phone' | t }}</label>
+                    </div>
+                    <div class="field form-group">
+                    <textarea
+                        rows="10"
+                        id="ContactFormProduct-body"
+                        class="text-area field__input form-control form-control-area"
+                        name="contact[{{ 'contact.form.message' | t }}]"
+                        placeholder="{{ 'contact.form.message' | t }}"
+                    >
+                        {{- form.body -}}
+                    </textarea>
+                    <label class="form__label field__label" for="ContactFormProduct-body">{{ 'contact.form.message' | t }}</label>
+                    </div>
+                    <div class="contact__button text-center">
+                        <button type="submit" class="button btn btn-theme">
+                            {{ 'contact.form.send' | t }}
+                        </button>
+
+                    </div>
+                </div>
+            {%- endform -%}
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+{% endif %}

@@ -1,0 +1,498 @@
+<!-- product-content.liquid -->
+{%- liquid
+    assign validRelated = 'col-12'
+    assign left_size = 'col-md-6 col-12'
+    assign right_size = 'col-md-6 col-12'
+    assign setwidth = section.settings.setwidth
+
+    case section.settings.tab_size 
+    when 'normal' 
+        assign left_size = 'col-md-6 col-12'
+        assign right_size = 'col-md-6 col-12'
+    when 'large' 
+        assign left_size = 'col-md-7 col-12'
+        assign right_size = 'col-md-5 col-12'
+      when 'largest' 
+        assign left_size = 'col-md-8 col-12'
+        assign right_size = 'col-md-4 col-12'  
+    when 'full' 
+        assign left_size = 'col-12'
+        assign right_size = 'col-12'  
+    endcase
+
+    for block in section.blocks
+        if block.type == 'related-product'
+            assign validRelated = left_size
+        else
+            assign validRelated = left_size
+        endif
+    endfor
+-%}
+<style>
+  @media (min-width:768px){
+    .product-related.product-block{
+        padding: 0rem 0rem 0rem 2rem;
+    }
+    .product-content #nav-tab-info .nav-tabs .nav-item{
+        margin: 0 4rem -2px 0;
+    }
+  }
+</style>
+
+<div class="section-{{ section.id }} product-content customstyle{{ section.id }}" data-aos="{{ section.settings.animation }}" >
+  {%- render 'style-section' -%}  
+  <div class="{{ setwidth }}">
+        <div class="row justify-content-center">
+            <div id="nav-tab-info" class="nav-tab-info {{ left_size }}" data-aos="{{ section.settings.animation }}" >
+                <div class="nav nav-tabs {% if section.settings.enable_left %} justify-content-start {% endif %}" role="tablist">
+                    {%- for block in section.blocks -%}
+                        {%- liquid
+                            if forloop.first == true
+                                assign active = 'active'
+                            else
+                                assign active = ''
+                            endif
+                        -%}
+                        {%- case block.type -%}
+                            {%- when 'description' -%}
+                                <a class="nav-item nav-link {{ active }} disabled-anchor" href="#gtab{{ block.id }}" data-toggle="tab" role="tab" aria-selected="true">
+                                    {{ block.settings.title_tab | default: 'Description' }}
+                                </a>
+                            {%- when 'custom_liquid' -%}
+                                <a class="nav-item nav-link {{ active }} disabled-anchor" href="#gtab{{ block.id }}" data-toggle="tab" role="tab" aria-selected="true">
+                                    {{ block.settings.title_tab | default: 'Custom Liquid' }}
+                                </a>
+                            {%- when 'content' -%}
+                                <a class="nav-item nav-link {{ active }} disabled-anchor" href="#gtab{{ block.id }}" data-toggle="tab" role="tab" aria-selected="true">
+                                    {{ block.settings.title_tab | default: 'Title Content' }}
+                                </a>
+                            {%- when 'review' -%}
+                                    <a class="nav-item nav-link {{ active }} disabled-anchor" href="#gtab{{ block.id }}" data-toggle="tab" role="tab" aria-selected="true">
+                                        {{ block.settings.title_tab | default: 'Reviews' }}
+                                    </a>
+                            {%- endcase -%}
+                    {%- endfor -%}
+                </div>
+                <div class="tab-content">
+                    {%- for block in section.blocks -%}
+                        {%- liquid
+                            if forloop.first == true
+                                assign activetab = 'show active'
+                            else
+                                assign activetab = ''
+                            endif
+                        -%}
+                        {%- case block.type -%}
+                            {%- when 'description' -%}
+                                <div class="tab-pane fade {{ activetab }}" id="gtab{{ block.id }}" role="tabpanel" >
+                                    {{ product.description }}
+                                </div>
+                            {%- when 'custom_liquid' -%}
+                                <div class="tab-pane fade {{ activetab }}" id="gtab{{ block.id }}" role="tabpanel" >
+                                    {{ block.settings.custom_liquid }}
+                                </div>
+                            {%- when 'content' -%}
+                                <div class="tab-pane fade {{ activetab }}" id="gtab{{ block.id }}" role="tabpanel" >
+                                    {{ block.settings.answer_content }}
+                                    {{ block.settings.page.content }}
+                                </div>
+                            {%- when 'review' -%}
+                                <div class="tab-pane fade {{ activetab }}" id="gtab{{ block.id }}" role="tabpanel">
+                                    <div id="shopify-product-reviews" data-id="{{ product.id }}">{{ product.metafields.spr.reviews }}</div>
+                                </div>
+                        {%- endcase -%}
+                    {%- endfor -%}
+                </div>
+            </div>
+            
+            {%- for block in section.blocks -%}
+                {%- if block.type == 'related-product' -%}
+                    <div class="{{ right_size }}" data-aos-delay="200" data-aos="{{ section.settings.animation }}" >
+                      <div class="product-block product-related mt-lg-0 mt-4 {% if section.settings.tab_size  == 'full' %} pl-0 {% endif %}">
+                            <product-pairs class="product-pairs isolate product-pairs--loaded" data-id="{{ section.id }}" 
+                              data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ block.settings.product_limit }}&intent=complementary">
+                              {% if recommendations.performed and recommendations.products_count > 0 %}
+                                {%- if block.settings.title_heading != blank -%}
+                                  <h5 class="mb-4 {{ block.settings.size_text }}">{{ block.settings.title_heading }}</h5>
+                                {%- endif -%}
+                                <div class="row">
+                                  {% for recommendation in recommendations.products %}
+                                    <div class="col-lg col-6">
+                                    {%- render 'product-grid-buywith', product: recommendation -%}
+                                  </div>
+                                  {% endfor %}
+                                </div>
+                              {% endif %}
+                            </product-pairs>
+                        </div>
+                    </div>
+                {%- endif -%}
+            {%- endfor -%}
+        </div>
+    </div>
+</div>
+
+{% javascript %}
+  class productPairs extends HTMLElement {
+    connectedCallback() {
+      fetch(this.dataset.url).
+      then((response) => {
+        if (!response.ok) {
+          throw new Error("HTTP error! Status: ".concat(response.status));
+        }
+        return response.text();
+      }).
+      then((response) => {
+        var frag = document.createDocumentFragment(),
+          fetchedContent = document.createElement('div');
+        frag.appendChild(fetchedContent);
+        fetchedContent.innerHTML = response;
+
+        var replacementContent = fetchedContent.querySelector("[data-id=\"".concat(CSS.escape(this.dataset.id), "\"]"));
+        if (replacementContent) {
+          this.innerHTML = replacementContent.innerHTML;
+        }
+      });
+    }
+  }
+
+  customElements.define('product-pairs', productPairs);
+{% endjavascript %}
+{% schema %}
+{
+  "name": "Product Content",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "tab_size",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Normal"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        },
+        {
+          "value": "largest",
+          "label": "Largest"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ],
+      "default": "large",
+      "label": "Tab Size"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_left",
+      "label": "Title Tab Left",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "description",
+      "name": "Description",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title_tab",
+          "label": "Heading",
+          "default": "Description"
+        }
+      ]
+    },
+    {
+      "type": "custom_liquid",
+      "name": "Custom Liquid",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title_tab",
+          "label": "Heading",
+          "default": "Title Custom liquid"
+        },
+        {
+          "type": "liquid",
+          "id": "custom_liquid",
+          "label": "Custom Liquid",
+          "info": "Add app snippets or other Liquid code to create advanced customizations."
+        }
+      ]
+    },
+    {
+      "type": "content",
+      "name": "Content",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title_tab",
+          "label": "Heading",
+          "default": "Title Content"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_content",
+          "label": "Tab content",
+          "default": "<p>Use collapsible tabs for more detailed information that will help customers make a purchasing decision.</p><p>Ex: Shipping and return policies, size guides, and other common questions.</p>"
+        },
+        {
+          "type": "page",
+          "id": "page",
+          "label": "Select Page"
+        }
+      ]
+    },
+    {
+      "type": "related-product",
+      "name": "Featured products ",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title_heading",
+          "label": "Heading",
+          "default": "Related products"
+        },
+        {
+          "type": "select",
+          "id": "size_text",
+          "default": "h6",
+          "options": [
+            {
+              "value": "h1",
+              "label": "H1"
+            },
+            {
+              "value": "h2",
+              "label": "H2"
+            },
+            {
+              "value": "h3",
+              "label": "H3"
+            },
+            {
+              "value": "h4",
+              "label": "H4"
+            },
+            {
+              "value": "h5",
+              "label": "H5"
+            },
+            {
+              "value": "h6",
+              "label": "H6"
+            }
+          ],
+          "label": "Heading Size"
+        },
+        {
+          "type": "range",
+          "id": "product_limit",
+          "min": 1,
+          "max": 6,
+          "step": 1,
+          "label": "Limit Products",
+          "default": 6,
+          "info":"Complementary products. Guide https://help.shopify.com/en/manual/online-store/search-and-discovery/product-recommendations"
+        }
+      ]
+    },
+    {
+      "type": "review",
+      "name": "Review",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title_tab",
+          "label": "Heading",
+          "default": "Review"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

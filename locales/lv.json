@@ -1,0 +1,189 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "general": {
+    "search": {
+      "titleplace": "Meklēt produktus",
+      "placeholder": "Meklēt",
+      "search": "Meklēt"
+    },
+    "breadcrumb": {
+      "home": "Sākums"
+    },
+    "newsletter_form": {
+      "newsletter_placeholder": "Ievadiet savu e-pasta adresi",
+      "submit": "Abonēt"
+    },
+    "social": {
+      "alt_text": {
+        "share_on_facebook": "Dalīties Facebook",
+        "share_on_pinterest": "Dalīties Pinterest"
+      }
+    }
+  },
+  "layout": {
+    "cart": {
+      "title": "Iepirkumu grozs"
+    },
+    "customer": {
+      "sub_login": "Pieteikties kontā",
+      "question_account": "Nav konta?",
+      "create_account": "Izveidot kontu"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Iepirkumu grozs",
+      "empty": "Jūsu iepirkumu grozs ir tukšs",
+      "empty_button": "Turpināt iepirkšanos",
+      "note_title": "Piezīmes pasūtījumam",
+      "note_label": "Pievienot piezīmi",
+      "note": "Piezīme",
+      "coupon_title": "Atlaižu kods",
+      "calc_title": "Aprēķināt piegādi",
+      "taxes_and_shipping_at_checkout": "Nodokļi un piegāde tiks aprēķināti pie apmaksas",
+      "taxes_included_and_shipping_policy_html": "Nodokļi iekļauti. Piegādes izmaksas tiks aprēķinātas pie apmaksas.",
+      "checkout": "Apmaksāt",
+      "close": "Aizvērt",
+      "save": "Saglabāt",
+      "view": "Skatīt",
+      "remove": "Noņemt",
+      "total": "Kopā"
+    },
+    "label": {
+      "total": "Kopā"
+    }
+  },
+  "products": {
+    "facets": {
+      "filter_by_label": "Filtrēt pēc",
+      "sort_by_label": "Kārtot pēc",
+      "product_count_simple": "produkti",
+      "filters_selected": "Filtri izvēlēti",
+      "reset": "Atiestatīt",
+      "filter_and_sort": "Filtrēt un kārtot",
+      "clear_all": "Notīrīt visu"
+    },
+    "product": {
+      "add_to_cart": "Pievienot grozam",
+      "vendor": "Ražotājs",
+      "type": "Tips",
+      "sku": "Produkta kods",
+      "compare_remove": "Noņemt no salīdzināšanas",
+      "available": "Pieejams",
+      "compare_text": "Salīdzināt",
+      "add_to_wishlist": "Pievienot vēlmju sarakstam",
+      "view_wishlist": "Skatīt vēlmju sarakstu",
+      "sold_out": "Izpārdots",
+      "unavailable": "Nav pieejams",
+      "compare_notice_added": "Produkts pievienots salīdzināšanai",
+      "compare_no_result": "Nav rezultātu salīdzināšanai",
+      "wishlist_remove": "Noņemt no vēlmju saraksta",
+      "wishlist_no_result": "Vēlmju saraksts ir tukšs"
+    }
+  },
+  "collections": {
+    "general": {
+      "title": "Kolekcijas"
+    }
+  },
+  "contact": {
+    "product": {
+      "ask_question": "Uzdot jautājumu"
+    }
+  },
+  "templates": {
+    "search": {
+      "title": "Meklēšanas rezultāti",
+      "products": "Produkti",
+      "search_for": "Meklēt",
+      "results_with_count": "Rezultāti"
+    }
+  },
+  "blogs": {
+    "article": {
+      "read_more": "Lasīt vairāk",
+      "all_tags": "Visi tagi",
+      "pre_post": "Iepriekšējais raksts",
+      "next_post": "Nākamais raksts"
+    },
+    "comments": {
+      "with_count": "Komentāri"
+    }
+  },
+  "customer": {
+    "login": {
+      "sign_in": "Pieteikties",
+      "title": "Pieteikšanās",
+      "email": "E-pasta adrese",
+      "password": "Parole",
+      "forgot_password": "Aizmirsāt paroli?",
+      "guest_title": "Turpināt kā viesis",
+      "guest_continue": "Turpināt",
+      "create_account": "Izveidot kontu",
+      "submit": "Pieteikties"
+    },
+    "register": {
+      "title": "Reģistrēties",
+      "first_name": "Vārds",
+      "last_name": "Uzvārds",
+      "email": "E-pasta adrese",
+      "password": "Parole",
+      "password_confirm": "Apstiprināt paroli",
+      "submit": "Izveidot kontu",
+      "return_to_login": "Atgriezties pie pieteikšanās"
+    },
+    "reset_password": {
+      "title": "Atiestatīt paroli",
+      "subtext": "Mēs nosūtīsim jums e-pastu ar saiti paroles atiestatīšanai",
+      "email": "E-pasta adrese",
+      "submit": "Nosūtīt",
+      "cancel": "Atcelt"
+    },
+    "account": {
+      "title": "Mans konts",
+      "details": "Konta detaļas",
+      "view_addresses": "Skatīt adreses",
+      "return": "Atgriezties pie konta"
+    },
+    "orders": {
+      "title": "Pasūtījumu vēsture",
+      "order_number": "Pasūtījums",
+      "date": "Datums",
+      "payment_status": "Maksājuma statuss",
+      "fulfillment_status": "Izpildes statuss",
+      "total": "Kopā",
+      "none": "Jūs vēl neesat veicis nevienu pasūtījumu."
+    },
+    "addresses": {
+      "title": "Adreses",
+      "default": "Noklusējuma",
+      "add_new": "Pievienot jaunu adresi",
+      "edit_address": "Rediģēt adresi",
+      "first_name": "Vārds",
+      "last_name": "Uzvārds",
+      "company": "Uzņēmums",
+      "address1": "Adrese",
+      "address2": "Dzīvoklis, komplekss utt.",
+      "city": "Pilsēta",
+      "country": "Valsts",
+      "province": "Rajons",
+      "zip": "Pasta indekss",
+      "phone": "Telefons",
+      "set_default": "Iestatīt kā noklusējuma",
+      "add": "Pievienot adresi",
+      "update": "Atjaunināt adresi",
+      "cancel": "Atcelt",
+      "edit": "Rediģēt",
+      "delete": "Dzēst",
+      "delete_confirm": "Vai tiešām vēlaties dzēst šo adresi?"
+    }
+  }
+}

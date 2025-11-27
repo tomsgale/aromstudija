@@ -1,0 +1,517 @@
+<!-- product-tab.liquid  -->
+
+{%-liquid
+  assign buttonall = section.settings.buttonall
+  assign buttonall_link = section.settings.buttonall_link
+  assign style_btn = section.settings.style_btn
+  assign enable_carousel = section.settings.enable_carousel
+  assign show = section.settings.show 
+  assign style_tab = section.settings.style_tab
+  case show
+    when 3
+    assign column = ' col-lg-4 col-6'
+    when 4
+    assign column = ' col-lg-3 col-6'
+    when 5
+    assign column = 'col'
+    when 6
+    assign column = ' col-lg-2 col-6'
+  endcase
+-%}
+{%- style -%}
+.customstyle{{ section.id }} .prdtab-content{
+  margin:0 -{{ section.settings.spaceBetween | divided_by: 2 }}px;
+}
+.customstyle{{ section.id }} .slick-track{
+display:flex;
+}
+.customstyle{{ section.id }} .prdtab-content .producttab-item{
+  padding: 0 {{ section.settings.spaceBetween | divided_by: 2 }}px;
+  height:inherit;
+}
+.style-button.nav-tabs .nav-item{
+  margin-bottom:0;
+}
+.style-button.nav-tabs.nav-tabs-1{
+  box-shadow:none;
+  gap: 16px;
+}
+.style-button.nav-tabs.nav-tabs-1 .nav-link{
+  border:2px solid rgba(var(--g-color-heading-rgb),0.1);
+  padding:8px 16px;
+  border-radius:var(--g-font-radius-btn);
+}
+.style-button.nav-tabs.nav-tabs-1 .nav-link:before{
+  display:none;
+}
+.style-button.nav-tabs.nav-tabs-1 .nav-link.active{
+  background-color:rgba(var(--g-color-heading-rgb),1);
+  color:white;
+}
+{%- endstyle -%}
+<div class="customstyle{{ section.id }} "  data-aos="{{ section.settings.animation }}" >
+  {%- render 'style-section' -%}
+  <div class="{{ section.settings.setwidth }}">
+    <div class="section-block">
+      {%- render 'section-heading' -%}
+      <div id="Producttab-{{ section.id }}" data-section-id="{{ section.id }}" 
+              {% if enable_carousel %}
+              data-section-type="producttab" 
+              {% endif %}
+              data-rows="{{ section.settings.rows }}"
+              data-slidesToShow="{{ section.settings.show }}"
+              data-arrows="{{ section.settings.arrows }}"
+              data-dots="{{ section.settings.dots }}" 
+              data-draggable="{{ section.settings.draggable }}" 
+              data-infinite="{{ section.settings.infinite }}"
+                >
+        <div class="text-{{ section.settings.align-heading }} mt-n4 mb-5">
+          <ul class="nav nav-tabs nav-tabs-1 d-inline-flex style-{{ style_tab }}" role="tablist">
+            {%- for block in section.blocks -%}
+            <li class="nav-item" role="presentation">
+              <a id="{{ block.id }}-tab" class="nav-link nav-link-{{ block.id }} {% if forloop.first %}active{% endif %}" data-toggle="tab" href="#prdtab-{{block.id}}" role="tab" aria-controls="prdtab-{{ block.id }}" {{ block.shopify_attributes }}>
+                {{ block.settings.title }}
+              </a>
+            </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+        <div class="tab-content" data-aos="{{ section.settings.animation }}">
+          {%- for block in section.blocks -%}
+          {%- assign collection = collections[block.settings.collection] -%}
+          {%- assign limit = section.settings.limit -%}
+          <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="prdtab-{{ block.id }}" role="tabpanel" aria-labelledby="{{ block.id }}-tab">
+            <div class="prdtab-content row {% unless enable_carousel %} {% if show == 5 %} row-cols-5 {% endif %} {% endunless %}" {% if enable_carousel %} style="opacity:0" {% endif %}>
+              {%- if collection != blank -%}
+              {%- for product in collection.products limit: limit -%}
+              <div class="producttab-item {% if enable_carousel %} col {% else %} {{ column }} {% endif %}" data-scroll data-scroll-speed="1" >
+                <div class="h-100" data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}">
+                {%- render 'product-card', product: product -%}
+                </div>
+              </div>
+              {%- endfor -%}
+              {%- else -%}
+              {%- for i in (1..limit) -%}
+              <div class="producttab-item {% if enable_carousel %} col {% else %} {{ column }} {% endif %}">
+                  <div data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}">
+                  {%- render 'product-grid-blank' -%}
+                  </div>
+              </div>
+              {%- endfor -%}
+              {%- endif -%}
+            </div>
+          </div>
+          {%- endfor -%}
+        </div>
+        {%- if buttonall != blank -%}
+          <div class="pt-4 text-center">
+            <a href="{{ buttonall_link }}" class="btn {{ style_btn }}">
+              {{ buttonall }}
+            </a>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product tab",
+  "class": "index-section",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+      "label": "Background Section",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "title_top",
+      "label": "Sub Title Top",
+      "default": "Sub Title Top"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Product tab"
+    },
+    {
+      "type": "textarea",
+      "id": "des",
+      "label": "HTML / Description"
+    },
+    {
+      "type": "select",
+      "id": "align-heading",
+      "label": "Align Heading",
+      "default": "center",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "style_tab",
+      "label": "Style Tab",
+      "default": "line",
+      "options": [
+        {
+          "value": "line",
+          "label": "Line"
+        },
+        {
+          "value": "button",
+          "label": "Button"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_carousel",
+      "label": "Enable Carousel",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "arrows",
+      "label": "Arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "draggable",
+      "label": "Draggable",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "dots",
+      "label": "Dots",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "infinite",
+      "label": "Infinite",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "rows",
+      "label": "Rows",
+      "default": "1",
+      "info":"It will working with enable carousel",
+      "options": [
+        {
+          "value": "1",
+          "label": "1 row"
+        },
+        {
+          "value": "2",
+          "label": "2 rows"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "spaceBetween",
+      "label": "Space Between",
+      "max": 40,
+      "min": 0,
+      "step": 1,
+      "unit": " sp",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "min": 3,
+      "max": 30,
+      "step": 1,
+      "label": "Limit items",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "show",
+      "min": 3,
+      "max": 6,
+      "step": 1,
+      "label": "Items",
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Section Button "
+    },
+    {
+      "type": "text",
+      "id": "buttonall",
+      "label": "Button Bottom" 
+    },
+    {
+      "type": "url",
+      "id": "buttonall_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "select",
+      "id": "style_btn",
+      "label": "Style Button",
+      "default": "btn-theme",
+      "options": [
+        {
+          "value": "btn-theme",
+          "label": "Button Box"
+        },
+        {
+          "value": "btn-theme btn-white",
+          "label": "Button Box White"
+        },
+        {
+          "value": "btn-underline",
+          "label": "Button Line"
+        },
+        {
+          "value": "btn-underline btn-underline-white",
+          "label": "Button Line White"
+        },
+        {
+          "value": "btn-outline",
+          "label": "Button Outline"
+        },
+        {
+          "value": "btn-outline btn-outline-white",
+          "label": "Button Outline White"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Title tab"
+        },
+        {
+          "label": "Collection",
+          "id": "collection",
+          "type": "collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product tab",
+      "category": "Collection",
+      "blocks": [
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

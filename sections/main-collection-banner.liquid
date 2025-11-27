@@ -1,0 +1,504 @@
+{%- liquid  
+  assign checkImg = section.settings.show_collection_image
+  assign colorH = section.settings.image_text_color
+  assign colorBg = section.settings.bg_color
+  assign opOverlay = section.settings.image_overlay_opacity | divided_by: 100.0
+  if collection.image != blank 
+  assign collectionImage = collection.image
+  elsif collection.handle == 'all'
+  assign collectionImage = section.settings.img_bannercollection
+  endif
+  assign img_height = section.settings.img_height
+  assign style_banner = section.settings.style_banner
+  assign title_all = section.settings.title_all
+  assign des_all = section.settings.des_all
+  assign save_allproducts = section.settings.save_allproducts
+
+  assign show_breadcrumb= section.settings.show_breadcrumb
+  assign width_breadcrumb = section.settings.width_breadcrumb
+-%}
+
+<style>
+  
+.main-content{
+  padding: 0;
+}
+.collection-hero{
+  position: relative;
+  overflow: hidden;
+  --section-height:{{ img_height }};
+  --section-overlay: {{ section.settings.image_overlay_color.red }}, {{ section.settings.image_overlay_color.blue }}, {{ section.settings.image_overlay_color.green }};
+  --section-opacity : {{ opOverlay }};
+
+}
+.collection-list .list-inline-item:not(:last-child){
+  margin-right: 1.5rem;
+}
+.collection-list li a{
+  position: relative;
+}
+.collection-list li a::before{
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -4px;
+  width: 0;
+  border-bottom: 1px solid var(--color-body-text);
+  -webkit-transition: width .3s ease;
+  transition: width .3s ease;
+  z-index: 7;
+}
+.collection-list li a:hover:before,.collection-list li a.active:before{
+  width: 100%;
+  left: 0;
+}
+  .collection-hero-container{
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+  }
+  
+  @media screen and (min-width: 750px){
+    .collection-hero__description{
+      padding:0 16rem;
+    }
+    .collection-hero{
+      padding: 0;
+    }
+  }
+{% if checkImg  and collectionImage != blank %}
+  .collection-hero .image-content__image{
+    object-fit: cover;
+    object-position: center;
+    height: 100%;
+  }
+  .collection-hero-container{
+    min-height: var(--section-height);
+  }
+  .collection-hero-banner{
+    padding-top:0 !important;
+  }
+
+  .collection-hero__title,.collection-hero__description{
+    color:{{ colorH }};
+    --color-body-text: {{ colorH }};
+    --g-color-heading: {{ colorH }}
+  }
+  .collection-hero::before{
+    content: "";
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(var(--section-overlay), var(--section-opacity));
+    z-index: 1;
+  }
+  .breadcrumbs-collection .breadcrumbs, .breadcrumbs-collection .breadcrumbs a, .breadcrumbs-collection .breadcrumbs span{
+    --color-body-text: {{ colorH }};
+    color:{{ colorH }};
+  }
+  .breadcrumbs-collection{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 10;
+  }
+{% endif %}
+
+/*Breaddrumb Collection*/
+.breadcrumbs__item{
+  display: flex; 
+  align-items: center;
+}
+.breadcrumbs-collection .breadcrumbs .breadcrumb__divider{
+  padding: 0 0.5rem;
+  line-height: 20px;
+  display: inline-block;
+}
+.breadcrumbs__list{
+  list-style-type:none;
+}
+
+</style>
+<div class="collection-banner position-relative">
+  {%- if show_breadcrumb -%}
+  <div class="breadcrumbs-collection py-3">
+    <nav class="breadcrumbs {{ width_breadcrumb }}" role="navigation" aria-label="breadcrumbs" >
+      <ol class=" breadcrumbs__list d-flex">
+        <li class="breadcrumbs__item ">
+          <a href="/" title="{{ 'general.breadcrumb.home' | t }}">{{ 'general.breadcrumb.home' | t }}</a>
+          <span class="breadcrumb__divider" aria-hidden="true">/</span>
+        </li>
+        {%- if template contains 'collection' and collection.handle -%}
+          {%- if current_tags -%}
+            <li class="breadcrumbs__item">
+              {{ collection.title | link_to: collection.url }}
+              <span class="breadcrumb__divider" aria-hidden="true">/</span>
+            </li>
+            <li class="breadcrumbs__item">
+              {%- capture tag_url -%}{{ collection.url }}/{{ current_tags | join: "+"}}{%- endcapture -%}
+              <a class="breadcrumbs__link" href="{{ tag_url }}" aria-current="page">{{ current_tags | join: " + "}}</a>
+              <span class="breadcrumb__divider" aria-hidden="true">/</span>
+            </li>
+          {%- else -%}
+            <li class="breadcrumbs__item">
+              <span class="breadcrumbs__link" aria-current="page">{{ collection.title }}</span>
+            </li>
+          {%- endif -%}
+        {%- endif -%}
+      </ol>
+    </nav>
+  </div>
+  {%- endif -%}
+ 
+{%- if style_banner == 'full' -%}
+  <div class="image-content__image-wrapper d-flex align-items-center collection-hero {% if img_height != 'orginal' %} collection-hero-banner {% endif %} " {% if checkImg  and collectionImage != blank %}style="padding-top:{{ 1 | divided_by: collectionImage.aspect_ratio | times: 100 }}%;" {% endif %}>
+    {%- if checkImg  and collectionImage != blank -%}
+      {%- liquid
+        assign sizes = '100vw'
+        assign widths = '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
+        assign fetch_priority = 'hight'
+        assign height = collectionImage.width | divided_by: collectionImage.aspect_ratio | round
+      -%}
+        {{
+          collectionImage
+              | image_url: width: 3840
+              | image_tag: height: height, width:collectionImage.width, sizes: sizes, widths: widths, fetchpriority: fetch_priority, class:'image-content__image lazyload scale-in'
+            }}
+    {%- endif -%}
+    <div class=" py-5 collection-hero-container d-flex align-items-center justify-content-center">
+      <div class="container text-center">
+        <h1 class="collection-hero__title {{ section.settings.heading_size }}">
+          <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
+          {% if collection.handle == 'all' and save_allproducts %}
+            {{- title_all -}}
+          {% else %}
+          {{- collection.title | escape -}}
+          {% endif %}
+         
+          
+        </h1>
+        {%- if section.settings.show_collection_description -%}
+            {% if collection.handle == 'all' and save_allproducts %}
+              <div class="collection-hero__description rte">{{ des_all }}</div>
+              {% else  %}
+            <div class="collection-hero__description rte">{{ collection.description }}</div>
+            {% endif %}
+            
+          {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- else -%}
+<style>
+.mbanner-left{
+  --mbanner-color-left : {{ colorH.red }},  {{ colorH.green }}, {{ colorH.blue }};
+}
+.mbanner-left,.mbanner-right{
+  flex:1;
+}
+.collection-hero__description{
+  color:rgba(var(--mbanner-color-left),0.7);
+}
+.mbanner-left--content{
+  max-width:550px;
+}
+.collection-split{
+  --section-height:{{ img_height }};
+}
+.collection-split .collection-hero-container {
+  padding-left: 1.2rem;
+  padding-right: 1.2rem;
+}
+@media(min-width:992px){
+  .collection-split .collection-hero-container {
+      padding-left: calc(calc(100vw - var(--g-container) + var(--g-hgutter))/2) ;
+      padding-right: 4rem;
+  }
+}
+
+.collection-split .collection-hero-container, .collection-split .collection-hero-banner{
+  min-height: var(--section-height);
+}
+.collection-split .collection-hero__description{
+  padding:0;
+}
+@media(max-width:749px){
+  .collection-split .collection-hero-banner{
+    min-height: calc(var(--section-height) - 80px);
+  }
+}
+
+</style>
+<div class="d-flex flex-lg-row flex-column collection-split" style="background-color:{{ colorBg }};">
+  <div class="mbanner-left">
+    <div class="py-5 collection-hero-container d-flex align-items-center">
+      <div class="text-left mbanner-left--content">
+        <h1 class="collection-hero__title {{ section.settings.heading_size }}">
+          <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
+          {% if collection.handle == 'all' and save_allproducts %}
+            {{- title_all -}}
+          {% else %}
+            {{- collection.title | escape -}}
+          {% endif %}
+        </h1>
+        {%- if section.settings.show_collection_description -%}
+          {% if collection.handle == 'all' and save_allproducts %}
+            <div class="collection-hero__description rte">{{ des_all }}</div>
+            {% else  %}
+            <div class="collection-hero__description rte">{{ collection.description }}</div>
+          {% endif %}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+  <div class="mbanner-right">
+    <div class="image-content__image-wrapper d-flex align-items-center collection-hero {% if img_height != 'orginal' %} collection-hero-banner {% endif %} " {% if checkImg  and collectionImage != blank %}style="padding-top:{{ 1 | divided_by: collectionImage.aspect_ratio | times: 100 }}%;" {% endif %}>
+      {%- if checkImg  and collectionImage != blank -%}
+        {%- liquid
+          assign sizes = '100vw'
+          assign widths = '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
+          assign fetch_priority = 'hight'
+          assign height = collectionImage.width | divided_by: collectionImage.aspect_ratio | round
+        -%}
+        {{
+          collectionImage
+              | image_url: width: 3840
+              | image_tag: height: height, width:collectionImage.width, sizes: sizes, widths: widths, fetchpriority: fetch_priority, class:'image-content__image lazyload scale-in'
+            }}
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{%- endif -%}
+
+{%- if linklists[section.settings.link_list_head].title != blank and section.settings.enable_collection -%}
+  <div class="container">
+    <ul class="site-head__list list-inline text-center py-4 collection-list border-bottom">
+        {%- for link in linklists[section.settings.link_list_head].links -%}
+        {% assign collection_handle = link.url | split: "collections/" | last %}
+        {%- assign current_collection = collections[collection_handle] -%}
+        <li class="site-head__list__list-item list-inline-item">
+          <a href="{{ link.url }}" {% if link.current %} class="active" {% endif %}>{{ link.title }}  
+            {%- if section.settings.enable_count -%}
+            <span class="d-inline-block ml-1 txt-body-50">({{ current_collection.all_products_count }})</span>
+            {%- endif -%}
+          </a>
+        </li>
+        {%- endfor -%}
+    </ul>
+  </div>
+{%- endif -%}
+</div>
+{% schema %}
+{
+  "name": "Collection Banner",
+  "class": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumb",
+      "default": true,
+      "label": "Show Breadcrumb"
+    },
+    {
+      "type": "select",
+      "id": "width_breadcrumb",
+      "label": "Width Breadcrumb",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Collection Banner"
+    },
+    {
+      "type": "paragraph",
+      "content": "Add a description or image by editing your collection. [Learn more](https://help.shopify.com/manual/products/collections/collection-layout)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_description",
+      "default": true,
+      "label": "Show collection description"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_image",
+      "default": false,
+      "label": "Show collection image",
+      "info": "For best results, use an image with a 16:9 aspect ratio. [Learn more](https://help.shopify.com/manual/shopify-admin/productivity-tools/image-editor#understanding-image-aspect-ratio)"
+    },
+    {
+      "type": "header",
+      "content": "All Products",
+      "info": "Config default All Products"
+    },
+    {
+      "type": "checkbox",
+      "id": "save_allproducts",
+      "default": true,
+      "label": "Apply to all product collection",
+      "info":"collection handle 'all' will use this configuration"
+    },
+    {
+      "type": "image_picker",
+      "id": "img_bannercollection",
+      "label": "Background All Products"
+    },
+    {
+      "type": "text",
+      "id": "title_all",
+      "label": "Title All Products",
+      "default": "All Products"
+    },
+    {
+      "type": "richtext",
+      "id": "des_all",
+      "label": "Descripion All Products",
+      "default": "<p>Shop now, not later. Browse the best of our favorite sale styles and brands.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "select",
+      "id": "style_banner",
+      "label": "Style Banner",
+      "options": [
+        {
+          "value": "full",
+          "label": "Banner Full"
+        },
+        {
+          "value": "split",
+          "label": "Banner Split"
+        }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "select",
+      "id": "img_height",
+      "label": "Image Height",
+      "options": [
+        {
+          "value": "orginal",
+          "label": "Original Image"
+        },
+        {
+          "value": "250px",
+          "label": "250px"
+        },
+        {
+          "value": "350px",
+          "label": "350px"
+        },
+        {
+          "value": "450px",
+          "label": "450px"
+        },
+        {
+          "value": "550px",
+          "label": "550px"
+        },
+        {
+          "value": "750px",
+          "label": "750px"
+        }
+      ],
+      "default": "350px"
+    },
+    {
+      "type": "header",
+      "content": "Color",
+      "info": "Only applicable when collection image is used."
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "image_text_color",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "image_overlay_color",
+      "label": "Overlay",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "image_overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Link Menu Collection"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_collection",
+      "default": true,
+      "label": "Show Menu Collections"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_count",
+      "default": true,
+      "label": "Show items number"
+    },
+    {
+      "id": "link_list_head",
+      "type": "link_list",
+      "label": "Menu",
+      "info": "This menu won't show dropdown items"
+    }
+  ]
+}
+{% endschema %}

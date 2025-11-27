@@ -1,0 +1,80 @@
+<!-- blog-grid-1.liquid -->
+<div class="blog__item blog__item--1 {% if template contains 'index' %} pb-0 {% endif %}" data-aos="{{ animation }}">
+  {%- if article.image -%}
+  <div class="content-block__image mb-4">
+    <a href="{{ article.url }}">
+      <noscript>
+        {{ article | image_url: width: 1024, height: 1024 | image_tag: article.title | escape }}
+      </noscript>
+      <div class="article__photo-container">
+        <div class="article__photo-wrapper {{ image_size }}" style="padding-top:{{ 1 | divided_by: article.image.aspect_ratio | times: 100 }}%;">
+              <img
+                srcset="
+                  {%- if article.image.width >= 165 -%}{{ article.image | image_url: width: 165 }} 165w,{%- endif -%}
+                  {%- if article.image.width >= 360 -%}{{ article.image | image_url: width: 360 }} 360w,{%- endif -%}
+                  {%- if article.image.width >= 533 -%}{{ article.image | image_url: width: 533 }} 533w,{%- endif -%}
+                  {%- if article.image.width >= 720 -%}{{ article.image | image_url: width: 720 }} 720w,{%- endif -%}
+                  {%- if article.image.width >= 940 -%}{{ article.image | image_url: width: 940 }} 940w,{%- endif -%}
+                  {%- if article.image.width >= 1066 -%}{{ article.image | image_url: width: 1066 }} 1066w,{%- endif -%}
+                  {{ article.image | image_url }} {{ article.image.width }}w
+                "
+                src="{{ article.image | image_url: width: 720 }}"
+                sizes="(min-width: {{ settings.container }}px) {{ settings.container | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
+                alt="{{article.title | escape }}"
+                class="lazyload scale-in"
+                data-sizes="auto"
+                data-aspectratio="{{ article.image.aspect_ratio }}"
+                loading="lazy"
+                width="{{ article.image.width }}"
+                height="{{ article.image.height }}"
+              >    
+        </div>
+        {%- if enable_date -%}
+          <p class="blog__meta" style="--color-body-text:{{ settings.color_body_text }};">
+            <time datetime="{{ article.published_at }}">
+              <span class="meta-b">{{ article.published_at | date: "%b" }}</span>
+              <span class="meta-d">{{ article.published_at | date: "%d" }}</span>
+              <span class="meta-y">{{ article.published_at | date: "%Y" }}</span>
+            </time>
+          </p>
+        {%- endif -%}
+      </div>
+    </a>
+  </div>
+  {%- endif -%}
+  <div class="blog__content">
+    {%- if enable_tag -%}
+    <div class="d-flex align-items-center">
+      {%- if article.tags.size > 0 -%}
+        <div class="blog_tag mb-3 border-right mr-3" style=" --g-main: {{ text_color }};">
+          {%- for tag in article.tags -%}
+          <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="link-body-color mr-3 txt-body-70">{{ tag }}</a>{% unless forloop.last %}, {% endunless %}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+      <div class="blog_comment align-items-center d-flex mb-3 txt-body-70">
+        {% render 'icon-comment' %}
+        {{ 'blogs.comments.with_count' | t: count: article.comments_count }}
+      </div>
+    </div>
+    {%- endif -%}
+  <h4 class="blog__title-link {% if settings.enable_short %}  mb-3 {% else %} mb-4 {% endif %}"><a href="{{ article.url }}">{{ article.title }}</a></h4>
+  {%- if enable_short -%}
+  <div style="width:70px;"><hr ></div>
+  <div class="rte rte--indented-images mb-4">
+    {%- if article.excerpt.size > 0 -%}
+    {{ article.excerpt }}
+    {%- else -%}
+      {%- if template contains 'index' -%}
+      <p class="txt-body-80">{{ article.content | strip_html | truncatewords: 15 }}</p>
+      {%- else -%}
+      <p class="txt-body-80">{{ article.content | strip_html | truncatewords: 20 }}</p>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+  {%- endif -%}
+  {%- if enable_btn_blog -%}
+  <a  class="btn {{ style_btn }} {% if template contains 'index' %} mb-1 {% else %}mb-4{% endif %}" href="{{ article.url }}" title="{{ article.title }}">{{ 'blogs.article.read_more' | t }}</a>  
+  {%- endif -%}
+</div>
+</div>

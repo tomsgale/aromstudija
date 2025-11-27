@@ -1,0 +1,190 @@
+{
+  "sections": {
+    "collection-banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "show_breadcrumb": true,
+        "width_breadcrumb": "container",
+        "show_collection_description": true,
+        "show_collection_image": true,
+        "save_allproducts": true,
+        "img_bannercollection": "shopify:\/\/shop_images\/blog_doctorsvisit.webp",
+        "title_all": "All Products",
+        "des_all": "<p>Shop now, not later. Browse the best of our favorite sale styles and brands.<\/p>",
+        "style_banner": "split",
+        "heading_size": "h3",
+        "img_height": "350px",
+        "bg_color": "#f7f7f7",
+        "image_text_color": "#000000",
+        "image_overlay_color": "#000000",
+        "image_overlay_opacity": 0,
+        "enable_collection": true,
+        "enable_count": true,
+        "link_list_head": ""
+      }
+    },
+    "ea7af2bd-7a4c-4129-ae32-bacb42814742": {
+      "type": "featured-collections-3",
+      "blocks": {
+        "template--21109129117976__48a9fffb-7b1f-4bc5-9e0b-4f19556846d2-collection-3": {
+          "type": "collection",
+          "settings": {
+            "collection": "acneprone",
+            "image": "shopify:\/\/shop_images\/a.jpg",
+            "enable_customize": false,
+            "text_customize": "Shop now",
+            "url_customize": ""
+          }
+        },
+        "template--21109129117976__48a9fffb-7b1f-4bc5-9e0b-4f19556846d2-collection-1": {
+          "type": "collection",
+          "settings": {
+            "collection": "bundles",
+            "image": "shopify:\/\/shop_images\/aa.jpg",
+            "enable_customize": false,
+            "text_customize": "Shop now",
+            "url_customize": ""
+          }
+        },
+        "012b04ac-f446-483f-a6aa-c59e3444912d": {
+          "type": "collection",
+          "settings": {
+            "collection": "dryness",
+            "image": "shopify:\/\/shop_images\/aaa.jpg",
+            "enable_customize": false,
+            "text_customize": "Shop now",
+            "url_customize": ""
+          }
+        },
+        "template--21109129117976__48a9fffb-7b1f-4bc5-9e0b-4f19556846d2-collection-2": {
+          "type": "collection",
+          "settings": {
+            "collection": "dullness",
+            "image": "shopify:\/\/shop_images\/aaaa.jpg",
+            "enable_customize": false,
+            "text_customize": "Shop now",
+            "url_customize": ""
+          }
+        },
+        "bcd6b727-9c9f-4c33-9b79-0d4ca6070131": {
+          "type": "collection",
+          "settings": {
+            "collection": "vitamin-c",
+            "image": "shopify:\/\/shop_images\/aaaaa.jpg",
+            "enable_customize": false,
+            "text_customize": "Shop now",
+            "url_customize": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--21109129117976__48a9fffb-7b1f-4bc5-9e0b-4f19556846d2-collection-3",
+        "template--21109129117976__48a9fffb-7b1f-4bc5-9e0b-4f19556846d2-collection-1",
+        "012b04ac-f446-483f-a6aa-c59e3444912d",
+        "template--21109129117976__48a9fffb-7b1f-4bc5-9e0b-4f19556846d2-collection-2",
+        "bcd6b727-9c9f-4c33-9b79-0d4ca6070131"
+      ],
+      "settings": {
+        "animation": "fade-up",
+        "setwidth": "container",
+        "bgsection": "#ffffff",
+        "title_top": "",
+        "title": "",
+        "des": "",
+        "align-heading": "center",
+        "stylecollection": "button",
+        "size_image_col": "portrait",
+        "enable_count_item": true,
+        "enable_gradient": false,
+        "color": "#ffffff",
+        "bg_overlay": "#222222",
+        "opacity_overlay": 0.2,
+        "size_title": "h5",
+        "style_btn": "btn-theme",
+        "button_link": "",
+        "button": "",
+        "perviewDesktop": 5,
+        "spaceBetween": 30,
+        "nowrap": false,
+        "arrows": true,
+        "scrollbar": false,
+        "paddingsection": "40px 0px 0px 0px",
+        "paddingmobile": "40px 0px 0px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    },
+    "3718e2cb-5821-407b-acec-0f519cf8d4b4": {
+      "type": "rich-text-hoz",
+      "blocks": {
+        "4aae42f0-8564-4ba9-bf69-e0db437bad2b": {
+          "type": "heading",
+          "settings": {
+            "title": "Summer Savings",
+            "size_text": "h4"
+          }
+        },
+        "05fa68df-6d3c-4ed2-afd2-39d1c6945a8a": {
+          "type": "paragraph",
+          "settings": {
+            "subtext": "Save an additional 10% on all clearance items."
+          }
+        },
+        "71224ca7-db08-44d5-8f55-df529ccb46af": {
+          "type": "button",
+          "settings": {
+            "button": "Shop now",
+            "link": "#",
+            "style_btn": "btn-outline"
+          }
+        }
+      },
+      "block_order": [
+        "4aae42f0-8564-4ba9-bf69-e0db437bad2b",
+        "05fa68df-6d3c-4ed2-afd2-39d1c6945a8a",
+        "71224ca7-db08-44d5-8f55-df529ccb46af"
+      ],
+      "settings": {
+        "animation": "",
+        "setwidth": "container",
+        "bgsection": "#ffffff",
+        "gradient_bg": "linear-gradient(125deg, rgba(249, 247, 242, 1), rgba(255, 242, 238, 1) 99%)",
+        "paddingsection": "40px 0px 20px 0px",
+        "paddingmobile": "40px 0px 20px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-template",
+      "settings": {
+        "collection_width": "container",
+        "products_per_page": 12,
+        "collection_perrow": "3",
+        "type_pagination": "pagi",
+        "enable_viewcolumn": true,
+        "enable_filtering": true,
+        "enable_sorting": true,
+        "filter_type": "vertical",
+        "first_group": false,
+        "open_group": true,
+        "enable_color": true,
+        "type_color": true,
+        "style_color": "color_list",
+        "style_size": "grid",
+        "enable_edit_item": false,
+        "select_item": "product-7",
+        "enable_list_collection": false,
+        "link_list_head": "",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    }
+  },
+  "order": [
+    "collection-banner",
+    "ea7af2bd-7a4c-4129-ae32-bacb42814742",
+    "3718e2cb-5821-407b-acec-0f519cf8d4b4",
+    "product-grid"
+  ]
+}

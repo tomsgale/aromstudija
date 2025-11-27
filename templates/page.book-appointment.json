@@ -1,0 +1,246 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+      }
+    },
+    "6038d19d-49e8-4a4c-b6a0-d70af361955c": {
+      "type": "parallax-banner",
+      "blocks": {
+        "template--21719801725201__6038d19d-49e8-4a4c-b6a0-d70af361955c-sub_title-1": {
+          "type": "sub_title",
+          "settings": {
+            "subtitle": "the oak essentials"
+          }
+        },
+        "template--21719801725201__6038d19d-49e8-4a4c-b6a0-d70af361955c-heading-1": {
+          "type": "heading",
+          "settings": {
+            "title": "Transforming the skin care industry from within",
+            "size_text": "h1"
+          }
+        },
+        "template--21719801725201__6038d19d-49e8-4a4c-b6a0-d70af361955c-paragraph-1": {
+          "type": "paragraph",
+          "settings": {
+            "subtext": "By doing business its own way, Omy Laboratoires shows that it is possible to offer high-performance, affordable skin care, while putting high-quality products, health, and sustainability at the heart of its mission."
+          }
+        },
+        "fc76c70b-0544-45ac-b85e-91885987af05": {
+          "type": "button",
+          "settings": {
+            "button": "Discover our ingredients",
+            "link": "#shopify-section-template--16873266020409__edf19ba8-1cc9-4993-923d-4b879caa7782",
+            "style_btn": "btn-theme btn-white"
+          }
+        }
+      },
+      "block_order": [
+        "template--21719801725201__6038d19d-49e8-4a4c-b6a0-d70af361955c-sub_title-1",
+        "template--21719801725201__6038d19d-49e8-4a4c-b6a0-d70af361955c-heading-1",
+        "template--21719801725201__6038d19d-49e8-4a4c-b6a0-d70af361955c-paragraph-1",
+        "fc76c70b-0544-45ac-b85e-91885987af05"
+      ],
+      "settings": {
+        "animation": "zoom-out",
+        "setwidth": "full",
+        "bgsection": "#ffffff",
+        "parrallax_enable": true,
+        "image": "shopify:\/\/shop_images\/A269940302_937550767163597_7117100006991752427_n_c0788b1d-1942-46a0-b7e7-c6d99bf24e0c.jpg",
+        "height_section": "550",
+        "height_section_mobile": "450",
+        "align": "center",
+        "position_text": "bot-center",
+        "bg_box": "#ffffff",
+        "opacity_bgbox": 0,
+        "title_color": "#ffffff",
+        "bg_overlay": "#000000",
+        "gradient_bg": "",
+        "opacity_bg_overlay": 0.2,
+        "paddingsection": "0px 0px 0px 0px",
+        "marginsection": "0px 0px 0px 0px"
+      }
+    },
+    "edf19ba8-1cc9-4993-923d-4b879caa7782": {
+      "type": "contact-booking",
+      "blocks": {
+        "6b93c6f8-7da8-4c76-a97b-bbd256ac20d5": {
+          "type": "interested",
+          "settings": {
+            "interested_want": "Complimentary Skin Consultation"
+          }
+        },
+        "7cb30f1c-2b42-4589-bd91-4628f708b01d": {
+          "type": "interested",
+          "settings": {
+            "interested_want": "Dermapen Skin Needling"
+          }
+        },
+        "d87802b2-44cf-4c73-a76c-afa7b509a2be": {
+          "type": "interested",
+          "settings": {
+            "interested_want": "Healite LED Light Therapy"
+          }
+        },
+        "4110e873-e0bd-436c-af3c-184985ba9b18": {
+          "type": "interested",
+          "settings": {
+            "interested_want": "Other"
+          }
+        },
+        "3a8115ee-2125-4ed9-a072-5f0200b847d1": {
+          "type": "store",
+          "settings": {
+            "store_location": "Carnaby - Boutique"
+          }
+        },
+        "81b46c33-c19b-4cdd-9ba0-4ad779b3b398": {
+          "type": "store",
+          "settings": {
+            "store_location": "New York Nolita - Boutique"
+          }
+        },
+        "3ad8d6b0-2a9b-4db4-91da-d967067ae9a2": {
+          "type": "store",
+          "settings": {
+            "store_location": "Bristol - Boutique"
+          }
+        }
+      },
+      "block_order": [
+        "6b93c6f8-7da8-4c76-a97b-bbd256ac20d5",
+        "7cb30f1c-2b42-4589-bd91-4628f708b01d",
+        "d87802b2-44cf-4c73-a76c-afa7b509a2be",
+        "4110e873-e0bd-436c-af3c-184985ba9b18",
+        "3a8115ee-2125-4ed9-a072-5f0200b847d1",
+        "81b46c33-c19b-4cdd-9ba0-4ad779b3b398",
+        "3ad8d6b0-2a9b-4db4-91da-d967067ae9a2"
+      ],
+      "settings": {
+        "animation": "fade",
+        "bgsection": "#ffffff",
+        "title_top": "",
+        "title": "Virtual Appointments",
+        "des": "Schedule Your Free Appointment Today",
+        "align-heading": "center",
+        "enable_interested": true,
+        "enable_store": true,
+        "answer_content": "<p>Need help finding just the right diamond or piece of jewelry? <\/p><p>Our experts are here to help.<\/p>",
+        "paddingsection": "80px 0px 80px 0px",
+        "paddingmobile": "40px 0px 40px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    },
+    "92a60825-bfef-4c9c-ab38-16a23650ee97": {
+      "type": "line",
+      "settings": {
+        "animation": "",
+        "paddingsection": "0px 0px 0px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "bgsection": "#ffffff",
+        "setwidth": "full",
+        "bgborder": "#dddddd",
+        "wborder": "1px"
+      }
+    },
+    "44be3156-c1a2-4d02-9e02-da8b6965f1f4": {
+      "type": "grid-banner-2",
+      "blocks": {
+        "template--21719801725201__44be3156-c1a2-4d02-9e02-da8b6965f1f4-banner-2": {
+          "type": "banner",
+          "settings": {
+            "paddingblock": "0px 0px 0px 0px",
+            "border_banner": "rgba(0,0,0,0)",
+            "bg_banner": "rgba(0,0,0,0)",
+            "image": "shopify:\/\/shop_images\/1.jpg",
+            "width": "3",
+            "description": "<div class=\"mb-3 subtop\">Personalized<\/div><p>Explore our full collection and receive special tips on stacking all the styles you’re eyeing with a 360-degree view. Plus, we’ll show you how to care for your pieces properly, so they last.<\/p>",
+            "button_text": "",
+            "button_link": "",
+            "style_btn": "btn-underline",
+            "reverse": "flex-column",
+            "text_align": "left"
+          }
+        },
+        "4cbd02f6-fc3a-4f92-b51c-c1ad666f4037": {
+          "type": "banner",
+          "settings": {
+            "paddingblock": "0px 0px 0px 0px",
+            "border_banner": "rgba(0,0,0,0)",
+            "bg_banner": "rgba(0,0,0,0)",
+            "image": "shopify:\/\/shop_images\/2.jpg",
+            "width": "3",
+            "description": "<div class=\"mb-3 subtop\"> Curated Styling<\/div><p>Welding may sound scary, but in fact it’s one of the newest and most lavish trends happening right now<\/p>",
+            "button_text": "",
+            "button_link": "",
+            "style_btn": "btn-underline",
+            "reverse": "flex-column",
+            "text_align": "left"
+          }
+        },
+        "template--21719801725201__44be3156-c1a2-4d02-9e02-da8b6965f1f4-banner-1": {
+          "type": "banner",
+          "settings": {
+            "paddingblock": "0px 0px 0px 0px",
+            "border_banner": "rgba(0,0,0,0)",
+            "bg_banner": "rgba(0,0,0,0)",
+            "image": "shopify:\/\/shop_images\/3.jpg",
+            "width": "3",
+            "description": "<div class=\"mb-3 subtop\">1:1 Service<\/div><p>This uninterrupted time is all about you. Whether shopping for yourself, your big day, or someone special, we’ll deep dive into your needs and wants to nail down the perfect pieces for any occasion.<\/p>",
+            "button_text": "",
+            "button_link": "",
+            "style_btn": "btn-underline",
+            "reverse": "flex-column",
+            "text_align": "left"
+          }
+        },
+        "1668fc01-18d6-4090-a85d-d1b0e47724b8": {
+          "type": "banner",
+          "settings": {
+            "paddingblock": "0px 0px 0px 0px",
+            "border_banner": "rgba(0,0,0,0)",
+            "bg_banner": "rgba(0,0,0,0)",
+            "image": "shopify:\/\/shop_images\/4.jpg",
+            "width": "3",
+            "description": "<div class=\"mb-3 subtop\"> Complimentary <\/div><p>We’ve got you covered. There are no hidden costs or spending limits—all you have to do is show up ready to explore and ask questions, and we’ll take care of the rest.<\/p>",
+            "button_text": "",
+            "button_link": "",
+            "style_btn": "btn-underline",
+            "reverse": "flex-column",
+            "text_align": "left"
+          }
+        }
+      },
+      "block_order": [
+        "template--21719801725201__44be3156-c1a2-4d02-9e02-da8b6965f1f4-banner-2",
+        "4cbd02f6-fc3a-4f92-b51c-c1ad666f4037",
+        "template--21719801725201__44be3156-c1a2-4d02-9e02-da8b6965f1f4-banner-1",
+        "1668fc01-18d6-4090-a85d-d1b0e47724b8"
+      ],
+      "settings": {
+        "animation": "fade-up",
+        "setwidth": "container",
+        "bgsection": "#ffffff",
+        "title_top": "",
+        "title": "",
+        "des": "",
+        "align-heading": "center",
+        "no_gutter": false,
+        "gutter_padding": 40,
+        "paddingsection": "80px 0px 70px 0px",
+        "paddingmobile": "40px 0px 40px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "6038d19d-49e8-4a4c-b6a0-d70af361955c",
+    "edf19ba8-1cc9-4993-923d-4b879caa7782",
+    "92a60825-bfef-4c9c-ab38-16a23650ee97",
+    "44be3156-c1a2-4d02-9e02-da8b6965f1f4"
+  ]
+}

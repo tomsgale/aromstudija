@@ -1,0 +1,118 @@
+
+<option-sidebar class="site-header__link sidebar-toogle pr-0 option-sidebar d-lg-block d-none">
+    <div class="sidebar-hamburger ml-3">
+        <svg aria-hidden="true" fill="none" focusable="false" width="24" class="icon-humbeger" viewBox="0 0 24 24">
+                <path d="M1 19h22M1 12h22M1 5h22" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"></path>
+        </svg>
+    </div>
+    <div class="option-sidebar-body">
+        <div class="modal-header p-0">
+            <button type="button" class="close" data-dismiss="modal">{%- render 'icon-close' -%}</button>
+        </div>
+        <div class="option-sidebar-bodywrap d-flex justify-space-between flex-column h-100">
+                    {%-liquid
+                        assign sidebar_logo = block.settings.sidebar_logo
+                        assign sidebar_bio = block.settings.sidebar_bio
+                        assign sidebar_image = block.settings.sidebar_image
+                        assign sidebar_contact = block.settings.sidebar_contact
+                        assign sidebar_social = block.settings.sidebar_social
+                        assign sidebar_link = block.settings.sidebar_link
+                    -%}
+                    <div>
+                    {%- if sidebar_logo -%}
+                        <div class="mb-4">
+                        {%- render 'site-logo' -%}
+                        </div>
+                    {%- endif -%} 
+                    {%- if sidebar_bio != blank -%}
+                        <div class="mb-4">
+                            {{ sidebar_bio }}
+                        </div>
+                    {%- endif -%}
+                    {%- if sidebar_image -%}
+                        <div class="option-sidebar-image py-3 mb-3">
+                            {%- for i in (1..6) -%}
+                                {% assign sidebar_images = 'sidebar_image_' | append: i %}
+                                {%- if block.settings[sidebar_images] != blank -%}
+                                    {%- assign widths = '165, 360, 535, 750, 1070, 1500' -%}
+                                    {%- capture sizes -%}
+                                    (min-width: {{ settings.container }}px) {{ settings.container | minus: 100 | divided_by: 2 }}px,
+                                    (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)
+                                    {%- endcapture -%}
+                                    <div class="option-sidebar-image-item position-relative overflow-hidden">
+                                        {{
+                                        block.settings[sidebar_images]
+                                        | image_url: width: 300
+                                        | image_tag: sizes: sizes, widths: widths, fetchpriority: 'auto', class: "lazyload"
+                                        }}
+                                    </div>
+                                {%- endif -%}
+                            {%- endfor -%}
+                            
+                        </div>
+                    {%- endif -%}
+                    {%- if sidebar_link != blank -%}
+                        <ul class="list-unstyled">
+                        {%- for link in linklists[sidebar_link].links -%}
+                            <li class="py-1"><a href="{{ link.url }}">{{ link.title }}</a></li>
+                        {%- endfor -%}
+                      </ul>
+                    {%- endif -%}
+                    
+                    </div>
+                    <div class="mt-auto">
+                    {% if sidebar_contact %}
+                        {% if settings.mobile_phone != blank %}
+                            <div class="">
+                              <a href="tel:{{ settings.mobile_phone | strip }}" class="sub-menu__link py-1 d-inline-flex font-weight-normal pr-1 d-flex align-items-center letter-spacing-0">
+                                {% render 'icon-mobile-phone' %}
+                                <span class="pl-2">{{ settings.mobile_phone }}</span>
+                              </a>
+                            </div>
+                          {% endif %}
+                          {% if settings.mobile_email != blank %}
+                          <div class="">
+                            <a href="mailto:{{ settings.mobile_email }}" class="sub-menu__link py-1 d-inline-flex font-weight-normal pr-1 d-flex align-items-center letter-spacing-0">
+                              {% render 'icon-email' %}
+                              <span class="pl-2">{{ settings.mobile_email }}</span>
+                            </a>
+                          </div>
+                        {% endif %}
+                    {% endif %}
+                    {%- if sidebar_social -%}
+                        <div class="pt-4">
+                        {% render 'block-social' %}
+                        </div>
+                    {%- endif -%}
+                    </div>
+            
+        </div>
+        
+    </div>
+    <div class="option-sidebar-overlay">
+    </div>
+</option-sidebar>
+<script>
+class OptionSidebar extends HTMLElement {
+    connectedCallback() {
+        this.openMenu(); 
+    }
+    openMenu(){
+        const menu = this.querySelector(".sidebar-hamburger");
+        const overlay = this.querySelector(".option-sidebar-overlay");
+        const body = this.querySelector(".option-sidebar-body");
+        const close = this.querySelector(".close");
+        menu.addEventListener("click", function(){
+            this.parentElement.classList.toggle("active");
+        });
+        overlay.addEventListener("click", function(){
+            this.parentElement.classList.remove("active");
+        });
+        close.addEventListener("click", function(){
+            this.parentElement.parentElement.parentElement.classList.remove("active");
+        });
+
+    }
+}
+customElements.define("option-sidebar", OptionSidebar);
+</script>

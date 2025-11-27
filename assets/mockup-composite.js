@@ -79,11 +79,9 @@ class MockupCompositor {
     // Clear canvas
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    // Draw product image at specified position (behind mockup)
-    this.ctx.drawImage(product, x, y, width, height);
-
-    // Draw mockup template on top (overlay effect)
+    // Draw mockup template first, then product image on top (for sticker/label effect)
     this.ctx.drawImage(mockup, 0, 0);
+    this.ctx.drawImage(product, x, y, width, height);
   }
 
   /**

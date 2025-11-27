@@ -2,21 +2,49 @@
 <div class="product-card js-product-card product-grid-buywith text-left" data-price="{{ product.price }}" style="height:100%;" >
     <div class="product-card__image-wr overflow-hidden">
       {%- assign image = product.selected_or_first_available_variant.featured_image | default: product.featured_image -%}
-      <a class="product-card__image js image-content__image-wrapper {{ settings.size_image_grid }}" href="{{ product.url | within: collection }}" style="padding-top:{{ 1 | divided_by: image.aspect_ratio | times: 100 }}%;" data-image-id="{{ image.id }}">
-        {%- assign img_url = image | image_url: width: 1 | replace: 'width=1', 'width={width}' -%}
-        <img class="lazyload transition first-image"
-              data-src="{{ img_url }}"
-              src="{{ image | image_url: width: 1, height: 1 }}"
-              data-sizes="auto"
-              data-widths="[180, 360, 540, 720]"
-              alt="{{ image.alt | escape }}"
-              loading="lazy"
-              width="{{ image.width }}"
-              height="{{ image.height }}">
-              {%- if firstimage -%}
-                {% render 'second-image' , product: product %}
-              {%- endif -%}
-      </a>
+      {%- assign has_mockup = false -%}
+      {%- assign mockup_type = product.metafields.custom.mockup_type -%}
+      {%- if settings.enable_mockup_compositing and settings.mockup_base_url != blank and mockup_type != blank -%}
+        {%- assign has_mockup = true -%}
+      {%- endif -%}
+
+      {%- if has_mockup -%}
+        <a class="product-card__image js image-content__image-wrapper mockup-composite-container {{ settings.size_image_grid }}" href="{{ product.url | within: collection }}" style="padding-top:{{ 1 | divided_by: image.aspect_ratio | times: 100 }}%;" data-image-id="{{ image.id }}">
+          <canvas class="mockup-canvas lazyload scale-in first-image"
+                  data-mockup-type="{{ mockup_type }}"
+                  data-product-image="{{ image | image_url: width: 800 }}"
+                  data-sizes="auto"
+                  data-aspectratio="{{ image.aspect_ratio }}"
+                  width="{{ image.width }}"
+                  height="{{ image.height }}">
+          </canvas>
+          <noscript>
+            <img src="{{ image | image_url: width: 720 }}"
+                 alt="{{ image.alt | escape }}"
+                 width="{{ image.width }}"
+                 height="{{ image.height }}">
+          </noscript>
+          {%- if firstimage -%}
+            {% render 'second-image' , product: product %}
+          {%- endif -%}
+        </a>
+      {%- else -%}
+        <a class="product-card__image js image-content__image-wrapper {{ settings.size_image_grid }}" href="{{ product.url | within: collection }}" style="padding-top:{{ 1 | divided_by: image.aspect_ratio | times: 100 }}%;" data-image-id="{{ image.id }}">
+          {%- assign img_url = image | image_url: width: 1 | replace: 'width=1', 'width={width}' -%}
+          <img class="lazyload transition first-image"
+                data-src="{{ img_url }}"
+                src="{{ image | image_url: width: 1, height: 1 }}"
+                data-sizes="auto"
+                data-widths="[180, 360, 540, 720]"
+                alt="{{ image.alt | escape }}"
+                loading="lazy"
+                width="{{ image.width }}"
+                height="{{ image.height }}">
+          {%- if firstimage -%}
+            {% render 'second-image' , product: product %}
+          {%- endif -%}
+        </a>
+      {%- endif -%}
     </div>
     <div class="product-card__info  pt-3 {% unless product.available %} disabled{% endunless %}">
       <a href="{{ product.url | within: collection }}" title="{{ product.title }}" class="product-card__name d-block {% if settings.t_product %} text-uppercase {% endif %}">{{ product.title }}</a>

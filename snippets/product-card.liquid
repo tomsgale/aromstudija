@@ -59,11 +59,14 @@
   {%- endif -%}
 {%- endcapture -%}
 
-{%- comment -%} vendor {%- endcomment -%}
+{%- comment -%} vendor & type tag {%- endcomment -%}
 {% capture vendor %}
- {%- if settings.enable_type and product.vendor != blank -%}
-      <a class="mb-1 product-card__type d-inline-block" href="/collections/vendors?filter.p.vendor={{ product.vendor }}&q={{ product.vendor }}">{{ product.vendor }}</a>
-      {%- endif -%}
+  {%- if product.type != blank -%}
+    <div class="product-card__type-tag">{{ product.type | upcase }}</div>
+  {%- endif -%}
+  {%- if settings.enable_type and product.vendor != blank -%}
+    <a class="mb-1 product-card__type d-inline-block" href="/collections/vendors?filter.p.vendor={{ product.vendor }}&q={{ product.vendor }}">{{ product.vendor }}</a>
+  {%- endif -%}
 {% endcapture %}
 
 {%- comment -%} price {%- endcomment -%}

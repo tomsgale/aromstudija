@@ -8477,6 +8477,30 @@ body.video-playing {
   flex: 0 0 100% !important;
   padding: 0 !important;
 }
+
+/* Fix grid item alignment when grid/list wrappers are present */
+.product-grid .grid__item.js-col {
+  display: flex;
+  flex-direction: column;
+}
+.product-grid-item {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.product-grid-item > .product-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.product-grid-item > .product-card > .product-card__image-wr {
+  flex-shrink: 0;
+}
+.product-grid-item > .product-card > .product-card__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
 .product-list-item {
   padding: 1.5rem 0;
   border-bottom: 1px solid rgba(var(--g-color-heading-rgb), 0.1);

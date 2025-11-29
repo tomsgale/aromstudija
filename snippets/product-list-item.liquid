@@ -32,21 +32,21 @@
       {%- if has_mockup -%}
         <canvas class="product-list-item__image mockup-canvas lazyload"
                 data-mockup-type="{{ mockup_type }}"
-                data-product-image="{{ image | image_url: width: 150 }}"
+                data-product-image="{{ image | image_url: width: 75 }}"
                 data-sizes="auto"
                 data-aspectratio="{{ image.aspect_ratio }}"
-                width="80"
-                height="80">
+                width="40"
+                height="40">
         </canvas>
       {%- elsif image -%}
         <img
-          src="{{ image | image_url: width: 80 }}"
-          srcset="{{ image | image_url: width: 80 }} 1x, {{ image | image_url: width: 160 }} 2x"
+          src="{{ image | image_url: width: 40 }}"
+          srcset="{{ image | image_url: width: 40 }} 1x, {{ image | image_url: width: 80 }} 2x"
           alt="{{ image.alt | escape }}"
           class="product-list-item__image lazyload"
           loading="lazy"
-          width="80"
-          height="80"
+          width="40"
+          height="40"
         >
       {%- else -%}
         {{ 'product-1' | placeholder_svg_tag: 'product-list-item__image placeholder-svg' }}
@@ -56,39 +56,40 @@
 
   {%- comment -%} Product Title {%- endcomment -%}
   <div class="product-list-item__title-wrapper flex-grow-1 px-3">
-    <h3 class="product-list-item__title h5 m-0">
-      <a href="{{ product.url | within: collection }}" class="text-body">
-        {{ product.title | escape }}
-      </a>
-    </h3>
+    <a href="{{ product.url | within: collection }}" title="{{ product.title }}" class="d-block product-card__name {% if settings.t_product %}text-uppercase{% endif %}">
+      {{ product.title }}
+    </a>
   </div>
 
   {%- comment -%} Product Type {%- endcomment -%}
   <div class="product-list-item__type-wrapper flex-shrink-0 px-3">
     {%- if product.type != blank -%}
-      <span class="product-list-item__type text-body small">{{ product.type }}</span>
+      <div class="product-card__type-tag">{{ product.type | upcase }}</div>
     {%- else -%}
-      <span class="product-list-item__type text-body small">—</span>
+      <div class="product-card__type-tag">—</div>
     {%- endif -%}
   </div>
 
   {%- comment -%} Product Price {%- endcomment -%}
   <div class="product-list-item__price-wrapper flex-shrink-0 px-3">
-    <div class="product-list-item__price {% if product.compare_at_price > product.price %}product-list-item__price--sale{% endif %}">
+    <div class="product-card__price {% if product.compare_at_price > product.price %}product-card__pricesale{% endif %}">
       {%- if product.compare_at_price > product.price -%}
         {%- if product.price_varies -%}
           {%- assign sale_price = product.price | money -%}
-          <span class="product-list-item__price-current">{{ 'products.product.on_sale_from_html' | t: price: sale_price }}</span>
+          {{ 'products.product.on_sale_from_html' | t: price: sale_price }}
         {%- else -%}
-          <span class="product-list-item__price-current">{{ product.price | money }}</span>
-          <s class="product-list-item__price-regular small ml-2">{{ product.compare_at_price | money }}</s>
+          <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+          {{ product.price | money }}
+          <s class="product-card__regular-price ml-2">{{ product.compare_at_price | money }}</s>
+          <span class="visually-hidden">{{ 'products.product.sale_price' | t }}</span>
         {%- endif -%}
       {%- else -%}
         {%- if product.price_varies -%}
           {%- assign price = product.price | money -%}
-          <span class="product-list-item__price-current">{{ 'products.product.from_text_html' | t: price: price }}</span>
+          {{ 'products.product.from_text_html' | t: price: price }}
         {%- else -%}
-          <span class="product-list-item__price-current">{{ product.price | money }}</span>
+          <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+          {{ product.price | money }}
         {%- endif -%}
       {%- endif -%}
     </div>
@@ -97,27 +98,25 @@
   {%- comment -%} Product Actions {%- endcomment -%}
   <div class="product-list-item__actions d-flex align-items-center gap-2 flex-shrink-0 pl-3">
     {%- if settings.enable_wishlsit -%}
-      <button
-        type="button"
-        class="btn btn-theme gradient-theme-vertical product-list-item__action-btn js-btn-wishlist"
+      <span
         data-toggle="tooltip"
         data-placement="top"
         data-tooltipalltimes="true"
+        class="btn btn-theme gradient-theme-vertical product-card__overlay-btn js-btn-wishlist"
         title="{{ 'products.product.wishlist_text' | t }}"
         data-handle="{{ product.handle }}">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M16.2936 3C14.0394 3 12.5436 4.38469 11.7505 5.39062C10.9593 4.38328 9.46161 3 7.2074 3C4.36583 3 2.03005 5.36906 2.00052 8.28047C1.97521 10.8216 2.8738 13.1681 4.74786 15.4523C5.62771 16.5248 7.22286 18.2395 10.9068 20.7403C11.1552 20.9106 11.4493 21.0017 11.7505 21.0017C12.0517 21.0017 12.3458 20.9106 12.5943 20.7403C16.2782 18.2395 17.8733 16.5248 18.7532 15.4523C20.6282 13.1677 21.5258 10.8211 21.5005 8.28047C21.471 5.36906 19.1352 3 16.2936 3Z" fill="currentColor"></path>
+        <svg class="svg-heart" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16.5429 4C13.4999 4 12 6.99984 12 6.99984C12 6.99984 10.5001 4 7.45712 4C4.98412 4 3.02579 6.06895 3.00048 8.53772C2.94892 13.6623 7.06573 17.3066 11.5782 20.3693C11.7026 20.4539 11.8495 20.4992 12 20.4992C12.1505 20.4992 12.2975 20.4539 12.4219 20.3693C16.9338 17.3066 21.0506 13.6623 20.9995 8.53772C20.9742 6.06895 19.0159 4 16.5429 4Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
         </svg>
-        <span class="visually-hidden">{{ 'products.product.wishlist_text' | t }}</span>
-      </button>
+        <span>{{ 'products.product.wishlist_text' | t }}</span>
+      </span>
     {%- endif -%}
 
     {%- if settings.enable_compare -%}
-      <button
-        type="button"
-        class="btn btn-theme gradient-theme-vertical product-list-item__action-btn js-btn-compare"
+      <span
         data-tooltip="true"
         data-placement="top"
+        class="btn btn-theme gradient-theme-vertical product-card__overlay-btn js-btn-compare"
         title="{{ 'products.product.compare_text' | t }}"
         data-handle="{{ product.handle }}">
         <svg class="icon-add-compare" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -126,15 +125,14 @@
         <svg focusable="false" class="icon icon-remove" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M18 18L6 6M18 6L6 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
         </svg>
-        <span class="visually-hidden">{{ 'products.product.compare_text' | t }}</span>
-      </button>
+        <span>{{ 'products.product.compare_text' | t }}</span>
+      </span>
     {%- endif -%}
 
-    <button
-      type="button"
-      class="btn btn-theme gradient-theme-vertical product-list-item__action-btn js-grid-cart {% unless product.available %}disabled{% endunless %}"
+    <span
       data-tooltip="true"
       data-placement="top"
+      class="btn btn-theme gradient-theme-vertical product-card__overlay-btn js-grid-cart {% unless product.available %}disabled{% endunless %}"
       {% if product.available %}
         title="{{ 'products.product.add_to_cart' | t }}"
       {% else %}
@@ -145,8 +143,8 @@
         <path d="M17.5727 7.45459H6.42926C5.47205 7.45459 4.67878 8.19674 4.61511 9.15183L3.94845 19.1519C3.87848 20.2012 4.71085 21.091 5.76259 21.091H18.2393C19.2912 21.091 20.1235 20.2012 20.0535 19.1519L19.3869 9.15183C19.3232 8.19674 18.5299 7.45459 17.5727 7.45459Z" stroke="currentColor" stroke-width="1.5"></path>
         <path d="M15.638 10.1818V6.54542C15.638 4.53711 14.0099 2.90906 12.0016 2.90906C9.99329 2.90906 8.36523 4.53711 8.36523 6.54542V10.1818" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"></path>
       </svg>
-      <div class="product-list-item__loading spinner-border" role="status"></div>
-      <span class="visually-hidden">
+      <div class="product-card__loading spinner-border" role="status"></div>
+      <span>
         {% unless product.available %}
           {{ 'products.product.sold_out' | t }}
         {% else %}
@@ -157,6 +155,6 @@
           {%- endif -%}
         {% endunless %}
       </span>
-    </button>
+    </span>
   </div>
 </div>

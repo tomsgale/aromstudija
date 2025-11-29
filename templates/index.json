@@ -362,7 +362,9 @@
         "productlist_B7nyGG",
         "productlist_cVUVXH"
       ],
-      "custom_css": [],
+      "custom_css": [
+        ".customstyletemplate--26860531155328__product_list_small_Ga3w6K .adv-productlist .media-body{margin-left:16px;}"
+      ],
       "name": "Product list Small",
       "settings": {
         "animation": "",

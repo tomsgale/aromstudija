@@ -112,8 +112,8 @@
     right: 16px;
     top: 50%;
     transform: translateY(-50%);
-    width: 28px;
-    height: 28px;
+    width: 34px;
+    height: 34px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -126,13 +126,11 @@
     cursor: pointer;
   }
   .customstyle{{ section.id }} .adv-productlist .product-card__arrow svg{
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
     fill: none;
     stroke: currentColor;
-    stroke-width: 2.4;
-    stroke-linecap: round;
-    stroke-linejoin: round;
+    stroke-width: 1.5;
   }
   .customstyle{{ section.id }} .col-lg-4{
     padding-left: 6px;
@@ -241,11 +239,13 @@
                               </div>
                             {%- endif -%}
                           </div>
-                          <a href="{{ product.url | within: collection }}" class="product-card__arrow" title="{{ product.title }}">
-                            <svg viewBox="0 0 24 24">
-                              <polyline points="9 18 15 12 9 6"></polyline>
+                          <span class="product-card__arrow js-grid-cart {% unless product.available %} disabled{% endunless %}" title="{{ 'products.product.add_to_cart' | t }}" data-id="{{ product.selected_or_first_available_variant.id }}">
+                            <svg class="svg-cart" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M17.5727 7.45459H6.42926C5.47205 7.45459 4.67878 8.19674 4.61511 9.15183L3.94845 19.1519C3.87848 20.2012 4.71085 21.091 5.76259 21.091H18.2393C19.2912 21.091 20.1235 20.2012 20.0535 19.1519L19.3869 9.15183C19.3232 8.19674 18.5299 7.45459 17.5727 7.45459Z" stroke="currentColor" stroke-width="1.5"></path>
+                              <path d="M15.638 10.1818V6.54542C15.638 4.53711 14.0099 2.90906 12.0016 2.90906C9.99329 2.90906 8.36523 4.53711 8.36523 6.54542V10.1818" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"></path>
                             </svg>
-                          </a>
+                            <div class="product-card__loading spinner-border" role="status"></div>
+                          </span>
                         </div>
                       {%- endfor -%}
                   

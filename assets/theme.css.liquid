@@ -10965,16 +10965,33 @@ blockquote::before {
 .swiper-button-next {
   height: 44px !important;
   width: 44px !important;
-  background: white;
-  box-shadow: 0 2px 6px #36363626;
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: none;
   border-radius: 50%;
-  transition: all 0.3s ease;
+  color: var(--g-color-carousel);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: color 0.2s ease, background-color 0.2s ease;
 }
 .swiper-button-prev:after,
 .swiper-button-next:after {
   font-size: 16px !important;
-  color:var(--g-color-carousel);
-  display:inline-block;
+  font-weight: 700;
+  color: currentColor;
+  text-shadow: 0 0 0 currentColor, 0 0 0 currentColor;
+  display: inline-block;
+}
+.swiper-button-prev:hover:not(.swiper-button-disabled),
+.swiper-button-next:hover:not(.swiper-button-disabled) {
+  background: rgba(255, 255, 255, 0.75);
+}
+.swiper-button-prev.swiper-button-disabled,
+.swiper-button-next.swiper-button-disabled {
+  color: #94a1a7;
+  background: rgba(201, 209, 213, 0.16);
+  opacity: 1;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 .swiper-button-prev:hover:after{
   animation: 0.4s ease-in-out reverse forwards animateIcon;

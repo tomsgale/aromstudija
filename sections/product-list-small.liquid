@@ -16,6 +16,65 @@
     height: {{ section.settings.rangebg }}%;
     background-color: {{ section.settings.bgbefore }};
   }
+  .customstyle{{ section.id }} .adv-productlist{
+    background: #ffffff;
+    border: none !important;
+    border-radius: 14px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.03);
+    padding: 12px 14px !important;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .customstyle{{ section.id }} .adv-productlist.border-bottom{
+    border-bottom: none !important;
+  }
+  .customstyle{{ section.id }} .adv-productlist .adv-img{
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    background: transparent;
+    border-radius: 10px;
+    padding: 0;
+    margin-right: 0;
+  }
+  .customstyle{{ section.id }} .adv-productlist .media-body{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .customstyle{{ section.id }} .adv-productlist .product-card__type{
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #8d96a3;
+    margin-bottom: 2px;
+  }
+  .customstyle{{ section.id }} .adv-productlist .product-card__name{
+    font-size: 15px;
+    font-weight: 600;
+    color: #0f1b2d;
+    line-height: 1.35;
+    margin-bottom: 0;
+  }
+  .customstyle{{ section.id }} .adv-productlist .product-card__price{
+    font-size: 15px;
+    font-weight: 700;
+    color: #0f1b2d;
+    margin: 0;
+  }
+  .customstyle{{ section.id }} .adv-productlist .product-card__price.product-card__pricesale{
+    color: #d64545;
+  }
+  .customstyle{{ section.id }} .adv-productlist .product-card__regular-price{
+    color: #9aa3ae;
+  }
+  @media (max-width: 767px){
+    .customstyle{{ section.id }} .adv-productlist{
+      padding: 16px;
+    }
+  }
 </style>
 <section class="customstyle{{ section.id }} lazyload"
     data-bgset="{% render 'bgset', image: section.settings.image_bg %}"
@@ -73,6 +132,9 @@
                             width="{{ product.featured_image.width }}"
                             height="{{ product.featured_image.height }}"></a>
                           <div class="media-body">
+                            {%- if product.type != blank -%}
+                              <div class="product-card__type">{{ product.type | upcase }}</div>
+                            {%- endif -%}
                             <a href="{{ product.url | within: collection }}" title="{{ product.title }}" class="product-card__name d-block">{{ product.title }}
                             </a>
                             {%- if product.available -%}

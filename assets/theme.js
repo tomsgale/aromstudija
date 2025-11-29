@@ -4990,21 +4990,37 @@ theme.collectionView =  (function (){
 
   $(document).on('click',btnView,function(){
     var value = $(this).data('col'),
-        $gridItemCol = $('.js-col');
+        $gridItemCol = $('.js-col'),
+        $productGrid = $('#product-grid');
 
     $(btnView).removeClass('active');
     $(this).addClass('active');
 
-    $gridItemCol.removeClass().addClass('js-col col-sm-6 col-6');
-    if (value === 3){
-      $gridItemCol.addClass('col-lg-4');
-    }else if(value === 4){
-      $gridItemCol.addClass('col-lg-3');
-    }else if(value === 5){
-      $gridItemCol.addClass('col-lg-2-4');
-    }else if(value === 6){
-      $gridItemCol.addClass('col-lg-2');
-    };
+    // Handle list view
+    if (value === 'list'){
+      $productGrid.removeClass('grid grid--2-col grid--3-col-tablet grid--4-col-desktop grid--one-third-max grid--quarter-max row').addClass('product-list-view');
+      $gridItemCol.removeClass().addClass('js-col product-list-view__item');
+      // Show list items, hide grid items
+      $('.product-grid-item').hide();
+      $('.product-list-item-wrapper').show();
+    } else {
+      // Handle grid view
+      $productGrid.removeClass('product-list-view').addClass('grid grid--2-col row');
+      $gridItemCol.removeClass().addClass('js-col col-sm-6 col-6');
+      // Show grid items, hide list items
+      $('.product-grid-item').show();
+      $('.product-list-item-wrapper').hide();
+
+      if (value === 3){
+        $gridItemCol.addClass('col-lg-4');
+      }else if(value === 4){
+        $gridItemCol.addClass('col-lg-3');
+      }else if(value === 5){
+        $gridItemCol.addClass('col-lg-2-4');
+      }else if(value === 6){
+        $gridItemCol.addClass('col-lg-2');
+      };
+    }
   })
 
   function triggerCollectionView(){

@@ -82,6 +82,7 @@
           <span class="js-btn-view btn-view-2 {% if productPerrow == '2' %}active{% endif %}" data-col="2"></span>
           <span class="js-btn-view btn-view-3 {% if productPerrow == '3' %}active{% endif %}" data-col="3"></span>
           <span class="js-btn-view btn-view-4 {% if productPerrow == '4' %}active{% endif %}" data-col="4"></span>
+          <span class="js-btn-view btn-view-list" data-col="list"></span>
         </div>
         <div class="d-flex align-items-center">
           <div class="facet-filters sorting caption">
@@ -172,17 +173,22 @@
               {% if collection.products_count == 4 %} grid--4-col-desktop{% else %} grid--3-col-tablet grid--one-third-max grid--4-col-desktop grid--quarter-max{% endif %}
             {% endif %}">
             {%- for product in collection.products -%}
-              
+
               {%- if forloop.index > 2 -%}
-                
+
               {%- endif -%}
 
               <li class="grid__item {{ gridProduct }}">
-                {%- liquid
-                  assign enable_edit_item = section.settings.enable_edit_item
-                  assign select_item = section.settings.select_item
-                -%}
-                {%- render 'product-card', product: product, size_image_grid: size_image_grid, cover_contain: cover_contain , enable_edit_item: enable_edit_item, select_item: select_item -%}
+                <div class="product-grid-item">
+                  {%- liquid
+                    assign enable_edit_item = section.settings.enable_edit_item
+                    assign select_item = section.settings.select_item
+                  -%}
+                  {%- render 'product-card', product: product, size_image_grid: size_image_grid, cover_contain: cover_contain , enable_edit_item: enable_edit_item, select_item: select_item -%}
+                </div>
+                <div class="product-list-item-wrapper" style="display: none;">
+                  {%- render 'product-list-item', product: product -%}
+                </div>
               </li>
             {%- endfor -%}
           </ul>

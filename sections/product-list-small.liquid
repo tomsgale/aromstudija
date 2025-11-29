@@ -21,54 +21,91 @@
     border: none !important;
     border-radius: 14px;
     box-shadow: 0 12px 28px rgba(0,0,0,0.03);
-    padding: 12px 14px !important;
+    padding: 16px 22px !important;
     align-items: center;
-    gap: 10px;
+    gap: 14px;
     margin-bottom: 12px;
+    min-height: 140px;
+    position: relative;
+    padding-right: 64px !important;
   }
   .customstyle{{ section.id }} .adv-productlist.border-bottom{
     border-bottom: none !important;
   }
   .customstyle{{ section.id }} .adv-productlist .adv-img{
-    width: 56px;
-    height: 56px;
+    width: 76px;
+    height: 76px;
     object-fit: contain;
     background: transparent;
     border-radius: 10px;
     padding: 0;
     margin-right: 0;
+    flex-shrink: 0;
   }
   .customstyle{{ section.id }} .adv-productlist .media-body{
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    justify-content: space-between;
+    gap: 8px;
+    height: 100%;
   }
   .customstyle{{ section.id }} .adv-productlist .product-card__type{
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     color: #8d96a3;
-    margin-bottom: 2px;
+    margin-bottom: 4px;
   }
   .customstyle{{ section.id }} .adv-productlist .product-card__name{
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     color: #0f1b2d;
-    line-height: 1.35;
-    margin-bottom: 0;
+    line-height: 1.3;
+    margin-bottom: 2px;
+    padding-right: 8px;
   }
   .customstyle{{ section.id }} .adv-productlist .product-card__price{
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
     color: #0f1b2d;
-    margin: 0;
+    margin: 4px 0 0;
   }
   .customstyle{{ section.id }} .adv-productlist .product-card__price.product-card__pricesale{
     color: #d64545;
   }
   .customstyle{{ section.id }} .adv-productlist .product-card__regular-price{
     color: #9aa3ae;
+  }
+  .customstyle{{ section.id }} .adv-productlist .product-card__arrow{
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #0f1b2d;
+    opacity: 0.7;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    border: 1px solid #cfd5dd;
+    border-radius: 50%;
+    background: #fff;
+  }
+  .customstyle{{ section.id }} .adv-productlist:hover .product-card__arrow{
+    opacity: 1;
+    transform: translateY(-50%) scale(1.02);
+  }
+  .customstyle{{ section.id }} .adv-productlist .product-card__arrow i::before{
+    content: '\2192';
+    font-size: 16px;
+    font-style: normal;
+  }
+  .customstyle{{ section.id }} .col-lg-4{
+    padding-left: 6px;
+    padding-right: 6px;
   }
   @media (max-width: 767px){
     .customstyle{{ section.id }} .adv-productlist{
@@ -169,6 +206,9 @@
                                 {{ 'products.product.sold_out' | t }}
                               </div>
                             {%- endif -%}
+                          </div>
+                          <div class="product-card__arrow">
+                            <i></i>
                           </div>
                         </div>
                       {%- endfor -%}

@@ -23,7 +23,7 @@
     box-shadow: 0 12px 28px rgba(0,0,0,0.03);
     padding: 24px 16px !important;
     align-items: center;
-    gap: 14px;
+    gap: 16px;
     margin-bottom: 12px;
     height: 128px;
     position: relative;
@@ -95,6 +95,8 @@
     border: 1px solid #0f1b2d;
     border-radius: 50%;
     background: transparent;
+    text-decoration: none;
+    cursor: pointer;
   }
   .customstyle{{ section.id }} .adv-productlist .product-card__arrow svg{
     width: 16px;
@@ -212,11 +214,11 @@
                               </div>
                             {%- endif -%}
                           </div>
-                          <div class="product-card__arrow">
+                          <a href="{{ product.url | within: collection }}" class="product-card__arrow" title="{{ product.title }}">
                             <svg viewBox="0 0 24 24">
                               <polyline points="9 18 15 12 9 6"></polyline>
                             </svg>
-                          </div>
+                          </a>
                         </div>
                       {%- endfor -%}
                   

@@ -457,6 +457,17 @@ article,aside,figcaption,figure,footer,header,hgroup,main,nav,section{display:bl
       .product-tag--absolute{
         border-radius: 9999px !important;
       }
+      /* Make swiper slides and product cards fill height */
+      .swiper-wrapper .swiper-slide,
+      .swiper-wrapper .productlist-item,
+      .swiper-wrapper .producttab-item{
+        height: 100% !important;
+      }
+      .swiper-wrapper .swiper-slide > div,
+      .swiper-wrapper .productlist-item > div,
+      .swiper-wrapper .producttab-item > div{
+        height: 100% !important;
+      }
       .modal-content--newsletter{
         overflow: hidden;
       }

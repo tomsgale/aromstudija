@@ -6027,6 +6027,9 @@ html {
   font-weight: 500;
   line-height: 1;
   letter-spacing:var(--g-label-space);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 .product-label {
   position: absolute;
@@ -6038,6 +6041,9 @@ html {
   flex-wrap: wrap;
   align-items: flex-start;
   align-content: flex-start;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 @media (max-width:749px){
   .product-label {

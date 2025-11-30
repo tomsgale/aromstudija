@@ -348,6 +348,7 @@
     fill: none;
     stroke-width: 4px;
     stroke: currentColor !important;
+    flex-shrink: 0;
   }
   @media (min-width:991px) {
     .photos-sticky{

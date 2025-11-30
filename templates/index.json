@@ -291,7 +291,7 @@
         "title": "Pirktākās preces",
         "des": "Pārbaudītas un populāras preces, kas noderēs arī Tev",
         "align-heading": "center",
-        "collection": "absoluti",
+        "collection": "",
         "limit": 20,
         "perviewDesktop": 5,
         "spaceBetween": 20,

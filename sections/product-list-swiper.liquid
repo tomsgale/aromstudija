@@ -135,6 +135,9 @@
           >
           <div class="swiper-wrapper">
             {%- assign collection = collections[section.settings.collection] -%}
+            {%- if collection == blank -%}
+              {%- assign collection = collections['all'] -%}
+            {%- endif -%}
             {%- assign limit = section.settings.limit -%}
             {%- if enable_first_banner -%}
             <div class="productlist-banner swiper-slide h-100">

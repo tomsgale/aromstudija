@@ -735,6 +735,7 @@
         "template--21581222871313__705146a2-5b6c-4449-8de7-345077567130-banner-1",
         "template--21581222871313__705146a2-5b6c-4449-8de7-345077567130-banner-2"
       ],
+      "disabled": true,
       "settings": {
         "animation": "fade-up",
         "setwidth": "full",
@@ -750,6 +751,88 @@
         "bg_overlay": "#000000",
         "opacity_overlay": 0.3,
         "paddingsection": "30px 0px 0px 0px",
+        "paddingmobile": "40px 0px 40px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    },
+    "image_content_3_aCd8Pr": {
+      "type": "image-content-3",
+      "name": "Image with text Style 3",
+      "settings": {
+        "animation": "",
+        "bgsection": "#f7f7f7",
+        "subtitle": "",
+        "title": "BIO augu dzērieni un hidrolāti",
+        "size_text": "h2",
+        "des": "BIO augu dzērienu sastāvā ir bioloģiski tīrā vidē augušiu vai savvaļas augu, to lapu, ziediņu, sakņu destilāts. Augi parasti tiek vākti ar rokām pareizās stundās, kad tajos ir visvairāk aktīvo vielu. Pēc tam tiek saudzīgi destilēti ar tvaiku zemā temperatūrā. Rezultātā top destilāts, kas pareizi tiek saukts par hidrolātu.",
+        "button": "Uzzināt vairāk",
+        "link": "",
+        "style_btn": "btn-theme",
+        "image": "shopify://shop_images/aromstudija-44.png",
+        "linkimg": "",
+        "bgimage": "#e2ddf2",
+        "enable_subbg": true,
+        "leftimage": false,
+        "paddingsection": "60px 0px 60px 0px",
+        "paddingmobile": "40px 0px 40px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    },
+    "shop_the_look_zyea6z": {
+      "type": "shop-the-look",
+      "blocks": {
+        "product_block_NAb433": {
+          "type": "product_block",
+          "settings": {
+            "product_item": "feel-good-eterisko-ellu-aromrullitis",
+            "left": 25,
+            "top": 25,
+            "dot_color": "#ffffff"
+          }
+        },
+        "product_block_TehNRk": {
+          "type": "product_block",
+          "settings": {
+            "product_item": "",
+            "left": 25,
+            "top": 25,
+            "dot_color": "#ffffff"
+          }
+        },
+        "product_block_JqaRVa": {
+          "type": "product_block",
+          "settings": {
+            "product_item": "",
+            "left": 25,
+            "top": 25,
+            "dot_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "product_block_NAb433",
+        "product_block_TehNRk",
+        "product_block_JqaRVa"
+      ],
+      "name": "Shop the look",
+      "settings": {
+        "animation": "",
+        "setwidth": "container-fluid",
+        "bgsection": "#d7e6e4",
+        "image": "shopify://shop_images/oshadhi_1.webp",
+        "enable_right": false,
+        "enable_heading_right": true,
+        "title_top": "",
+        "title": "OSHADHI ēteriskās eļļas",
+        "des": "Aromstudija piedāvā iepazīties ar JAUNUMU- OSHADHI !\n<br>\n<br>\nMūsu  - jau Aromstudijā esošajām 100% dabiskām un tīrām, kvalitatīvām un īpaši atlasītām ēteriskām eļļām - pievienojas aromterapijas kvalitātes ēteriskās eļļas  no jauna piegādātāja. Lai Jums ir patīkami pārsteigumi un atklājumi! OSHADHI ēteriskās eļļas.",
+        "align-heading": "left",
+        "arrows": true,
+        "draggable": true,
+        "dots": false,
+        "infinite": true,
+        "paddingsection": "60px 0px 60px 0px",
         "paddingmobile": "40px 0px 40px 0px",
         "marginsection": "0px 0px 0px 0px",
         "marginmobile": "0px 0px 0px 0px"
@@ -1432,10 +1515,12 @@
     "product_list_small_Ga3w6K",
     "96713abe-b110-4f66-82c4-233305af1faf",
     "backgroundvideo_mp3Hxa",
-    "1660192674d8a6fd50",
     "48a9fffb-7b1f-4bc5-9e0b-4f19556846d2",
     "705146a2-5b6c-4449-8de7-345077567130",
     "c92b6d28-25d1-477b-920a-d657bf443761",
+    "image_content_3_aCd8Pr",
+    "shop_the_look_zyea6z",
+    "1660192674d8a6fd50",
     "service_zTGnmN",
     "9614dbf0-b77a-4edf-b0a3-08bea8f76dee",
     "9421016d-7952-4484-96b5-5b341d3d6fe4",

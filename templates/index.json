@@ -70,7 +70,7 @@
         "title": "Jaunumi",
         "des": "Jaunākie aromterapijas risinājumi tieši Tev",
         "align-heading": "left",
-        "collection": "ellas-sviesti",
+        "collection": "",
         "limit": 20,
         "perviewDesktop": 6,
         "spaceBetween": 16,
@@ -896,7 +896,7 @@
         "product_block_JqaRVa": {
           "type": "product_block",
           "settings": {
-            "product_item": "baziliks-85-methyl-chavicol-ocimum-basilicum-l-bio-eteriska-ella-5ml-organic",
+            "product_item": "burkanu-seklas-daucus-carota-eteriska-ella-5ml",
             "left": 25,
             "top": 25,
             "dot_color": "#ffffff"

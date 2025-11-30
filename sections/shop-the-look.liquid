@@ -1,21 +1,35 @@
 <!-- shop-the-look.liquid -->
 
 {%- liquid
-  assign image_col_class = 'col-lg-5'
+  assign image_col_class = 'col-lg-5 shopthelook__image-col'
   if section.settings.enable_heading_right
-    assign slider_col_class = 'col-lg-4'
+    assign slider_col_class = 'col-lg-4 shopthelook__slider-col'
   else
-    assign slider_col_class = 'col-lg-7'
+    assign slider_col_class = 'col-lg-7 shopthelook__slider-col'
   endif
-  assign text_col_class = 'col-lg-3'
+  assign text_col_class = 'col-lg-3 shopthelook__text-col'
 -%}
 {%- style -%}
   .customstyle{{ section.id }} .shopthelook-grid {
     row-gap: 32px;
+    position: relative;
+    --slider-width: clamp(320px, 34vw, 460px);
   }
   @media (min-width: 992px) {
     .customstyle{{ section.id }} .shopthelook-grid {
       column-gap: 30px;
+    }
+    .customstyle{{ section.id }} .shopthelook__slider-col {
+      position: absolute;
+      width: var(--slider-width);
+      max-width: 90vw;
+      left: calc(41.6667% - (var(--slider-width) / 2));
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+    }
+    .customstyle{{ section.id }} .shopthelook__slider-col .shopthelook-wrapper {
+      width: 100%;
     }
   }
 {%- endstyle -%}

@@ -22,6 +22,13 @@
       z-index: 1;
     }
   {%- endif -%}
+  @media (max-width: 767px){
+    .customstyle{{ section.id }} .banner-theme-bottom figcaption{
+      bottom: auto !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+    }
+  }
 </style>
 
 <div class="customstyle{{ section.id }}" data-aos="{{ section.settings.animation }}" >

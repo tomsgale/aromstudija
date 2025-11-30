@@ -31,6 +31,14 @@
     .customstyle{{ section.id }} .shopthelook__slider-col .shopthelook-wrapper {
       width: 100%;
     }
+    .customstyle{{ section.id }} .shopthelook__text-col {
+      padding-left: 0;
+      margin-left: clamp(120px, 16vw, 280px);
+    }
+    .customstyle{{ section.id }} .shopthelook__text-col .product-html--top,
+    .customstyle{{ section.id }} .shopthelook__text-col .product-html--top * {
+      text-align: left !important;
+    }
   }
 {%- endstyle -%}
 

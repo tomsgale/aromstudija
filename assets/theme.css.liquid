@@ -8520,7 +8520,16 @@ body.video-playing {
 }
 .product-list-item__price-wrapper {
   min-width: 150px;
-  text-align: right;
+  text-align: left;
+}
+.product-list-item .product-card__price {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+.product-list-item .product-card__regular-price {
+  margin-left: 0 !important;
 }
 .product-list-item__actions {
   gap: 0.5rem;

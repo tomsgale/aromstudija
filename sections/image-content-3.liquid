@@ -29,6 +29,22 @@
         right:7rem;
         position: absolute;
     }
+    .contentimg3 .imgblock{
+        width: 65%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .contentimg3 .imgblock .image-content__image-wrapper{
+        width: 100%;
+        max-width: none;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    @media only screen and (max-width: 767px){
+      .contentimg3 .imgblock{
+        width: 90%;
+      }
+    }
     .contentimg-left .imgblock .imgblock-bg{
         left:7rem;
         right: auto;
@@ -44,9 +60,9 @@
 </style>
 <div class="customstyle{{ section.id }} contentimg3 {% if section.settings.leftimage %} contentimg-left {% else %} contentimg-right {% endif %}" >
     {%- render 'style-section' -%}
-  <div class="container">
+  <div class="container-fluid">
     <div class="section-block">
-      <div class="row d-flex justify-content-center m-0">
+      <div class="row d-flex align-items-center justify-content-center m-0">
           <div class="col-12 col-lg-6 p-0 col-left" data-aos="{{ section.settings.animation }}" data-aos-duration="{%- if section.settings.leftimage -%} 800 {%- else -%} 500 {%- endif -%}">
                 <div class="contentimg3-des {% if section.settings.leftimage %} mt-5 mt-lg-0 {% else %} mb-5 mb-lg-0 {% endif %}">
                   {% if section.settings.subtitle != blank %}

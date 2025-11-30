@@ -48,6 +48,25 @@ display:flex;
   background-color:rgba(var(--g-color-heading-rgb),1);
   color:white;
 }
+@media (max-width: 767px){
+  .customstyle{{ section.id }} .nav-tabs-1{
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .customstyle{{ section.id }} .nav-tabs-1::-webkit-scrollbar{
+    display: none;
+  }
+  .customstyle{{ section.id }} .nav-tabs-1 .nav-item{
+    flex-shrink: 0;
+  }
+  .customstyle{{ section.id }} .nav-tabs-1 .nav-item:last-child{
+    margin-right: -100px !important;
+  }
+}
 {%- endstyle -%}
 <div class="customstyle{{ section.id }} "  data-aos="{{ section.settings.animation }}" >
   {%- render 'style-section' -%}

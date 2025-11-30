@@ -15,6 +15,9 @@
   endcase 
 -%}
 <style>
+  .customstyle{{ section.id }} .section-block{
+    margin-bottom: 30px;
+  }
   .instagramoff-grid{
     display: grid;
     grid-template-columns: repeat({{ section.settings.column }},1fr);

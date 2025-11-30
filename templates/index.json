@@ -496,7 +496,7 @@
         "opacity_bg_overlay": 0.1,
         "title_color": "#202025",
         "bg_box": "#ffffff",
-        "opacity_bgbox": 0.7,
+        "opacity_bgbox": 1,
         "marginsection": "0px 0px 0px 0px",
         "marginmobile": "0px 0px 0px 0px"
       }
@@ -683,7 +683,7 @@
           "settings": {
             "width": "6",
             "enable_height_banner": true,
-            "promo_banner_height": 700,
+            "promo_banner_height": 800,
             "promo_banner_height_mobile": 600,
             "image": "shopify://shop_images/oshadhi_1.webp",
             "enable_video": false,
@@ -695,7 +695,7 @@
             "description": "Aromstudija piedāvā iepazīties ar JAUNUMU- OSHADHI !\n\nMūsu  - jau Aromstudijā esošajām 100% dabiskām un tīrām, kvalitatīvām un īpaši atlasītām ēteriskām eļļām - pievienojas aromterapijas kvalitātes ēteriskās eļļas  no jauna piegādātāja. Lai Jums ir patīkami pārsteigumi un atklājumi! OSHADHI ēteriskās eļļas.",
             "bg_color": "#ffffff",
             "colordef": "#202025",
-            "opacity_bg": 0.7,
+            "opacity_bg": 1,
             "style_btn": "btn-theme",
             "button_text": "Uzzināt vairāk",
             "button_link": "",
@@ -709,7 +709,7 @@
           "settings": {
             "width": "6",
             "enable_height_banner": true,
-            "promo_banner_height": 700,
+            "promo_banner_height": 800,
             "promo_banner_height_mobile": 600,
             "image": "shopify://shop_images/aromstudija-44.png",
             "enable_video": false,
@@ -721,7 +721,7 @@
             "description": "BIO augu dzērienu sastāvā ir bioloģiski tīrā vidē augušiu vai savvaļas augu, to lapu, ziediņu, sakņu destilāts. Augi parasti tiek vākti ar rokām pareizās stundās, kad tajos ir visvairāk aktīvo vielu. Pēc tam tiek saudzīgi destilēti ar tvaiku zemā temperatūrā. Rezultātā top destilāts, kas pareizi tiek saukts par hidrolātu.",
             "bg_color": "#ffffff",
             "colordef": "#202025",
-            "opacity_bg": 0.7,
+            "opacity_bg": 1,
             "style_btn": "btn-theme",
             "button_text": "Uzzināt vairāk",
             "button_link": "",

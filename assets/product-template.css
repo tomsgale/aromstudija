@@ -60,6 +60,22 @@
     background-color: transparent;
     padding:0px 0px 16px;
   }
+  @media (max-width: 767px){
+    #nav-tab-info .nav-tabs{
+      overflow-x: auto;
+      overflow-y: hidden;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    #nav-tab-info .nav-tabs::-webkit-scrollbar{
+      display: none;
+    }
+    #nav-tab-info .nav-tabs .nav-item{
+      flex-shrink: 0;
+    }
+  }
 
   .nav-link .spr-badge-starrating {
     display: none

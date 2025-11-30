@@ -8438,30 +8438,19 @@ body.video-playing {
   box-shadow: 13px 0 var(--color-accent), 26px 0 var(--color-accent), 39px 0 var(--color-accent), 52px 0 var(--color-accent);
 }
 .btn-view-list:before {
+  box-shadow: 0 6px rgba(var(--g-color-heading-rgb), 0.2), 0 12px rgba(var(--g-color-heading-rgb), 0.2);
+  background: rgba(var(--g-color-heading-rgb), 0.2);
   content: "";
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
   width: 18px;
-  height: 14px;
-  background-image: repeating-linear-gradient(
-    to bottom,
-    rgba(var(--g-color-heading-rgb), 0.2) 0px,
-    rgba(var(--g-color-heading-rgb), 0.2) 2px,
-    transparent 2px,
-    transparent 5px
-  );
-  box-shadow: none;
+  height: 2px;
+  transform: translateX(-50%) translateY(calc(-50% - 6px));
 }
 .btn-view-list.active:before {
-  background-image: repeating-linear-gradient(
-    to bottom,
-    rgb(var(--g-color-heading-rgb)) 0px,
-    rgb(var(--g-color-heading-rgb)) 2px,
-    transparent 2px,
-    transparent 5px
-  );
+  background: rgb(var(--g-color-heading-rgb));
+  box-shadow: 0 6px rgb(var(--g-color-heading-rgb)), 0 12px rgb(var(--g-color-heading-rgb));
 }
 
 /* Product List View Styles */

@@ -1,5 +1,25 @@
 <!-- shop-the-look.liquid -->
 
+{%- liquid
+  assign image_col_class = 'col-lg-5'
+  if section.settings.enable_heading_right
+    assign slider_col_class = 'col-lg-4'
+  else
+    assign slider_col_class = 'col-lg-7'
+  endif
+  assign text_col_class = 'col-lg-3'
+-%}
+{%- style -%}
+  .customstyle{{ section.id }} .shopthelook-grid {
+    row-gap: 32px;
+  }
+  @media (min-width: 992px) {
+    .customstyle{{ section.id }} .shopthelook-grid {
+      column-gap: 30px;
+    }
+  }
+{%- endstyle -%}
+
 <div class="customstyle{{ section.id }} split-section shopthelook" data-aos="{{ section.settings.animation }}" data-section-type="shopthelook" 
   style="--color-body : {{ section.settings.bgsection }}">
     {%- render 'style-section' -%}
@@ -9,8 +29,8 @@
         {%- if section.settings.enable_heading_right == false -%}
           {%- render 'section-heading' -%}
         {%- endif -%}
-        <div class="row mx-0 {% if section.settings.enable_right %} flex-row-reverse {% endif %}">
-            <div class="col-lg-6 col-12 px-0">
+        <div class="row mx-0 shopthelook-grid {% if section.settings.enable_right %} flex-row-reverse {% endif %}">
+            <div class="{{ image_col_class }} col-12 px-0">
               <div class="image-content__image-container">
                 {%- if section.settings.image != blank -%}
                 <div class="position-relative image-content__image-wrapper overflow-hidden " 
@@ -49,47 +69,51 @@
                 </ul>
             </div>
             </div>
-            <div class="col-lg-6 col-12 px-0 d-flex align-items-center">
-                <div class="split-p--right mx-auto py-5 py-lg-0">
-                  {%- if section.settings.enable_heading_right -%}
-                    <div class="product-html--top">
-                      {%- if section.settings.title_top != blank -%}
-                        <div class="subtop text-center text-top" data-aos="{{ section.settings.animation }}" data-aos-duration="300">{{ section.settings.title_top }}</div>
-                      {%- endif -%}
-                      {%- if section.settings.title != blank -%}
-                      <h3 class="section-title-1 text-center  {% if section.settings.des != blank %} mb-2 {% else %} mb-5 {% endif %}" data-aos="{{ section.settings.animation }}" data-aos-duration="500">
-                        <span>{{ section.settings.title }}</span>
-                      </h3>
-                      {%- endif -%}
-                      {%- if section.settings.des != blank -%}
-                      <div class="text-center font-family-2 mb-5 txt-body-70" data-aos="{{ section.settings.animation }}" data-aos-duration="800">{{ section.settings.des }}</div>
-                      {%- endif -%}
-                    </div>
-                  {%- endif -%}
-                <div class="shopthelook-wrapper " data-aos="{{ section.settings.animation }}">
-                    <div class="shopthelook-slider row mb-0" id="Shopthelook-{{ section.id }}"
-                        style="opacity:0"
-                        data-rows="1"
-                        data-slidesToShow="1"
-                        data-arrows="{{ section.settings.arrows }}"
-                        data-dots="{{ section.settings.dots }}" 
-                        data-draggable="{{ section.settings.draggable }}" 
-                        data-infinite="{{ section.settings.infinite }}" 
-                        data-section-id="{{ section.id }}" 
-                        data-section-type="slickCarousels">
-                    {%- for block in section.blocks -%}
-                        <div class="productlist-item col carousel__slide-wrapper--{{ block.id }}" {{ block.shopify_attributes }}>
-                            {%- if block.settings.product_item != blank -%}
-                                {%- render 'product-card', product: block.settings.product_item -%}
-                            {%- else -%}
-                            {%- render 'product-grid-blank' -%}
-                            {%- endif -%}
-                        </div>
-                    {%- endfor -%}
-                    </div>
-                </div>
-                </div>
+            <div class="{{ slider_col_class }} col-12 px-0 d-flex align-items-center">
+              <div class="split-p--right mx-auto py-5 py-lg-0 w-100">
+                <div class="shopthelook-wrapper" data-aos="{{ section.settings.animation }}">
+                  <div class="shopthelook-slider row mb-0" id="Shopthelook-{{ section.id }}"
+                      style="opacity:0"
+                      data-rows="1"
+                      data-slidesToShow="1"
+                      data-arrows="{{ section.settings.arrows }}"
+                      data-dots="{{ section.settings.dots }}" 
+                      data-draggable="{{ section.settings.draggable }}" 
+                      data-infinite="{{ section.settings.infinite }}" 
+                      data-section-id="{{ section.id }}" 
+                      data-section-type="slickCarousels">
+                  {%- for block in section.blocks -%}
+                      <div class="productlist-item col carousel__slide-wrapper--{{ block.id }}" {{ block.shopify_attributes }}>
+                          {%- if block.settings.product_item != blank -%}
+                              {%- render 'product-card', product: block.settings.product_item -%}
+                          {%- else -%}
+                          {%- render 'product-grid-blank' -%}
+                          {%- endif -%}
+                      </div>
+                  {%- endfor -%}
+                  </div>
+              </div>
+              </div>
             </div>
+            {%- if section.settings.enable_heading_right -%}
+            <div class="{{ text_col_class }} col-12 px-0 d-flex align-items-center">
+              <div class="split-p--right mx-auto ms-lg-3 mt-4 mt-lg-0">
+                <div class="product-html--top text-lg-start text-center">
+                  {%- if section.settings.title_top != blank -%}
+                    <div class="subtop text-top mb-3" data-aos="{{ section.settings.animation }}" data-aos-duration="300">{{ section.settings.title_top }}</div>
+                  {%- endif -%}
+                  {%- if section.settings.title != blank -%}
+                  <h3 class="section-title-1 {% if section.settings.des != blank %} mb-2 {% else %} mb-4 {% endif %}" data-aos="{{ section.settings.animation }}" data-aos-duration="500">
+                    <span>{{ section.settings.title }}</span>
+                  </h3>
+                  {%- endif -%}
+                  {%- if section.settings.des != blank -%}
+                  <div class="font-family-2 txt-body-70" data-aos="{{ section.settings.animation }}" data-aos-duration="800">{{ section.settings.des }}</div>
+                  {%- endif -%}
+                </div>
+              </div>
+            </div>
+            {%- endif -%}
            
         </div>
         {%- if section.blocks.size == 0 -%}

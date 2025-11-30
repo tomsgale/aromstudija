@@ -501,40 +501,6 @@
         "marginmobile": "0px 0px 0px 0px"
       }
     },
-    "1660192674d8a6fd50": {
-      "type": "featured-articles",
-      "settings": {
-        "animation": "fade-up",
-        "setwidth": "container-fluid",
-        "bgsection": "#f7f7f7",
-        "title_color": "rgba(0,0,0,0)",
-        "title_top": "",
-        "title": "Jaunākie raksti",
-        "des": "Seko līdzī mūsu jaunumiem, ieteikumiem un izmaiņām darba laikā",
-        "align-heading": "left",
-        "blog": "news",
-        "item_style": "blog-1",
-        "enable_btn_blog": false,
-        "style_btn": "btn-underline",
-        "enable_date": true,
-        "enable_tag": false,
-        "enable_comment": false,
-        "enable_short": true,
-        "image_size": "landscape",
-        "gutter_padding": 50,
-        "arrows": false,
-        "draggable": false,
-        "dots": true,
-        "infinite": false,
-        "rows": "1",
-        "limit": 3,
-        "show": 3,
-        "paddingsection": "60px 0px 40px 0px",
-        "paddingmobile": "60px 0px 60px 0px",
-        "marginsection": "0px 0px 0px 0px",
-        "marginmobile": "0px 0px 0px 0px"
-      }
-    },
     "48a9fffb-7b1f-4bc5-9e0b-4f19556846d2": {
       "type": "featured-collections-3",
       "blocks": {
@@ -756,88 +722,6 @@
         "marginmobile": "0px 0px 0px 0px"
       }
     },
-    "image_content_3_aCd8Pr": {
-      "type": "image-content-3",
-      "name": "Image with text Style 3",
-      "settings": {
-        "animation": "",
-        "bgsection": "#f7f7f7",
-        "subtitle": "",
-        "title": "BIO augu dzērieni un hidrolāti",
-        "size_text": "h2",
-        "des": "BIO augu dzērienu sastāvā ir bioloģiski tīrā vidē augušiu vai savvaļas augu, to lapu, ziediņu, sakņu destilāts. Augi parasti tiek vākti ar rokām pareizās stundās, kad tajos ir visvairāk aktīvo vielu. Pēc tam tiek saudzīgi destilēti ar tvaiku zemā temperatūrā. Rezultātā top destilāts, kas pareizi tiek saukts par hidrolātu.",
-        "button": "Uzzināt vairāk",
-        "link": "",
-        "style_btn": "btn-theme",
-        "image": "shopify://shop_images/aromstudija-44.png",
-        "linkimg": "",
-        "bgimage": "#e2ddf2",
-        "enable_subbg": true,
-        "leftimage": false,
-        "paddingsection": "60px 0px 60px 0px",
-        "paddingmobile": "40px 0px 40px 0px",
-        "marginsection": "0px 0px 0px 0px",
-        "marginmobile": "0px 0px 0px 0px"
-      }
-    },
-    "shop_the_look_zyea6z": {
-      "type": "shop-the-look",
-      "blocks": {
-        "product_block_NAb433": {
-          "type": "product_block",
-          "settings": {
-            "product_item": "feel-good-eterisko-ellu-aromrullitis",
-            "left": 25,
-            "top": 25,
-            "dot_color": "#ffffff"
-          }
-        },
-        "product_block_TehNRk": {
-          "type": "product_block",
-          "settings": {
-            "product_item": "",
-            "left": 25,
-            "top": 25,
-            "dot_color": "#ffffff"
-          }
-        },
-        "product_block_JqaRVa": {
-          "type": "product_block",
-          "settings": {
-            "product_item": "",
-            "left": 25,
-            "top": 25,
-            "dot_color": "#ffffff"
-          }
-        }
-      },
-      "block_order": [
-        "product_block_NAb433",
-        "product_block_TehNRk",
-        "product_block_JqaRVa"
-      ],
-      "name": "Shop the look",
-      "settings": {
-        "animation": "",
-        "setwidth": "container-fluid",
-        "bgsection": "#d7e6e4",
-        "image": "shopify://shop_images/oshadhi_1.webp",
-        "enable_right": false,
-        "enable_heading_right": true,
-        "title_top": "",
-        "title": "OSHADHI ēteriskās eļļas",
-        "des": "Aromstudija piedāvā iepazīties ar JAUNUMU- OSHADHI !\n<br>\n<br>\nMūsu  - jau Aromstudijā esošajām 100% dabiskām un tīrām, kvalitatīvām un īpaši atlasītām ēteriskām eļļām - pievienojas aromterapijas kvalitātes ēteriskās eļļas  no jauna piegādātāja. Lai Jums ir patīkami pārsteigumi un atklājumi! OSHADHI ēteriskās eļļas.",
-        "align-heading": "left",
-        "arrows": true,
-        "draggable": true,
-        "dots": false,
-        "infinite": true,
-        "paddingsection": "60px 0px 60px 0px",
-        "paddingmobile": "40px 0px 40px 0px",
-        "marginsection": "0px 0px 0px 0px",
-        "marginmobile": "0px 0px 0px 0px"
-      }
-    },
     "c92b6d28-25d1-477b-920a-d657bf443761": {
       "type": "product-tab",
       "blocks": {
@@ -984,6 +868,122 @@
         "infinite": true,
         "paddingsection": "80px 0px 80px 0px",
         "paddingmobile": "40px 0px 20px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    },
+    "shop_the_look_zyea6z": {
+      "type": "shop-the-look",
+      "blocks": {
+        "product_block_NAb433": {
+          "type": "product_block",
+          "settings": {
+            "product_item": "feel-good-eterisko-ellu-aromrullitis",
+            "left": 25,
+            "top": 25,
+            "dot_color": "#ffffff"
+          }
+        },
+        "product_block_TehNRk": {
+          "type": "product_block",
+          "settings": {
+            "product_item": "",
+            "left": 25,
+            "top": 25,
+            "dot_color": "#ffffff"
+          }
+        },
+        "product_block_JqaRVa": {
+          "type": "product_block",
+          "settings": {
+            "product_item": "",
+            "left": 25,
+            "top": 25,
+            "dot_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "product_block_NAb433",
+        "product_block_TehNRk",
+        "product_block_JqaRVa"
+      ],
+      "name": "Shop the look",
+      "settings": {
+        "animation": "",
+        "setwidth": "full",
+        "bgsection": "#d7e6e4",
+        "image": "shopify://shop_images/oshadhi_1.webp",
+        "enable_right": false,
+        "enable_heading_right": true,
+        "title_top": "",
+        "title": "OSHADHI ēteriskās eļļas",
+        "des": "Aromstudija piedāvā iepazīties ar JAUNUMU- OSHADHI !\n<br>\n<br>\nMūsu  - jau Aromstudijā esošajām 100% dabiskām un tīrām, kvalitatīvām un īpaši atlasītām ēteriskām eļļām - pievienojas aromterapijas kvalitātes ēteriskās eļļas  no jauna piegādātāja. Lai Jums ir patīkami pārsteigumi un atklājumi! OSHADHI ēteriskās eļļas.",
+        "align-heading": "left",
+        "arrows": true,
+        "draggable": true,
+        "dots": false,
+        "infinite": true,
+        "paddingsection": "0px 0px 0px 0px",
+        "paddingmobile": "40px 0px 40px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    },
+    "image_content_3_aCd8Pr": {
+      "type": "image-content-3",
+      "name": "Image with text Style 3",
+      "settings": {
+        "animation": "",
+        "bgsection": "#f7f7f7",
+        "subtitle": "",
+        "title": "BIO augu dzērieni un hidrolāti",
+        "size_text": "h2",
+        "des": "BIO augu dzērienu sastāvā ir bioloģiski tīrā vidē augušiu vai savvaļas augu, to lapu, ziediņu, sakņu destilāts. Augi parasti tiek vākti ar rokām pareizās stundās, kad tajos ir visvairāk aktīvo vielu. Pēc tam tiek saudzīgi destilēti ar tvaiku zemā temperatūrā. Rezultātā top destilāts, kas pareizi tiek saukts par hidrolātu.",
+        "button": "Uzzināt vairāk",
+        "link": "",
+        "style_btn": "btn-theme",
+        "image": "shopify://shop_images/aromstudija-44.png",
+        "linkimg": "",
+        "bgimage": "#e2ddf2",
+        "enable_subbg": true,
+        "leftimage": false,
+        "paddingsection": "60px 0px 60px 0px",
+        "paddingmobile": "40px 0px 40px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    },
+    "1660192674d8a6fd50": {
+      "type": "featured-articles",
+      "settings": {
+        "animation": "fade-up",
+        "setwidth": "container-fluid",
+        "bgsection": "#f7f7f7",
+        "title_color": "rgba(0,0,0,0)",
+        "title_top": "",
+        "title": "Jaunākie raksti",
+        "des": "Seko līdzī mūsu jaunumiem, ieteikumiem un izmaiņām darba laikā",
+        "align-heading": "left",
+        "blog": "news",
+        "item_style": "blog-1",
+        "enable_btn_blog": false,
+        "style_btn": "btn-underline",
+        "enable_date": true,
+        "enable_tag": false,
+        "enable_comment": false,
+        "enable_short": true,
+        "image_size": "landscape",
+        "gutter_padding": 50,
+        "arrows": false,
+        "draggable": false,
+        "dots": true,
+        "infinite": false,
+        "rows": "1",
+        "limit": 3,
+        "show": 3,
+        "paddingsection": "60px 0px 40px 0px",
+        "paddingmobile": "60px 0px 60px 0px",
         "marginsection": "0px 0px 0px 0px",
         "marginmobile": "0px 0px 0px 0px"
       }
@@ -1518,10 +1518,10 @@
     "48a9fffb-7b1f-4bc5-9e0b-4f19556846d2",
     "705146a2-5b6c-4449-8de7-345077567130",
     "c92b6d28-25d1-477b-920a-d657bf443761",
-    "image_content_3_aCd8Pr",
-    "shop_the_look_zyea6z",
-    "1660192674d8a6fd50",
     "service_zTGnmN",
+    "shop_the_look_zyea6z",
+    "image_content_3_aCd8Pr",
+    "1660192674d8a6fd50",
     "9614dbf0-b77a-4edf-b0a3-08bea8f76dee",
     "9421016d-7952-4484-96b5-5b341d3d6fe4",
     "662cf23c-2a28-41c4-9bd8-b6517c99ba49",

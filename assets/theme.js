@@ -4996,6 +4996,9 @@ theme.collectionView =  (function (){
     $(btnView).removeClass('active');
     $(this).addClass('active');
 
+    // Save view mode to localStorage
+    localStorage.setItem('collectionViewMode', value);
+
     // Handle list view
     if (value === 'list'){
       $productGrid.removeClass('grid grid--2-col grid--3-col-tablet grid--4-col-desktop grid--one-third-max grid--quarter-max row').addClass('product-list-view');
@@ -5027,8 +5030,24 @@ theme.collectionView =  (function (){
     $(btnViewActive).trigger('click');
   }
 
+  function initCollectionView(){
+    // Check if there's a saved view mode in localStorage
+    var savedViewMode = localStorage.getItem('collectionViewMode');
+
+    if (savedViewMode) {
+      // Remove active class from all buttons
+      $(btnView).removeClass('active');
+      // Add active class to the saved view mode button
+      $(btnView + '[data-col="' + savedViewMode + '"]').addClass('active');
+    }
+
+    // Trigger the active view
+    $(btnViewActive).trigger('click');
+  }
+
   return {
-    triggerView:triggerCollectionView
+    triggerView:triggerCollectionView,
+    init:initCollectionView
   }
 })()
 

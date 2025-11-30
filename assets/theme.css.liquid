@@ -8468,19 +8468,26 @@ body.video-playing {
 }
 
 /* Fix grid item alignment when grid/list wrappers are present */
-.product-grid .grid__item.js-col {
+#product-grid.grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+#product-grid.grid .grid__item.js-col {
   display: flex;
   flex-direction: column;
+  align-self: stretch;
 }
 .product-grid-item {
   display: flex;
   flex-direction: column;
   flex: 1;
+  height: 100%;
 }
 .product-grid-item > .product-card {
   flex: 1;
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 .product-grid-item > .product-card > .product-card__image-wr {
   flex-shrink: 0;
@@ -8526,10 +8533,14 @@ body.video-playing {
   display: flex;
   flex-direction: row-reverse;
   justify-content: flex-start;
+  align-items: center;
   gap: 0.5rem;
 }
 .product-list-item .product-card__regular-price {
   margin-left: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  line-height: 1;
 }
 .product-list-item__actions {
   gap: 0.5rem;

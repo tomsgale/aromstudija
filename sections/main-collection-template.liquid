@@ -248,7 +248,14 @@
         });
       });
     }
-    
+
+    // Initialize collection view from localStorage
+    document.addEventListener("DOMContentLoaded", function() {
+      if (typeof theme !== 'undefined' && theme.collectionView && theme.collectionView.init) {
+        theme.collectionView.init();
+      }
+    });
+
   {% endjavascript %}
 
 {% schema %}

@@ -56,6 +56,9 @@
       padding:40px;
     }
   {% endif %}
+  .bgvideo-{{ section.id }} .parallax-banner__meta{
+    border-radius: 8px;
+  }
   .bgvideo-{{ section.id }}::before{
       content:"";
       position: absolute;
@@ -70,6 +73,7 @@
   .bgvideo-{{ section.id }} .parallax-banner__meta::before{
   background-color: {{ section.settings.bg_box }};
   opacity: {{ section.settings.opacity_bgbox }};
+  border-radius: 8px;
 }
   </style>
 <div class="customstyle{{ section.id }} " data-aos="{{ section.settings.animation }}" >

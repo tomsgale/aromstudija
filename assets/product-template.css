@@ -366,6 +366,9 @@
     stroke: currentColor !important;
     flex-shrink: 0;
   }
+  .product-block__iwt .iwt-item__text--icn{
+    font-style: italic;
+  }
   @media (min-width:991px) {
     .photos-sticky{
       position: sticky;

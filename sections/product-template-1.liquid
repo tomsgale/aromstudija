@@ -111,6 +111,7 @@
             {%- when 'icon_with_text' -%}
               {%-liquid 
                 assign block_style = block.settings.block_style
+                assign icn_value = product.metafields.custom.icn.value | default: product.metafields.custom.icn
               -%}
               <div class="product-block product-block__iwt">
                   <div class="iwt-{{ block_style }}  {% if block_style == 'hoz' %} d-flex justify-content-start gap-4 flex-lg-row flex-column{% else %} iwt-blockhoz gap-3 {% endif %}">
@@ -120,12 +121,18 @@
                         assign text = 'icon_text_' | append: i 
                         assign iconShow = block.settings[icon]
                         assign textShow = block.settings[text]
+                        assign is_custom_icn = false
+                        assign textShow_clean = textShow | strip
+                        assign icn_value_clean = icn_value | strip
+                        if icn_value_clean != blank and textShow_clean == icn_value_clean
+                          assign is_custom_icn = true
+                        endif
                       -%}
                       {%- if textShow != blank -%}
                         <div class="iwt-item text-center {% if block_style == 'hoz' %} d-flex flex-row gap-2 align-items-center {% endif %}" >
                           {% render 'list-svg', icon : iconShow %}
                           {%- if textShow != blank -%}
-                            <div class="iwt-item__text mt-1">
+                            <div class="iwt-item__text mt-1 {% if is_custom_icn %}iwt-item__text--icn{% endif %}">
                               {{ textShow }}
                             </div>
                           {%- endif -%}

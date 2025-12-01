@@ -7,6 +7,21 @@
     background-size: {{ section.settings.e_size }} !important;
 
   }
+  .customstyle{{ section.id }} .adv-productlist-grid{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+  @media (max-width: 991px){
+    .customstyle{{ section.id }} .adv-productlist-grid{
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 767px){
+    .customstyle{{ section.id }} .adv-productlist-grid{
+      grid-template-columns: 1fr;
+    }
+  }
   .customstyle{{ section.id }}::before {
     position: absolute;
     top: 0;
@@ -196,64 +211,66 @@
                           {{ block.settings.title }}
                         </h4>
                       {%- endif -%}
-                      {%- for product in collection.products limit: block.settings.limit_product -%}
-                        <div class="media adv-productlist {% if forloop.last %} pb-0 pt-4 {% else %} py-4 {% endif %} {% unless forloop.last %} border-bottom {% endunless %}" style="border-bottom-color: {{ block.settings.p_border }}!important;">
-                          <a href="{{ product.url | within: collection }}"><img class="lazyload adv-img" 
-                            data-src="{{ product.featured_image | image_url: width: 150 }}" 
-                            src="{{ product.featured_image | image_url: width: 1, height: 1 }}"
-                            loading="lazy"
-                            width="{{ product.featured_image.width }}"
-                            height="{{ product.featured_image.height }}"></a>
-                          <div class="media-body">
-                            <div>
-                              {%- if product.type != blank -%}
-                                <div class="product-card__type">{{ product.type | upcase }}</div>
-                              {%- endif -%}
-                              <a href="{{ product.url | within: collection }}" title="{{ product.title }}" class="product-card__name d-block">{{ product.title }}
-                              </a>
-                            </div>
-                            {%- if product.available -%}
-                              <div class="product-card__price {% if product.compare_at_price > product.price %} product-card__pricesale {% endif %}">
-                                {%- if product.compare_at_price > product.price -%}
-                                  {%- if product.price_varies -%}
-                                    {%- assign sale_price = product.price | money -%}
-                                    {{ 'products.product.on_sale_from_html' | t: price: sale_price }}
-                                  {%- else -%}
-                                    <span class="visually-hidden">{{ 'products.product.regular_price' | t }}
-                                    </span>
-                                   
-                                    <span class="visually-hidden">{{ 'products.product.sale_price' | t }}
-                                    </span>
-                                    {{ product.price | money }}
-                                    <s class="product-card__regular-price">{{ product.compare_at_price | money }}
-                                    </s>
-                                  {%- endif -%}
-                                {%- else -%}
-                                  {%- if product.price_varies -%}
-                                    {%- assign price = product.price | money -%}
-                                    {{ 'products.product.from_text_html' | t: price: price }}
-                                  {%- else -%}
-                                    <span class="visually-hidden">{{ 'products.product.regular_price' | t }}
-                                    </span>
-                                    {{ product.price | money }}
-                                  {%- endif -%}
+                      <div class="adv-productlist-grid">
+                        {%- for product in collection.products limit: block.settings.limit_product -%}
+                          <div class="media adv-productlist py-4" style="border-bottom-color: {{ block.settings.p_border }}!important;">
+                            <a href="{{ product.url | within: collection }}"><img class="lazyload adv-img" 
+                              data-src="{{ product.featured_image | image_url: width: 150 }}" 
+                              src="{{ product.featured_image | image_url: width: 1, height: 1 }}"
+                              loading="lazy"
+                              width="{{ product.featured_image.width }}"
+                              height="{{ product.featured_image.height }}"></a>
+                            <div class="media-body">
+                              <div>
+                                {%- if product.type != blank -%}
+                                  <div class="product-card__type">{{ product.type | upcase }}</div>
                                 {%- endif -%}
+                                <a href="{{ product.url | within: collection }}" title="{{ product.title }}" class="product-card__name d-block">{{ product.title }}
+                                </a>
                               </div>
-                            {%- else -%}
-                              <div class="product-card__availability small">
-                                {{ 'products.product.sold_out' | t }}
-                              </div>
-                            {%- endif -%}
+                              {%- if product.available -%}
+                                <div class="product-card__price {% if product.compare_at_price > product.price %} product-card__pricesale {% endif %}">
+                                  {%- if product.compare_at_price > product.price -%}
+                                    {%- if product.price_varies -%}
+                                      {%- assign sale_price = product.price | money -%}
+                                      {{ 'products.product.on_sale_from_html' | t: price: sale_price }}
+                                    {%- else -%}
+                                      <span class="visually-hidden">{{ 'products.product.regular_price' | t }}
+                                      </span>
+                                     
+                                      <span class="visually-hidden">{{ 'products.product.sale_price' | t }}
+                                      </span>
+                                      {{ product.price | money }}
+                                      <s class="product-card__regular-price">{{ product.compare_at_price | money }}
+                                      </s>
+                                    {%- endif -%}
+                                  {%- else -%}
+                                    {%- if product.price_varies -%}
+                                      {%- assign price = product.price | money -%}
+                                      {{ 'products.product.from_text_html' | t: price: price }}
+                                    {%- else -%}
+                                      <span class="visually-hidden">{{ 'products.product.regular_price' | t }}
+                                      </span>
+                                      {{ product.price | money }}
+                                    {%- endif -%}
+                                  {%- endif -%}
+                                </div>
+                              {%- else -%}
+                                <div class="product-card__availability small">
+                                  {{ 'products.product.sold_out' | t }}
+                                </div>
+                              {%- endif -%}
+                            </div>
+                            <span class="product-card__arrow js-grid-cart {% unless product.available %} disabled{% endunless %}" title="{{ 'products.product.add_to_cart' | t }}" data-id="{{ product.selected_or_first_available_variant.id }}">
+                              <svg class="svg-cart" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M17.5727 7.45459H6.42926C5.47205 7.45459 4.67878 8.19674 4.61511 9.15183L3.94845 19.1519C3.87848 20.2012 4.71085 21.091 5.76259 21.091H18.2393C19.2912 21.091 20.1235 20.2012 20.0535 19.1519L19.3869 9.15183C19.3232 8.19674 18.5299 7.45459 17.5727 7.45459Z" stroke="currentColor" stroke-width="1.5"></path>
+                                <path d="M15.638 10.1818V6.54542C15.638 4.53711 14.0099 2.90906 12.0016 2.90906C9.99329 2.90906 8.36523 4.53711 8.36523 6.54542V10.1818" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"></path>
+                              </svg>
+                              <div class="product-card__loading spinner-border" role="status"></div>
+                            </span>
                           </div>
-                          <span class="product-card__arrow js-grid-cart {% unless product.available %} disabled{% endunless %}" title="{{ 'products.product.add_to_cart' | t }}" data-id="{{ product.selected_or_first_available_variant.id }}">
-                            <svg class="svg-cart" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M17.5727 7.45459H6.42926C5.47205 7.45459 4.67878 8.19674 4.61511 9.15183L3.94845 19.1519C3.87848 20.2012 4.71085 21.091 5.76259 21.091H18.2393C19.2912 21.091 20.1235 20.2012 20.0535 19.1519L19.3869 9.15183C19.3232 8.19674 18.5299 7.45459 17.5727 7.45459Z" stroke="currentColor" stroke-width="1.5"></path>
-                              <path d="M15.638 10.1818V6.54542C15.638 4.53711 14.0099 2.90906 12.0016 2.90906C9.99329 2.90906 8.36523 4.53711 8.36523 6.54542V10.1818" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"></path>
-                            </svg>
-                            <div class="product-card__loading spinner-border" role="status"></div>
-                          </span>
-                        </div>
-                      {%- endfor -%}
+                        {%- endfor -%}
+                      </div>
                   
                   {%- else -%}
                     <h4 class="mb-2">

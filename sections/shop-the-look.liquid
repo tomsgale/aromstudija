@@ -19,6 +19,72 @@
   .customstyle{{ section.id }} .image-content__image-wrapper .image-content__image {
     border-radius: 0 !important;
   }
+  @media (max-width: 991.98px) {
+    .customstyle{{ section.id }} {
+      padding-top: 0 !important;
+    }
+    .customstyle{{ section.id }} .shopthelook__image-col {
+      position: relative;
+    }
+    .customstyle{{ section.id }} .shopthelook__slider-col {
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(78%, 320px);
+      max-width: 100%;
+      padding: 0 !important;
+      z-index: 3;
+    }
+    .customstyle{{ section.id }} .shopthelook__slider-col .split-p--right {
+      padding: 12px 0 0;
+    }
+    .customstyle{{ section.id }} .shopthelook__slider-col .shopthelook-wrapper {
+      width: 100%;
+    }
+    .customstyle{{ section.id }} .shopthelook__slider-col .shopthelook-slider {
+      padding-top: 6px;
+    }
+    .customstyle{{ section.id }} .shopthelook__slider-col .shopthelook-slider .productlist-item {
+      display: flex;
+      justify-content: center;
+    }
+    .customstyle{{ section.id }} .shopthelook__slider-col .product-card {
+      width: 80%;
+      max-width: 320px;
+      margin: 0 auto;
+    }
+    .customstyle{{ section.id }} .shopthelook__image-col #dot-{{ section.id }},
+    .customstyle{{ section.id }} .shopthelook__image-col .hotspot-dotwrap,
+    .customstyle{{ section.id }} .shopthelook__image-col .hotspot-dot {
+      display: none !important;
+      pointer-events: none;
+      visibility: hidden;
+    }
+    .customstyle{{ section.id }} .section-block {
+      padding-top: 0 !important;
+      margin-top: 0 !important;
+    }
+    .customstyle{{ section.id }} .shopthelook__text-col {
+      padding-left: clamp(18px, 5vw, 36px);
+      padding-right: clamp(18px, 5vw, 36px);
+      margin-top: clamp(150px, 32vw, 240px);
+      max-width: 1040px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .customstyle{{ section.id }} .shopthelook__text-col .product-html--top,
+    .customstyle{{ section.id }} .shopthelook__text-col .product-html--top * {
+      text-align: left !important;
+    }
+    .customstyle{{ section.id }} .shopthelook__text-col .product-html--top {
+      padding-left: clamp(18px, 5vw, 36px);
+      padding-right: clamp(18px, 5vw, 36px);
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
   @media (min-width: 992px) {
     .customstyle{{ section.id }} .shopthelook-grid {
       column-gap: 30px;

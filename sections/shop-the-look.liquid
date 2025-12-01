@@ -19,6 +19,9 @@
   .customstyle{{ section.id }} .image-content__image-wrapper .image-content__image {
     border-radius: 0 !important;
   }
+  .customstyle{{ section.id }} .shopthelook__text-col .shopthelook__cta {
+    margin-top: 26px !important;
+  }
   @media (max-width: 991.98px) {
     .customstyle{{ section.id }} {
       padding-top: 0 !important;
@@ -201,6 +204,11 @@
                   {%- endif -%}
                   {%- if section.settings.des != blank -%}
                   <div class="font-family-2 txt-body-70" data-aos="{{ section.settings.animation }}" data-aos-duration="800">{{ section.settings.des }}</div>
+                  {%- endif -%}
+                  {%- if section.settings.button_text != blank -%}
+                  <div class="shopthelook__cta" data-aos="{{ section.settings.animation }}" data-aos-duration="900">
+                    <a class="btn {{ section.settings.style_btn }}" href="{{ section.settings.button_link }}">{{ section.settings.button_text }}</a>
+                  </div>
                   {%- endif -%}
                 </div>
               </div>
@@ -408,6 +416,50 @@
       "type": "textarea",
       "id": "des",
       "label": "HTML / Description"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Shop collection"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "info": "Link to a collection or any URL"
+    },
+    {
+      "type": "select",
+      "id": "style_btn",
+      "label": "Button style",
+      "default": "btn-theme",
+      "options": [
+        {
+          "value": "btn-theme",
+          "label": "Button box"
+        },
+        {
+          "value": "btn-theme btn-white",
+          "label": "Button box white"
+        },
+        {
+          "value": "btn-underline",
+          "label": "Button line"
+        },
+        {
+          "value": "btn-underline btn-underline-white",
+          "label": "Button line white"
+        },
+        {
+          "value": "btn-outline",
+          "label": "Button outline"
+        },
+        {
+          "value": "btn-outline btn-outline-white",
+          "label": "Button outline white"
+        }
+      ]
     },
     {
       "type": "select",

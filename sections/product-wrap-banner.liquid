@@ -40,6 +40,88 @@
     else 
     assign positiontxt = 'align-items-end justify-content-start'
   endcase
+  assign collection_handle = section.settings.collection
+  assign product_source = section.settings.product_source | default: 'best-selling'
+  assign limit = section.settings.limit
+  assign is_all_products = false
+
+  comment
+    Get the collection and products
+  endcomment
+  if collection_handle != blank
+    assign base_collection = collections[collection_handle]
+  endif
+
+  if base_collection == blank
+    assign base_collection = collections['all']
+    assign is_all_products = true
+  endif
+
+  assign products = base_collection.products
+
+  if products == blank and collection_handle != blank
+    assign base_collection = collections['all']
+    assign products = base_collection.products
+    assign is_all_products = true
+  endif
+
+  comment
+    Parse metafield setting and prepare for sorting
+  endcomment
+  assign sorted_products = '' | split: ''
+  assign use_manual_sort = false
+  assign metafield_name = section.settings.sales_metafield | default: 'custom.sales'
+  assign metafield_parts = metafield_name | split: '.'
+  assign mf_namespace = metafield_parts[0] | strip
+  assign mf_key = metafield_parts[1] | strip
+
+  if product_source == 'sales-metafield' and products.size > 0
+    assign use_manual_sort = true
+
+    for product in products
+      assign sales_value = 0
+
+      comment
+        Try to get metafield value - handle common namespaces
+      endcomment
+      assign mv = blank
+      if mf_namespace == 'custom'
+        if mf_key == 'sales'
+          assign mv = product.metafields.custom.sales
+        elsif mf_key == 'sales_total'
+          assign mv = product.metafields.custom.sales_total
+        elsif mf_key == 'total_sales'
+          assign mv = product.metafields.custom.total_sales
+        endif
+      endif
+
+      comment
+        Extract numeric value
+      endcomment
+      if mv.value
+        assign sales_value = mv.value
+      elsif mv
+        assign sales_value = mv
+      endif
+
+      comment
+        Convert to number and pad for sorting
+      endcomment
+      assign sales_num = sales_value | times: 1 | floor
+      assign padded_value = sales_num | prepend: '000000000000' | slice: -12, 12
+
+      comment
+        Create sortable entry
+      endcomment
+      assign entry = padded_value | append: '|' | append: forloop.index0
+      assign sorted_products = sorted_products | push: entry
+    endfor
+
+    comment
+      Sort descending highest first
+    endcomment
+    assign sorted_products = sorted_products | sort | reverse
+  endif
   -%}
 <style>
   .customstyle{{ section.id }}{
@@ -205,52 +287,64 @@
               </div>
             </div>
           </div>
-      <div class="wrbanner-product">
-        <div class="wrbanner-wrapper dots-negative swiper-wrapper-{{ section.id }} position-relative">
-          <div class="productlist-swiper swiper-container swipercol-{{ section.id }} {% if section.settings.scrollbar %} pb-5 {% endif %}" id="Productlist-{{ section.id }}"
-            data-section-id="{{ section.id }}"  
-            data-section-type="swipercustom"
-            data-perview-desktop="{{ section.settings.perviewDesktop }}"
-            data-space-between="{{ section.settings.spaceBetween }}"
-            data-perview-mobile="{% if enable_first_banner %} 1.32 {% else %} 1.38 {% endif %}"
-            >
-            <div class="swiper-wrapper">
-              {%- assign collection = collections[section.settings.collection] -%}
-              {%- assign limit = section.settings.limit -%}
-              {%- if collection != blank -%}
-              {%- for product in collection.products limit: limit -%}
-              <div class="productlist-item swiper-slide">
-                  <div data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}">
-                    {%- render 'product-card', product: product -%}
+          <div class="wrbanner-product">
+            <div class="wrbanner-wrapper dots-negative swiper-wrapper-{{ section.id }} position-relative">
+              <div class="productlist-swiper swiper-container swipercol-{{ section.id }} {% if section.settings.scrollbar %} pb-5 {% endif %}" id="Productlist-{{ section.id }}"
+                data-section-id="{{ section.id }}"  
+                data-section-type="swipercustom"
+                data-perview-desktop="{{ section.settings.perviewDesktop }}"
+                data-space-between="{{ section.settings.spaceBetween }}"
+                data-perview-mobile="{% if enable_first_banner %} 1.32 {% else %} 1.38 {% endif %}"
+                >
+                <div class="swiper-wrapper">
+                  {%- if use_manual_sort and sorted_products.size > 0 -%}
+                    {%- comment -%} Using metafield sorting {%- endcomment -%}
+                    {%- for entry in sorted_products limit: limit -%}
+                      {%- assign product_index = entry | split: '|' | last | plus: 0 -%}
+                      {%- assign product = products[product_index] -%}
+                      {%- if product == blank -%}{% continue %}{%- endif -%}
+                      <div class="productlist-item swiper-slide">
+                        <div data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}">
+                          {%- render 'product-card', product: product -%}
+                        </div>
+                      </div>
+                    {%- endfor -%}
+                  {%- elsif products.size > 0 -%}
+                    {%- comment -%} Using collection's natural sort order (works with specific collections only) {%- endcomment -%}
+                    {%- for product in products limit: limit -%}
+                    <div class="productlist-item swiper-slide">
+                      <div data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}">
+                        {%- render 'product-card', product: product -%}
+                      </div>
+                    </div>
+                    {%- endfor -%}
+                  {%- else -%}
+                    {%- comment -%} No products available - show placeholders {%- endcomment -%}
+                    {%- for i in (1..limit) -%}
+                    <div class="productlist-item swiper-slide">
+                      <div data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}">
+                        {%- render 'product-grid-blank' -%}
+                      </div>
+                    </div>
+                    {%- endfor -%}
+                  {%- endif -%}
                   </div>
-              </div>
-              {%- endfor -%}
-              {%- else -%}
-              {%- for i in (1..limit) -%}
-              <div class="productlist-item swiper-slide">
-                <div data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}">
-                  {%- render 'product-grid-blank' -%}
+                  
+                  {%- if section.settings.scrollbar -%}
+                  <div class="swiper-scrollbar"></div>
+                  {%- endif -%}
                 </div>
-              </div>
-              {%- endfor -%}
+              {%- if section.settings.arrows -%}
+                  <div class="swiper-button-prev"></div>
+                  <div class="swiper-button-next"></div>
               {%- endif -%}
-              </div>
-              
-              {%- if section.settings.scrollbar -%}
-              <div class="swiper-scrollbar"></div>
+              {%- if buttonall != blank -%}
+                  <a href="{{ buttonall_link }}" class="btn-section btn {{ style_btn }}">
+                    {{ buttonall }}
+                  </a>
               {%- endif -%}
             </div>
-          {%- if section.settings.arrows -%}
-              <div class="swiper-button-prev"></div>
-              <div class="swiper-button-next"></div>
-          {%- endif -%}
-          {%- if buttonall != blank -%}
-              <a href="{{ buttonall_link }}" class="btn-section btn {{ style_btn }}">
-                {{ buttonall }}
-              </a>
-          {%- endif -%}
-        </div>
-      </div>
+          </div>
       </div>
       
     </div>
@@ -455,7 +549,36 @@
     {
       "label": "Collection",
       "id": "collection",
-      "type": "collection"
+      "type": "collection",
+      "info": "Leave empty to show all products. For best-selling sort, select a specific collection and set its sort order to 'Best selling' in Shopify admin."
+    },
+    {
+      "type": "header",
+      "content": "Product source"
+    },
+    {
+      "type": "select",
+      "id": "product_source",
+      "label": "Show products by",
+      "default": "best-selling",
+      "options": [
+        {
+          "value": "best-selling",
+          "label": "Best-selling (store sales)"
+        },
+        {
+          "value": "sales-metafield",
+          "label": "Sales metafield (imported data)"
+        }
+      ],
+      "info": "Best-selling: Requires specific collection (not 'all products') with sort set to 'Best selling' in admin. Metafield: Works with any collection or all products."
+    },
+    {
+      "type": "text",
+      "id": "sales_metafield",
+      "label": "Sales metafield",
+      "default": "custom.sales",
+      "info": "Supported: custom.sales, custom.sales_total, custom.total_sales"
     },
     {
       "type": "range",

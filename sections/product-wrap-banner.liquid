@@ -219,7 +219,7 @@
               {%- assign limit = section.settings.limit -%}
               {%- if collection != blank -%}
               {%- for product in collection.products limit: limit -%}
-              <div class="productlist-item swiper-slide">
+              <div class="productlist-item swiper-slide" data-product-handle="{{ product.handle }}">
                   <div data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}">
                     {%- render 'product-card', product: product -%}
                   </div>
@@ -257,6 +257,35 @@
     </div>
   </div>
   </div>
+
+  {%- if section.settings.collection != blank -%}
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var container = document.getElementById('Productlist-{{ section.id }}');
+      if (!container) return;
+      var wrapper = container.querySelector('.swiper-wrapper');
+      if (!wrapper) return;
+      var slides = Array.from(wrapper.querySelectorAll('.productlist-item[data-product-handle]'));
+      if (!slides.length) return;
+
+      fetch('{{ routes.root_url }}collections/{{ section.settings.collection }}/products.json?sort_by=best-selling&limit={{ section.settings.limit }}')
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+          if (!data || !data.products) return;
+          var order = data.products.map(function(p) { return p.handle; });
+          slides.sort(function(a, b) {
+            return order.indexOf(a.dataset.productHandle) - order.indexOf(b.dataset.productHandle);
+          });
+          slides.forEach(function(slide) { wrapper.appendChild(slide); });
+          if (container.swiper && container.swiper.updateSlides) {
+            container.swiper.updateSlides();
+            container.swiper.update();
+          }
+        })
+        .catch(function() { /* leave existing order on error */ });
+    });
+  </script>
+  {%- endif -%}
   
   {% schema %}
   

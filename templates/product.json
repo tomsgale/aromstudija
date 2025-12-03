@@ -12,25 +12,17 @@
     "main": {
       "type": "product-template-1",
       "blocks": {
-        "10baeeb8-3d3b-4115-8375-8a90ab8f58e9": {
-          "type": "text",
-          "disabled": true,
-          "settings": {
-            "text": "{{ product.vendor }}",
-            "text_style": "subtitle"
-          }
-        },
         "989bce2f-7961-4267-8e6c-40ff4bb0ed64": {
           "type": "title",
           "settings": {
             "e_label": true
           }
         },
-        "2cf20ef7-ba29-4dd5-8c98-df0b96ba3c5b": {
+        "10baeeb8-3d3b-4115-8375-8a90ab8f58e9": {
           "type": "text",
           "settings": {
-            "text": "Garais nosaukums",
-            "text_style": "body"
+            "text": "Product type",
+            "text_style": "subtitle"
           }
         },
         "31b79d7e-a35a-4a94-8cb5-8e518bf8fef6": {
@@ -41,6 +33,13 @@
         "c5c11045-e3b5-47e4-80d1-25e86ec844cc": {
           "type": "price",
           "settings": {}
+        },
+        "2cf20ef7-ba29-4dd5-8c98-df0b96ba3c5b": {
+          "type": "text",
+          "settings": {
+            "text": "Garais nosaukums",
+            "text_style": "body"
+          }
         },
         "1affb493-1e14-4893-9876-be8d348ee475": {
           "type": "shortdesc",
@@ -211,11 +210,11 @@
         }
       },
       "block_order": [
-        "10baeeb8-3d3b-4115-8375-8a90ab8f58e9",
         "989bce2f-7961-4267-8e6c-40ff4bb0ed64",
-        "2cf20ef7-ba29-4dd5-8c98-df0b96ba3c5b",
+        "10baeeb8-3d3b-4115-8375-8a90ab8f58e9",
         "31b79d7e-a35a-4a94-8cb5-8e518bf8fef6",
         "c5c11045-e3b5-47e4-80d1-25e86ec844cc",
+        "2cf20ef7-ba29-4dd5-8c98-df0b96ba3c5b",
         "1affb493-1e14-4893-9876-be8d348ee475",
         "9cd2d8a0-a8b4-46d7-b3a7-b1609af99285",
         "ff32ea77-bcea-43d3-8e38-55894c9d938a",

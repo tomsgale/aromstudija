@@ -78,11 +78,14 @@
     assign variant_label = ''
     if card_variant
       assign variant_label = card_variant.title | strip
-      if variant_label == 'Default Title'
+      assign variant_label_downcase = variant_label | downcase
+      if variant_label == 'Default Title' or variant_label_downcase == 'default title'
         assign variant_label = ''
+        assign variant_label_downcase = ''
       endif
       assign options_joined = card_variant.options | join: ' / ' | strip
-      if variant_label == '' and options_joined != blank
+      assign options_joined_downcase = options_joined | downcase
+      if variant_label == '' and options_joined != blank and options_joined_downcase != 'default title'
         assign variant_label = options_joined
       endif
     endif

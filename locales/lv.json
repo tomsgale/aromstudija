@@ -75,10 +75,15 @@
       "add_to_cart": "Pievienot grozam",
       "vendor": "Ražotājs",
       "type": "Tips",
+      "from_text_html": "No {{ price }}",
       "sku": "Produkta kods",
       "compare_remove": "Noņemt no salīdzināšanas",
       "available": "Pieejams",
       "compare_text": "Salīdzināt",
+      "stock_available": {
+        "one": "{{ count }} pieejams",
+        "other": "{{ count }} pieejams"
+      },
       "add_to_wishlist": "Pievienot vēlmju sarakstam",
       "view_wishlist": "Skatīt vēlmju sarakstu",
       "sold_out": "Izpārdots",

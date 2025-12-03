@@ -93,12 +93,40 @@
             {%- when '@app' -%}
               {% render block %}
             {%- when 'text' -%}
-                <p
-                  class="product-block product__text{% if block.settings.text_style == 'uppercase' %} text-uppercase {% elsif block.settings.text_style == 'subtitle' %} subtop{% endif %}"
-                  {{ block.shopify_attributes }}
-                >
-                  {{- block.settings.text -}}
-                </p>
+                {%- liquid
+                  assign text_content = block.settings.text
+                  assign product_type_text = nil
+                  assign long_title = nil
+
+                  if text_content == 'Product type'
+                    assign product_type_text = product.type | strip
+                  elsif text_content == 'Garais nosaukums'
+                    assign long_title = product.metafields.custom.long_title.value | default: product.metafields.custom.long_title
+                    assign long_title = long_title | strip
+                  endif
+                -%}
+                {%- if product_type_text != blank -%}
+                  <p
+                    class="product-block product__text{% if block.settings.text_style == 'uppercase' %} text-uppercase {% elsif block.settings.text_style == 'subtitle' %} subtop{% endif %}"
+                    {{ block.shopify_attributes }}
+                  >
+                    {{- product_type_text -}}
+                  </p>
+                {%- elsif long_title != blank -%}
+                  <p
+                    class="product-block product__text{% if block.settings.text_style == 'uppercase' %} text-uppercase {% elsif block.settings.text_style == 'subtitle' %} subtop{% endif %}"
+                    {{ block.shopify_attributes }}
+                  >
+                    {{- long_title -}}
+                  </p>
+                {%- elsif product_type_text == nil and long_title == nil -%}
+                  <p
+                    class="product-block product__text{% if block.settings.text_style == 'uppercase' %} text-uppercase {% elsif block.settings.text_style == 'subtitle' %} subtop{% endif %}"
+                    {{ block.shopify_attributes }}
+                  >
+                    {{- text_content -}}
+                  </p>
+                {%- endif -%}
             {%- when 'title' -%}
               <div class="product-block product-title">
                 {%- if block.settings.e_label -%}
@@ -192,13 +220,15 @@
             {% endif %}
             {%- when 'shortdesc' -%}
               
-              <div class="product-block rte product-short__description txt-body-70" >
-                {% if product.metafields.info.shortdesc != blank %}
-                {{ product.metafields.info.shortdesc }}
-                {% else  %}
-                  {{ product.description | strip_html | truncatewords: 20 }}
-                {% endif %}
-              </div>
+              {%- liquid
+                assign mini_description = product.metafields.custom.mini_description.value | default: product.metafields.custom.mini_description
+                assign mini_description = mini_description | strip
+              -%}
+              {%- if mini_description != blank -%}
+                <div class="product-block rte product-short__description txt-body-70">
+                  {{ mini_description }}
+                </div>
+              {%- endif -%}
              
             {%- when 'description' -%}
               {%- if block.settings.enable_tab -%}

@@ -48,27 +48,36 @@
     </div>
     <div class="product-card__info  pt-3 {% unless product.available %} disabled{% endunless %}">
       <a href="{{ product.url | within: collection }}" title="{{ product.title }}" class="product-card__name d-block {% if settings.t_product %} text-uppercase {% endif %}">{{ product.title }}</a>
-      <div class="product-card__price {% if product.compare_at_price > product.price %}product-card__pricesale {% endif %}">
-          {%- if product.compare_at_price > product.price -%}
-          {%- if product.price_varies -%}
-          {%- assign sale_price = product.price | money -%}
-          {{ 'products.product.on_sale_from_html' | t: price: sale_price }}
-          {%- else -%}
-          <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
-          {{ product.price | money }}
-          <s class="product-card__regular-price">{{ product.compare_at_price | money }}</s>
-          <span class="visually-hidden">{{ 'products.product.sale_price' | t }}</span>
-          
-          {%- endif -%}
-          {%- else -%}
-          {%- if product.price_varies -%}
-          {%- assign price = product.price | money -%}
-          {{ 'products.product.from_text_html' | t: price: price }}
-          {%- else -%}
-          <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
-          {{ product.price | money }}
-          {%- endif -%}
-  
+      {%- liquid
+        assign card_variant = product.selected_or_first_available_variant
+        assign card_price = card_variant.price | default: product.price
+        assign card_compare_at = card_variant.compare_at_price | default: product.compare_at_price
+        assign variant_label = ''
+        if card_variant
+          assign variant_label = card_variant.title | strip
+          if variant_label == 'Default Title'
+            assign variant_label = ''
+          endif
+          assign options_joined = card_variant.options | join: ' / ' | strip
+          if variant_label == '' and options_joined != blank
+            assign variant_label = options_joined
+          endif
+        endif
+      -%}
+      <div class="product-card__price {% if card_compare_at > card_price %}product-card__pricesale {% endif %} d-flex justify-content-between align-items-center w-100">
+          <span class="product-card__price-amount">
+            {%- if card_compare_at > card_price -%}
+              <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+              {{ card_price | money }}
+              <s class="product-card__regular-price">{{ card_compare_at | money }}</s>
+              <span class="visually-hidden">{{ 'products.product.sale_price' | t }}</span>
+            {%- else -%}
+              <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+              {{ card_price | money }}
+            {%- endif -%}
+          </span>
+          {%- if variant_label != blank -%}
+            <span class="product-card__variant-value ml-3 text-right">{{ variant_label }}</span>
           {%- endif -%}
       </div>
       {% unless enablqv %}

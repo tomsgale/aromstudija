@@ -730,36 +730,43 @@
         "template--21581222871313__c92b6d28-25d1-477b-920a-d657bf443761-collection-2": {
           "type": "collection",
           "settings": {
-            "title": "Maigai ādai",
-            "collection": "eteriskas-ellas"
+            "title": "Anti-age",
+            "collection": "problematiskai-adai-1"
           }
         },
         "template--21581222871313__c92b6d28-25d1-477b-920a-d657bf443761-collection-1": {
           "type": "collection",
           "settings": {
-            "title": "Taukainiem matiem",
-            "collection": "ellas-sviesti"
+            "title": "Lūpām",
+            "collection": "lupam"
           }
         },
         "template--21581222871313__c92b6d28-25d1-477b-920a-d657bf443761-collection-3": {
           "type": "collection",
           "settings": {
-            "title": "Sausai ādai",
-            "collection": "best-sellers"
+            "title": "Matiem",
+            "collection": "matiem"
           }
         },
         "collection_RVBLaL": {
           "type": "collection",
           "settings": {
-            "title": "Atmosfērai mājās",
-            "collection": "all-skin-types"
+            "title": "Problemātiskai ādai",
+            "collection": "problematiskai-adai"
           }
         },
         "collection_RDgWWy": {
           "type": "collection",
           "settings": {
             "title": "Sejas ādai",
-            "collection": "all-skin-types"
+            "collection": "sejai"
+          }
+        },
+        "collection_AAMPQT": {
+          "type": "collection",
+          "settings": {
+            "title": "Saules aizsardzībai",
+            "collection": "saulei"
           }
         }
       },
@@ -768,7 +775,8 @@
         "template--21581222871313__c92b6d28-25d1-477b-920a-d657bf443761-collection-1",
         "template--21581222871313__c92b6d28-25d1-477b-920a-d657bf443761-collection-3",
         "collection_RVBLaL",
-        "collection_RDgWWy"
+        "collection_RDgWWy",
+        "collection_AAMPQT"
       ],
       "custom_css": [],
       "settings": {

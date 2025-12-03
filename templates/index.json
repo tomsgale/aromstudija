@@ -291,7 +291,7 @@
         "title": "Pirktākās preces",
         "des": "Pārbaudītas un populāras preces, kas noderēs arī Tev",
         "align-heading": "center",
-        "collection": "eteriskas-ellas",
+        "collection": "bestselleri",
         "limit": 20,
         "perviewDesktop": 5,
         "spaceBetween": 20,
@@ -326,7 +326,7 @@
         "productlist_QhwhDK": {
           "type": "productlist",
           "settings": {
-            "mini_collection": "eteriskas-ellas",
+            "mini_collection": "atra-iepirksanas",
             "title": "",
             "limit_product": "9",
             "p_border": "#e9e9e9",

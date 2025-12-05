@@ -70,7 +70,7 @@
         "title": "Jaunumi",
         "des": "Jaunākie aromterapijas risinājumi tieši Tev",
         "align-heading": "left",
-        "collection": "",
+        "collection": "jaunumi",
         "limit": 20,
         "perviewDesktop": 6,
         "spaceBetween": 16,

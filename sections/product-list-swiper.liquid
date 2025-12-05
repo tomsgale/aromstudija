@@ -196,7 +196,8 @@
             </div>
           {%- endif -%}
             {%- if collection != blank -%}
-            {%- for product in collection.products limit: limit -%}
+            {%- assign sorted_products = collection.products | sort: 'created_at' | reverse -%}
+            {%- for product in sorted_products limit: limit -%}
             <div class="productlist-item swiper-slide">
                 <div data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}">
                   {%- render 'product-card', product: product -%}

@@ -220,7 +220,7 @@
     "whatsapp_number": "0988164483",
     "whatsapp_msg": "Hello",
     "mockup_base_url": "https://cdn.shopify.com/s/files/1/0926/1350/9504/files",
-    "mockup_positions": "{\n    \"oil\": {\n      \"x\": 266,\n      \"y\": 520,\n      \"width\": 253,\n      \"height\": 260,\n      \"curve_strength\": 0.18,\n      \"crop_left\": 0.32\n    }\n  }",
+    "mockup_positions": "{\n    \"oil\": {\n      \"x\": 448,\n      \"y\": 750,\n      \"width\": 400,\n      \"height\": 270,\n      \"curve_strength\": 0.3,\n      \"crop_left\": 0.32\n    }\n  }",
     "checkout_header_image": "",
     "checkout_logo_image": "",
     "checkout_logo_position": "left",

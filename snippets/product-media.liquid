@@ -340,25 +340,45 @@
     <div class="photos__item photos__item--thumbs {{ layout_mobile }}">
       <div class="product-single__thumbnails product-single__thumbnails-{{ section.id }} product-single__thumbnails--static">
         {%- for media in product.media -%}
-        {% assign image = media %}
-        <div class="item product-single__thumbnail-item product-single__thumbnail-item-{{ section.id }}{% if image == featured_image %} is-active {% endif %}" 
+        {%- liquid
+          assign image = media
+          assign thumb_has_mockup = false
+          assign mockup_type = product.metafields.custom.mockup_type
+
+          if settings.enable_mockup_compositing and settings.mockup_base_url != blank and mockup_type != blank and forloop.first
+            assign thumb_has_mockup = true
+          endif
+        -%}
+        <div class="item product-single__thumbnail-item product-single__thumbnail-item-{{ section.id }}{% if image == featured_image %} is-active {% endif %}"
           data-image-id="{{ image.id }}">
           <a href="{{ media | image_url: width: 1200 }}"  class="product-single__thumbnail product-single__thumbnail-{{ section.id }}"
             {% if media.media_type == 'video' %}
             data-videoid="{{ image.id }}"
             {% endif %}>
             <span class="{{ image_size }} position-relative image-wrap" style="padding-top:{% if media.media_type == 'model' %}100% {% else %} {{ 1 | divided_by: media.aspect_ratio | times: 100 }}% {% endif %}">
-                {% assign img_url = image | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
-                <img class="lazyload scale-in {% unless image == featured_image %} lazypreload {% endunless %}"
-                     src="{{ image | image_url: width: 1, height: 1 }}"
-                     data-src="{{ img_url }}"
-                     data-widths="[180, 240]"
-                     data-aspectratio="{{ image.aspect_ratio }}"
-                     data-sizes="auto"
-                     alt="{{ image.alt | escape }}"
-                     loading="lazy"
-                     width="{{ image.width }}"
-                     height="{{ image.height }}">
+                {%- if thumb_has_mockup -%}
+                  {%- comment -%} Mockup Composite Thumbnail {%- endcomment -%}
+                  <canvas class="mockup-canvas lazyload scale-in"
+                          data-mockup-type="{{ mockup_type }}"
+                          data-product-image="{{ media.preview_image | image_url: width: 240 }}"
+                          data-media-id="{{ media.id }}"
+                          data-aspectratio="{{ media.preview_image.aspect_ratio }}"
+                          loading="lazy">
+                  </canvas>
+                {%- else -%}
+                  {%- comment -%} Regular Thumbnail {%- endcomment -%}
+                  {% assign img_url = image | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
+                  <img class="lazyload scale-in {% unless image == featured_image %} lazypreload {% endunless %}"
+                       src="{{ image | image_url: width: 1, height: 1 }}"
+                       data-src="{{ img_url }}"
+                       data-widths="[180, 240]"
+                       data-aspectratio="{{ image.aspect_ratio }}"
+                       data-sizes="auto"
+                       alt="{{ image.alt | escape }}"
+                       loading="lazy"
+                       width="{{ image.width }}"
+                       height="{{ image.height }}">
+                {%- endif -%}
                {% case media.media_type %}
                 {%   when 'video' or 'external_video' %}
                   <span class="thumbnail__badge thumbnail__badge-video">

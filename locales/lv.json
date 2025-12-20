@@ -112,6 +112,12 @@
       "results_with_count": "Rezultāti"
     }
   },
+  "sections": {
+    "collection_template": {
+      "empty": "Produkti nav atrasti",
+      "use_fewer_filters_html": "Izmantojiet mazāk filtru vai <a class=\"{{ class }}\" href=\"{{ link }}\">notīriet visu<\/a>"
+    }
+  },
   "blogs": {
     "article": {
       "read_more": "Lasīt vairāk",
